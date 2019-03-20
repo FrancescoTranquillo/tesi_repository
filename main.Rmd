@@ -1,0 +1,43 @@
+---
+output:
+  pdf_document: 
+    number_sections: TRUE
+    fig_height: 3
+    fig_width: 5
+  
+  
+#geometry: "left=3cm,right=2.5cm,top=3cm,bottom=3cm"
+geometry: asymmetric
+fontsize: 12pt
+fig_caption: yes
+linestretch: 1.5
+bibliography: My Library.bib
+link-citations: true
+csl: style.csl
+toc: true
+header-includes:
+  - \usepackage[italian]{babel}
+  #- \usepackage[fontsize=12pt]{scrextend}
+  - \usepackage{placeins}
+  - \usepackage{setspace}
+  - \usepackage{chngcntr}
+  - \onehalfspacing
+  - \counterwithin{figure}{section}
+  - \counterwithin{table}{section}
+  #- \pagenumbering{gobble}
+  - \evensidemargin=0in
+  - \oddsidemargin=0.5in
+
+
+---
+
+\pagebreak
+```{r child='./capitolo1.md'}
+```
+\pagebreak
+```{r child='./capitolo2.md'}
+```
+
+\pagebreak
+
+# Bibliografia
