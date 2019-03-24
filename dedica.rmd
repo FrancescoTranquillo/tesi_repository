@@ -1,0 +1,9 @@
+---
+output: pdf_document
+---
+\vspace{17cm}
+
+\large
+\begin{flushright}
+\itshape{ Spazio per dedica}
+\end{flushright}

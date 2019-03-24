@@ -1,21 +1,22 @@
 ---
 output:
-  pdf_document: 
+  pdf_document:
+    fig_caption: yes 
     number_sections: TRUE
     fig_height: 3
     fig_width: 5
+    
+# geometry: "left=3cm,right=2.5cm,top=3cm,bottom=3cm"
   
-  
-#geometry: "left=3cm,right=2.5cm,top=3cm,bottom=3cm"
 geometry: asymmetric
+
 fontsize: 12pt
-fig_caption: yes
 linestretch: 1.5
 bibliography: My Library.bib
 link-citations: true
 csl: style.csl
-toc: true
 header-includes:
+  
   - \usepackage[italian]{babel}
   #- \usepackage[fontsize=12pt]{scrextend}
   - \usepackage{placeins}
@@ -30,9 +31,29 @@ header-includes:
 
 
 ---
+\pagenumbering{gobble}
+```{r child='frontespizio.rmd'}
+```
+
+```{r child='dedica.rmd'}
+```
+\cleardoublepage
+\pagenumbering{Roman}
+
+```{r child='sommario_abstract.rmd'}
+```
+\pagebreak
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+
 
 \pagebreak
-```{r child='./capitolo1.md'}
+\pagenumbering{arabic} 
+```{r child='capitolo1/capitolo1.md'}
 ```
 \pagebreak
 ```{r child='./capitolo2.md'}
