@@ -1,10 +1,9 @@
-# Capitolo 1
-
-## L'ASST di Vimercate
+# L'ASST di Vimercate
 
 
 L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.[@khanRealTimeAnalysisSensor2018]
 
+ vedere [@khanRealTimeAnalysisSensor2018]
 
 
 L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015.<br>
@@ -12,6 +11,10 @@ L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del
 Le ASST si articolano in due settori aziendali rispettivamente definiti rete territoriale e polo ospedaliero.<br>
 
 Il settore aziendale polo ospedaliero si articola in presidi ospedalieri e/o in dipartimenti organizzati in diversi livelli di intensità di cura, tecnologica e organizzativa, in coerenza con la normativa nazionale.<br>  
+
+A|B|C
+-|-|-
+23|45|67
 
 
 

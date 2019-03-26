@@ -1,35 +1,26 @@
 ---
+bibliography: My Library.bib
+csl: style.csl
+fontsize: 12pt
+geometry: asymmetric
+header-includes:
+- \usepackage[italian]{babel}
+- \usepackage{placeins}
+- \usepackage{setspace}
+- \usepackage{chngcntr}
+- \onehalfspacing
+- \counterwithin{figure}{section}
+- \counterwithin{table}{section}
+- \evensidemargin=0in
+- \oddsidemargin=0.5in
+linestretch: 1.5
+link-citations: yes
 output:
   pdf_document:
-    fig_caption: yes 
-    number_sections: TRUE
+    fig_caption: yes
     fig_height: 3
     fig_width: 5
-    
-# geometry: "left=3cm,right=2.5cm,top=3cm,bottom=3cm"
-  
-geometry: asymmetric
-
-fontsize: 12pt
-linestretch: 1.5
-bibliography: My Library.bib
-link-citations: true
-csl: style.csl
-header-includes:
-  
-  - \usepackage[italian]{babel}
-  #- \usepackage[fontsize=12pt]{scrextend}
-  - \usepackage{placeins}
-  - \usepackage{setspace}
-  - \usepackage{chngcntr}
-  - \onehalfspacing
-  - \counterwithin{figure}{section}
-  - \counterwithin{table}{section}
-  #- \pagenumbering{gobble}
-  - \evensidemargin=0in
-  - \oddsidemargin=0.5in
-
-
+    number_sections: yes
 ---
 \pagenumbering{gobble}
 ```{r child='frontespizio.rmd'}

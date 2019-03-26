@@ -1,6 +1,4 @@
-# Capitolo 1
-
-## L'ASST di Vimercate
+# L'ASST di Vimercate 2
 
 
 L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.[@lopezMedicalDeviceMaintenance2009]
