@@ -1,13 +1,13 @@
-\select@language {italian}
-\select@language {italian}
-\contentsline {section}{Sommario}{I}{section*.1}
-\contentsline {section}{Abstract}{II}{section*.2}
-\contentsline {section}{\numberline {1}L'ASST di Vimercate}{1}{section.1}
-\contentsline {subsubsection}{\numberline {1.0.1}Polo Ospedaliero}{2}{subsubsection.1.0.1}
-\contentsline {subsubsection}{\numberline {1.0.2}Rete Territoriale}{3}{subsubsection.1.0.2}
-\contentsline {subsubsection}{\numberline {1.0.3}La Missione Aziendale}{3}{subsubsection.1.0.3}
-\contentsline {section}{\numberline {2}L'ASST di Vimercate 2}{5}{section.2}
-\contentsline {subsubsection}{\numberline {2.0.1}Polo Ospedaliero}{6}{subsubsection.2.0.1}
-\contentsline {subsubsection}{\numberline {2.0.2}Rete Territoriale}{7}{subsubsection.2.0.2}
-\contentsline {subsubsection}{\numberline {2.0.3}La Missione Aziendale}{7}{subsubsection.2.0.3}
-\contentsline {section}{Bibliografia}{9}{section*.6}
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {section}{Sommario}{I}{section*.1}% 
+\contentsline {section}{Abstract}{II}{section*.2}% 
+\contentsline {section}{\numberline {1}L'ASST di Vimercate}{1}{section.1}% 
+\contentsline {subsubsection}{\numberline {1.0.1}Polo Ospedaliero}{2}{subsubsection.1.0.1}% 
+\contentsline {subsubsection}{\numberline {1.0.2}Rete Territoriale}{3}{subsubsection.1.0.2}% 
+\contentsline {subsubsection}{\numberline {1.0.3}La Missione Aziendale}{3}{subsubsection.1.0.3}% 
+\contentsline {section}{\numberline {2}L'ASST di Vimercate 2}{5}{section.2}% 
+\contentsline {subsubsection}{\numberline {2.0.1}Polo Ospedaliero}{6}{subsubsection.2.0.1}% 
+\contentsline {subsubsection}{\numberline {2.0.2}Rete Territoriale}{6}{subsubsection.2.0.2}% 
+\contentsline {subsubsection}{\numberline {2.0.3}La Missione Aziendale}{7}{subsubsection.2.0.3}% 
+\contentsline {section}{Bibliografia}{8}{section*.6}% 

@@ -3,7 +3,9 @@
 
 L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.[@khanRealTimeAnalysisSensor2018]
 
- vedere [@khanRealTimeAnalysisSensor2018]
+[@pandeyGetFasterPandas2019]
+
+
 
 
 L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015.<br>
