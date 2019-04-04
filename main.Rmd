@@ -1,18 +1,19 @@
 ---
 bibliography: My Library.bib
-csl: style.csl
+#csl: style.csl
 fontsize: 12pt
 geometry: asymmetric
 header-includes:
-- \usepackage[italian]{babel}
-- \usepackage{placeins}
-- \usepackage{setspace}
-- \usepackage{chngcntr}
-- \onehalfspacing
-- \counterwithin{figure}{section}
-- \counterwithin{table}{section}
-- \evensidemargin=0in
-- \oddsidemargin=0.5in
+  - \usepackage[italian]{babel}
+  #- \usepackage{placeins}
+  - \usepackage{setspace}
+  - \usepackage{chngcntr}
+  - \onehalfspacing
+  - \counterwithin{figure}{section}
+  - \counterwithin{table}{section}
+  - \usepackage[utf8x]{inputenc}
+  - \evensidemargin=0in
+  - \oddsidemargin=0.5in
 linestretch: 1.5
 link-citations: yes
 output:
@@ -21,6 +22,7 @@ output:
     fig_height: 3
     fig_width: 5
     number_sections: yes
+
 ---
 \pagenumbering{gobble}
 ```{r child='frontespizio.rmd'}
@@ -44,12 +46,8 @@ output:
 
 \pagebreak
 \pagenumbering{arabic} 
-```{r child='capitolo1/capitolo1.md'}
+```{r child='capitolo predittiva/predittiva.md'}
 ```
-\pagebreak
-```{r child='./capitolo2.md'}
-```
-
 \pagebreak
 
 # Bibliografia
