@@ -2,12 +2,6 @@
 \babel@toc {italian}{}
 \contentsline {section}{Sommario}{I}{section*.1}% 
 \contentsline {section}{Abstract}{II}{section*.2}% 
-\contentsline {section}{\numberline {1}L'ASST di Vimercate}{1}{section.1}% 
-\contentsline {subsubsection}{\numberline {1.0.1}Polo Ospedaliero}{2}{subsubsection.1.0.1}% 
-\contentsline {subsubsection}{\numberline {1.0.2}Rete Territoriale}{3}{subsubsection.1.0.2}% 
-\contentsline {subsubsection}{\numberline {1.0.3}La Missione Aziendale}{3}{subsubsection.1.0.3}% 
-\contentsline {section}{\numberline {2}L'ASST di Vimercate 2}{5}{section.2}% 
-\contentsline {subsubsection}{\numberline {2.0.1}Polo Ospedaliero}{6}{subsubsection.2.0.1}% 
-\contentsline {subsubsection}{\numberline {2.0.2}Rete Territoriale}{6}{subsubsection.2.0.2}% 
-\contentsline {subsubsection}{\numberline {2.0.3}La Missione Aziendale}{7}{subsubsection.2.0.3}% 
-\contentsline {section}{Bibliografia}{8}{section*.6}% 
+\contentsline {section}{\numberline {1}Manutenzione predittiva}{1}{section.1}% 
+\contentsline {subsection}{\numberline {1.1}Definizione di manutenzione predittiva}{1}{subsection.1.1}% 
+\contentsline {section}{Bibliografia}{2}{section*.6}% 

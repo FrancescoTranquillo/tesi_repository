@@ -1,17 +1,16 @@
 ---
 bibliography: My Library.bib
-#csl: style.csl
-fontsize: 12pt
+csl: style.csl
+fontsize: 10pt
 geometry: asymmetric
 header-includes:
   - \usepackage[italian]{babel}
-  #- \usepackage{placeins}
+  - \usepackage{placeins}
   - \usepackage{setspace}
   - \usepackage{chngcntr}
   - \onehalfspacing
   - \counterwithin{figure}{section}
   - \counterwithin{table}{section}
-  - \usepackage[utf8x]{inputenc}
   - \evensidemargin=0in
   - \oddsidemargin=0.5in
 linestretch: 1.5
