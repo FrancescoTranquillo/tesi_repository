@@ -3,5 +3,8 @@
 \contentsline {section}{Sommario}{I}{section*.1}% 
 \contentsline {section}{Abstract}{II}{section*.2}% 
 \contentsline {section}{\numberline {1}Manutenzione predittiva}{1}{section.1}% 
-\contentsline {subsection}{\numberline {1.1}Definizione di manutenzione predittiva}{1}{subsection.1.1}% 
-\contentsline {section}{Bibliografia}{2}{section*.6}% 
+\contentsline {subsection}{\numberline {1.1}Origine storica e inquadramento normativo}{1}{subsection.1.1}% 
+\contentsline {subsubsection}{\numberline {1.1.1}Industria 4.0 e tecnologie emergenti}{1}{subsubsection.1.1.1}% 
+\contentsline {subsubsection}{\numberline {1.1.2}Il contesto normativo}{2}{subsubsection.1.1.2}% 
+\contentsline {subsection}{\numberline {1.2}Metodi analitici di predizione}{3}{subsection.1.2}% 
+\contentsline {section}{Bibliografia}{4}{section*.6}% 
