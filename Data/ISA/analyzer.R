@@ -33,7 +33,7 @@ morpher <- function(path_scontrino) {
 
 #path = "C:\\Users\\frtranquillo\\github\\tesi_repository\\Data\\ISA\\isareport16-19\\16-17-18"
 path <- here("isareport16-19")
-lista_scontrini <- as.list(list.files(path,pattern = "*.txt"))
+lista_scontrini <- as.list(list.files(path, pattern = "*.txt"))
 
 # applico funzione morpher ad ogni elemento della lista di scontrini e poi unisco
 message("Analisi degli scontrini in corso...")
@@ -53,9 +53,18 @@ test$`TIPO CICLO` <-
     CALIBRAZIONE = c("CALIBRATION", "CALIBRAZIONE"),
     "DISINFEZIONE COMPLETA" = c("COMPLETE DISINFECTION", "DISINFEZIONE COMPLETA"),
     "DISINFEZIONE VELOCE" = c("DISINFEZIONE VELOCE", "FAST DISINFECTION"),
-    "STERILIZZAZIONE COMPLETA"= c("COMPLETE STERILIZATION", "STERILIZZAZIONE COMPLETA"),
-    "STERILIZZAZIONE VELOCE" = c(" STERILIZAZIONE VELOCE" ,"FAST STERILIZATION","ster velo1"," STERILIZZAZIONE VELOCE"))
-table(test$`TIPO CICLO`)  
+    "STERILIZZAZIONE COMPLETA" = c("COMPLETE STERILIZATION", "STERILIZZAZIONE COMPLETA"),
+    "STERILIZZAZIONE VELOCE" = c(
+      " STERILIZAZIONE VELOCE" ,
+      "FAST STERILIZATION",
+      "ster velo1",
+      " STERILIZZAZIONE VELOCE"
+    )
+  )
+table(test$`TIPO CICLO`)
 
 #scrittura tabella
-write.csv2(test, file = here("tabella_scontrini.csv"),row.names = F)
+
+write.csv2(test,
+           file = here("tabella_scontrini.csv"),
+           row.names = F)
