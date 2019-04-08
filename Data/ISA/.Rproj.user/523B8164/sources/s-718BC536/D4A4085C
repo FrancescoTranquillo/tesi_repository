@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1554713605564.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "5|34|27|0|\n",
+    "hash" : "1036992930",
+    "id" : "D4A4085C",
+    "lastKnownWriteTime" : 1554714192,
+    "last_content_update" : -2147483648,
+    "path" : "C:/Users/frtranquillo/github/tesi_repository/Data/ISA/analyzer.R",
+    "project_path" : "analyzer.R",
+    "properties" : {
+        "cursorPosition" : "42,0",
+        "scrollLine" : "2"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
