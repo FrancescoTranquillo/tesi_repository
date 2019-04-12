@@ -46,16 +46,30 @@ morpher <- function(path_scontrino) {
   n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
   if(last(grepl("REGOLARE|IRREGOLARE",scontrino,perl = T))==T){
     # print(n)
-    #rimuovo dicitura di vimercate
-    scontrino <- scontrino[5:length(scontrino)]
-    scontrino_header <- scontrino[1:11]
-    scontrino_footer <- scontrino[-(1:11)] %>% .[1:(length(.)-3)]
-    #trasformazione header
-    df_header <- data.frame(do.call(rbind,
-                                    strsplit(scontrino_header,
-                                             "(?<=[A-Z]): ",
-                                             perl = T)),
-                            stringsAsFactors = F)
+    
+    scontrino_header <-
+      na.omit(gsub(scontrino, pattern = "\\d\\d:\\d\\d:\\d\\d .*", replacement = NA)) %>%
+      .[5:(length(.) - 1)]
+    scontrino_regolare <-
+      na.omit(str_extract(scontrino, pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>% 
+      gsub("(\\d\\d:){2,}\\d\\d ", "", .) %>% last(.)
+    scontrino_footer <-
+      na.omit(str_extract(scontrino, pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>% 
+      .[1:(length(.) - 1)]
+    
+    
+    #trasformazione header:
+    #estrazione di inizio ciclo, tipo ciclo e numero ciclo
+    
+    dati_header <-
+      na.omit(
+        str_extract(
+          scontrino_header,
+          "(?<=INIZIO CICLO: ).*|(?<=TIPO CICLO: ).*|(?<=NUMERO CICLO: ).*"
+        )
+      )
+    label_dati_header <- c("INIZIO CICLO", "TIPO CICLO", "NUMERO CICLO")
+    df_header <- data.frame(cbind(label_dati_header,dati_header), stringsAsFactors = F)
     tmydf_header = setNames(data.frame(t(df_header[, -1])), df_header[, 1])
     head(tmydf_header)
     df_header <- tmydf_header
@@ -99,10 +113,10 @@ morpher <- function(path_scontrino) {
     
     
     #trasformazione footer
-    df_header <- df_header %>%
+    df_footer <- df_footer %>%
       mutate("CICLO REGOLARE" = ifelse(any(
-        grepl("CICLO IRREGOLARE", scontrino_footer) == TRUE
-      ), -1, 1))
+        grepl("CICLO IRREGOLARE", scontrino_regolare) == TRUE
+      ), 0, 1))
     
     df <- cbind(df_header,df_footer)
     return(df)
@@ -126,6 +140,7 @@ message("Analisi degli scontrini in corso...")
 tabella_scontrini <- pblapply(lista_scontrini, morpher) %>%
   bind_rows(.)
 
+tabella_scontrini<-tabella_scontrini[,order(colnames(tabella_scontrini),decreasing=TRUE)]
 #tabella_scontrini <- tabella_scontrini[, 2:12]
 head(tabella_scontrini)
 
@@ -151,6 +166,6 @@ table(test$`TIPO CICLO`)
 
 #scrittura tabella
 
-write.csv2(tabella_mini,
-           file = here("tabella_scontrini_mini.csv"),
+write.csv2(test,
+           file = here("tabella_scontrini.csv"),
            row.names = F)
