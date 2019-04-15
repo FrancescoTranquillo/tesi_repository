@@ -2,14 +2,11 @@ library(tidyverse)
 library(dplyr)
 library(lubridate)
 library(here)
-library(ggplot2)
 library(readxl)
-library(caret)
-library(magrittr)
-library(devtools)
-library(NeuralNetTools)
 
-source_url('https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r')
+# Lo script unisce la tabella degli scontrini a quella di coswin, 
+# aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
+# all'effettiva chiamata
 
 #importa tabella degli scontrini
 
@@ -92,7 +89,7 @@ back_assign <- function(table, x) {
   
   col_name <<- paste0("CHIAMATA-", x)
   df_backed <-
-    table %>% mutate(., !!col_name := factor(ifelse(.$GIORNO %in% as.Date(a), 1, 0)))
+    table %>% mutate(., "TARGET"=factor(ifelse(.$GIORNO %in% as.Date(a), 1, 0)))
   table(df_backed$col_name)
   
   return(df_backed)
@@ -103,88 +100,5 @@ df_backed <- back_assign(df, 4)
 #riordino le colonne in ordine alfabetico per conversione multipla
 df_backed<-df_backed[,order(colnames(df_backed),decreasing=TRUE)]
 
-#rimuovo colonne delle date e colonne inutili
-View(names(df_backed))
-df_backed <- df_backed[,-c(46,47,2,53,44,38)]
-View(names(df_backed))
-glimpse(df_backed)
-
-#conversione multipla
-cols = c(37:86, 2)
-df_backed[,cols] %<>% lapply(function(x) fct_explicit_na(as.character(x)))
-View(names(df_backed))
-
-#data splitting
-trainIndex <- createDataPartition(df_backed$`CHIAMATA-4`, p = .8, 
-                                  list = FALSE, 
-                                  times = 1)
-training <- df_backed[ trainIndex,]
-testing <-  df_backed[-trainIndex,]
-
-names(training)[names(training) == "CHIAMATA-4"] <- "TARGET"
-names(testing)[names(testing) == "CHIAMATA-4"] <- "TARGET"
-y = training$TARGET
-Y=testing$TARGET
-#one hot encoding
-dummies_model <- dummyVars(TARGET ~ ., data=training,sep = "_")
-trainData_mat <- predict(dummies_model, newdata = training)
-trainData <- data.frame(trainData_mat)
-
-preProcess_range_model <- preProcess(trainData, method=c('range','medianImpute'))
-trainData <- predict(preProcess_range_model, newdata = trainData)
-
-training <- trainData
-training$TARGET <- y
-
-dummies_model_test <- dummyVars(TARGET~., data=testing)
-testData_mat <- predict(dummies_model_test, newdata=testing)
-testData <- data.frame(testData_mat)
-
-preProcess_range_model_test <- preProcess(testData, method=c('range','medianImpute'))
-testData <- predict(preProcess_range_model_test, newdata = testData)
-testing <- testData
-testing$TARGET <- Y
-
-
-fitControl <- trainControl(
-  method = 'cv',                   # k-fold cross validation
-  number = 5,                      # number of folds
-  savePredictions = 'final',       # saves predictions for optimal tuning parameter
-  classProbs = F,                  # should class probabilities be returned
-  summaryFunction=twoClassSummary  # results summary function
-) 
-
-nnet <- train(TARGET ~ .,data=training,
-  method = "nnet",
-  trControl=fitControl,
-  tuneLength= 5
-
-)
-
-predictions <- predict(nb,newdata = testing)
-confusionMatrix(reference = testing$TARGET, data = predictions, mode='everything')
-
-varimp_nnet <- varImp(nnet)
-plot(varimp_nnet, main="Variable Importance with NNET",top = 10)
-
-svm <- train(TARGET ~ .,data=training,
-              method = "svmRadial"
-              
-)
-varimp_svm <- varImp(svm)
-plot(varimp_svm, main="Variable Importance with SVM",top = 10)
-plot(svm)
-
-nb <- train(TARGET ~ .,data=training,
-            method = "bayesglm",
-            trControl=trainControl(verboseIter=T)
-)
-plot(nb)
-
-models_compare <- resamples(list(NNET=nnet,
-                                 SVM=svm,
-                                 NaiveBayes_GLM=nb))
-summary(models_compare)
-# Draw box plots to compare models
-scales <- list(x=list(relation="free"), y=list(relation="free"))
-bwplot(models_compare, scales=scales)
+write.csv2(df_backed, file = here(paste0(col_name,"-", "ISACOS.csv")),row.names = F)
+           
