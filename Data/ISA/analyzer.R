@@ -5,7 +5,7 @@ library(here)
 library(pbapply)
 library(forcats)
 library(readr)
-
+library(tm)
 
 path1 = here("isareport16-19")
 scontrino1 <- readLines(
@@ -43,6 +43,7 @@ bouncer <- function(path_scontrino) {
 morpher <- function(path_scontrino) {
   scontrino <- readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8")
   
+  scontrino_text <- paste(scontrino,collapse="")
   n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
   if(last(grepl("REGOLARE|IRREGOLARE",scontrino,perl = T))==T){
     # print(n)
@@ -118,7 +119,7 @@ morpher <- function(path_scontrino) {
         grepl("CICLO IRREGOLARE", scontrino_regolare) == TRUE
       ), 0, 1))
     
-    df <- cbind(df_header,df_footer)
+    df <- cbind(df_header,df_footer,testo=scontrino_text)
     return(df)
   } else data.frame()
   }
@@ -148,7 +149,6 @@ tabella_scontrini$`TIPO CICLO` <-
   factor(tabella_scontrini$`TIPO CICLO`)
 
 test <- tabella_scontrini
-tabella_mini <- tabella_scontrini[1:10,]
 test$`TIPO CICLO` <-
   test$`TIPO CICLO` %>% fct_collapse(
     CALIBRAZIONE = c("CALIBRATION", "CALIBRAZIONE"),
@@ -167,5 +167,5 @@ table(test$`TIPO CICLO`)
 #scrittura tabella
 
 write.csv2(test,
-           file = here("tabella_scontrini.csv"),
+           file = here("tabella_scontrini_text.csv"),
            row.names = F)
