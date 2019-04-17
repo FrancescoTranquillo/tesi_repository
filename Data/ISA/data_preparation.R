@@ -3,7 +3,9 @@ library(dplyr)
 library(lubridate)
 library(here)
 library(readxl)
-
+library(magrittr)
+library(DataExplorer)
+library(caret)
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
 # aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
 # all'effettiva chiamata
@@ -64,45 +66,133 @@ df <- df %>%
 #aggiunta della colonna CHIAMATA nella tabella degli scontrini
 #l'istanza avrà CHIAMATA = 1 se il giorno corrisponde ad una delle date in coswin
 
+#aggiunta della bag-label
 df <- df %>%
-  mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)))
-
-table(df$CHIAMATA,df$Allarme.temperatura.massima.acqua)
-
-
-#forte class imbalance
+  mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)),
+         "BAG"=factor(cut.Date(df$GIORNO, breaks = "3 days",labels = F)))
 
 
-#scrivo una funzione che data la tabella degli scontrini (!), crea la variabile CHIAMATA-X con X uguale
-#al numero di giorni che precedono una chiamata.
-#ad esempio per una predizione di 3 giorni, assegno CHIAMATA-3 = 1 anche ai 3 giorni precedenti
-#all'effettiva chiamata.
-# back_assign <- function(table, x) {
-#   df_ch_1 <- unique(table$GIORNO[which(table$CHIAMATA == 1)])
-#   a <-
-#     sapply(
-#       X = df_ch_1,
-#       FUN = function(date)
-#         format(date - days(1:x), format = "%Y-%m-%d"),
-#       simplify = T
-#     )
-#   
-#   col_name <<- paste0("CHIAMATA-", x)
-#   df_backed <-
-#     table %>% mutate(., "TARGET"=factor(ifelse(.$GIORNO %in% as.Date(a), 1, 0)))
-#   table(df_backed$col_name)
-#   
-#   return(df_backed)
-# }
-# 
-# #predizione a X giorni
-# df_backed <- back_assign(df, 4)
-# #riordino le colonne in ordine alfabetico per conversione multipla
-# df_backed<-df_backed[,order(colnames(df_backed),decreasing=TRUE)]
-# 
-# write.csv2(df_backed, file = here(paste0(col_name,"-", "ISACOS.csv")),row.names = F)
-#            
+
+ignore_columns <- c("testo","TEST.DI.TENUTA","NUMERO.CICLO",
+                    "INIZIO.CICLO", "GIORNO")
+df_bagged <- df[,-which(names(df) %in% ignore_columns)]
+
+#conversione multipla delle feature da int a fattori
+cols = c(38:88, 2)
+df_bagged[,cols] %<>% lapply(function(x) fct_explicit_na(as.character(x)))
+df_bagged <- df_bagged[,-c(3,6:37)]
 
 
-#bagging
-df <- df %>% mutate(bag=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
+#divisione in lista di bags
+bags <- as.list(split(df_bagged,f = df_bagged$BAG))
+
+#assegnazione label bag positiva o negativa a seconda della presenza, nelle singole
+#bags, di chiamata = 1
+
+bags_label <- lapply(bags,function(bag){
+  if(1%in%bag$CHIAMATA){
+    bags <- list("INSTANCES"=bag, "FLAG"=1)
+  } else{
+    bags <- list("INSTANCES"=bag, "FLAG"=0)
+  }
+})
+
+table(factor(lapply(bags_label,function(bag){
+  s <- bag$FLAG
+}) %>% do.call("rbind",.)))
+
+
+#Trasformazione delle bag nel dataframe di ESEMPI
+#ciclando sulle bags, se il flag è 0, tutte le istances diventano esempi,
+#se il flag è 1, viene creato un metaesempio tramite la funzione meta
+
+
+#la funzione meta prende in ingresso un dataframe e riporta in uscita
+# un unico vettore con lo stesso numero di colonne del dataframe iniziale
+# ma con un'unica riga. Il vettore rappresenta una "media" di tutte le righe 
+# presenti nel dataframe iniziale, diventando così un meta-esempio da inserire nel
+# dataset di esempi. 
+# Se la variabile è categorica, viene utilizzata la funzione freq_factor
+# ed il meta-esempio assumerà in quella variabile il valore più frequente
+# altrimenti, se la variabile è numerica, viene calcolata la media aritmetica
+# Nel caso delle variabili di allarme, la funzione meta assegnerà al meta-esempio
+# il valore 1 se almeno una delle instances presenta valore 1 nella corrispettiva
+# colonna di allarme, 0 altrimenti.
+
+freq_factor <- function(factor_column){
+  tt <- table(factor_column)
+  return(names(tt[which.max(tt)]))
+}
+unify_alarms <- function(alarm_column){
+  ifelse(1 %in% alarm_column,return(levels(alarm_column)[1]),return(levels(alarm_column)[2]))
+}
+meta <- function(df_instances){
+  temps_columns <- grep("temp\\.",names(df_instances))
+  alarm_columns <- grep("allarm|alarm",names(df_instances),ignore.case = T)
+  
+  fct <- summarise_all(df_instances[,-c(temps_columns,alarm_columns)],funs(freq_factor(.)))
+  temps <- summarise_all(df_instances[,temps_columns],mean,na.rm=T)
+  alarms <- summarise_all(df_instances[,alarm_columns], funs(unify_alarms(.)))
+  return(cbind(fct,temps,alarms))
+}
+
+df_meta <- lapply(bags_label,FUN = function(bag){
+  if(bag$FLAG==1){
+    meta_example <- meta(bag$INSTANCES)
+  } else{
+    examples <- bag$INSTANCES
+  }
+}) %>% do.call("rbind",.)
+
+names(df_meta)[names(df_meta) == "CHIAMATA"] <- "TARGET"
+df_meta_pp <- df_meta[,-which(names(df_meta) %in% "BAG")]
+df_meta_pp$TARGET <- as.numeric(df_meta_pp$TARGET)
+# pre processing
+
+#one-hot encoding
+dummies <- dummyVars(~.,data = df_meta_pp,fullRank = T)
+head(predict(dummies, newdata = df_meta_pp))
+
+dummied <- as.data.frame(predict(dummies, newdata = df_meta_pp))
+df_meta_pp <- dummied
+
+
+#scaling
+pp_df_no_nzv <- preProcess(df_meta_pp[ , -which(names(df_meta_pp) %in% "TARGET")],
+                           method = c("range","medianImpute"))
+
+pp_df_no_nzv
+data <- predict(pp_df_no_nzv, newdata = df_meta_pp[,-which(names(df_meta_pp) %in% "TARGET")])
+
+
+data$TARGET <- factor(df_meta_pp$TARGET)
+levels(data$TARGET) <- c("neg", "pos")
+df_meta_pp$TARGET <- factor(df_meta_pp$TARGET)
+levels(df_meta_pp$TARGET) <- c("neg", "pos")
+#data splitting
+trainIndex <- createDataPartition(data$TARGET, p = .8,
+                                  list = FALSE,
+                                  times = 1)
+training <- data[ trainIndex,]
+testing <-  data[-trainIndex,]
+
+# set.seed(9560)
+# down_train <- downSample(x = data[, -which(names(df_meta_pp) %in% "TARGET")],
+#                          y = data$TARGET)
+# down_train <- down_train[,-63]
+# table(down_train$TARGET)
+
+
+
+mod0 <- train(TARGET ~ ., data = training,
+              method = "gbm",
+              trControl = trainControl( verboseIter = T,
+                                        sampling = "up",
+                                        method = "repeatedcv",
+                                        number = 5,
+                                        repeats = 5))
+# saveRDS(mod0, "model0.rds")
+# my_model <- readRDS(here("model.rds"))
+predictions <- predict(mod0, testing)
+confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
+plot(mod0)
