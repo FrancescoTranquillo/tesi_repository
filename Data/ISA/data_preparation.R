@@ -6,6 +6,7 @@ library(readxl)
 library(magrittr)
 library(DataExplorer)
 library(caret)
+library(pROC)
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
 # aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
 # all'effettiva chiamata
@@ -69,7 +70,7 @@ df <- df %>%
 #aggiunta della bag-label
 df <- df %>%
   mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)),
-         "BAG"=factor(cut.Date(df$GIORNO, breaks = "3 days",labels = F)))
+         "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
 
 
 
@@ -133,19 +134,19 @@ meta <- function(df_instances){
   fct <- summarise_all(df_instances[,-c(temps_columns,alarm_columns)],funs(freq_factor(.)))
   temps <- summarise_all(df_instances[,temps_columns],mean,na.rm=T)
   alarms <- summarise_all(df_instances[,alarm_columns], funs(unify_alarms(.)))
-  return(cbind(fct,temps,alarms))
+  TARGET <- 1
+  return(cbind(fct,temps,alarms,TARGET))
 }
 
 df_meta <- lapply(bags_label,FUN = function(bag){
   if(bag$FLAG==1){
     meta_example <- meta(bag$INSTANCES)
   } else{
-    examples <- bag$INSTANCES
+    examples <- cbind(bag$INSTANCES, TARGET=0)
   }
 }) %>% do.call("rbind",.)
 
-names(df_meta)[names(df_meta) == "CHIAMATA"] <- "TARGET"
-df_meta_pp <- df_meta[,-which(names(df_meta) %in% "BAG")]
+df_meta_pp <- df_meta[,-which(names(df_meta) %in% c("BAG","CHIAMATA"))]
 df_meta_pp$TARGET <- as.numeric(df_meta_pp$TARGET)
 # pre processing
 
@@ -170,7 +171,7 @@ levels(data$TARGET) <- c("neg", "pos")
 df_meta_pp$TARGET <- factor(df_meta_pp$TARGET)
 levels(df_meta_pp$TARGET) <- c("neg", "pos")
 #data splitting
-trainIndex <- createDataPartition(data$TARGET, p = .8,
+trainIndex <- createDataPartition(data$TARGET, p = .75,
                                   list = FALSE,
                                   times = 1)
 training <- data[ trainIndex,]
@@ -182,17 +183,75 @@ testing <-  data[-trainIndex,]
 # down_train <- down_train[,-63]
 # table(down_train$TARGET)
 
-
-
+fitControl <- trainControl(method = "repeatedcv", 
+                           number = 10, 
+                           repeats = 10, 
+                           classProbs = TRUE,
+                           verboseIter=T,allowParallel = T,
+                            summaryFunction = twoClassSummary)
+                           # sampling = "smote")
+# 
+# svmGrid <-  expand.grid(size=seq(1, 5,1),
+#                         decay=seq(0.1,1,0.1))
 mod0 <- train(TARGET ~ ., data = training,
-              method = "gbm",
-              trControl = trainControl( verboseIter = T,
-                                        sampling = "up",
-                                        method = "repeatedcv",
-                                        number = 5,
-                                        repeats = 5))
+              metric = "Sens",
+              maximize = TRUE,
+              method = "nnet",
+               # tuneGrid = svmGrid,
+              trControl = fitControl)
+
 # saveRDS(mod0, "model0.rds")
 # my_model <- readRDS(here("model.rds"))
-predictions <- predict(mod0, testing)
-confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
-plot(mod0)
+
+
+mod1 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
+              maximize = TRUE,
+                  method = "svmLinear",
+                  trControl = fitControl)
+
+mod2 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
+              maximize = TRUE,
+              method = "svmRadial",
+              trControl = fitControl)
+
+mod3 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
+              maximize = TRUE,
+                  method = "glm",
+                  trControl = fitControl)
+mod4 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
+              maximize = TRUE,
+              method = "bayesglm",
+              trControl = fitControl)
+
+mod5 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
+              maximize = TRUE,
+              method = "rf",
+              trControl = fitControl)
+
+compare <- resamples(list(NN=mod0,
+                          SVM.Linear=mod1,
+                          SVM.Radial=mod2,
+                          LogReg=mod3,
+                          BayesLogReg=mod4))
+
+bwplot(compare,metric="Accuracy")	
+summary(compare)
+
+splom(compare)
+
+scales <- list(x=list(relation="free"), y=list(relation="free"))
+bwplot(compare, scales=scales)
+
+
+
+predictions <- predict(mod3, testing)
+confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
+
+plot(varImp(mod1))
+
+featurePlot(training)
