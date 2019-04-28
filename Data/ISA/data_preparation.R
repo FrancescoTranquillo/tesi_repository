@@ -7,13 +7,13 @@ library(magrittr)
 library(DataExplorer)
 library(caret)
 library(pROC)
-library(esquisse)
+
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
 # aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
 # all'effettiva chiamata
-esquisse::esquisser(df_bagged)
+
 #importa tabella degli scontrini
-esquisser
+
 df <-
   read.csv2(file = "tabella_scontrini_text.csv",
             header = T,
@@ -201,6 +201,9 @@ mod0 <- train(TARGET ~ ., data = training,
                # tuneGrid = svmGrid,
               trControl = fitControl)
 
+predictions <- predict(mod3, testing)
+confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
+
 # saveRDS(mod0, "model0.rds")
 # my_model <- readRDS(here("model.rds"))
 
@@ -210,50 +213,57 @@ mod1 <- train(TARGET ~ ., data = training,
               maximize = TRUE,
                   method = "svmLinear",
                   trControl = fitControl)
-
-mod2 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
-              maximize = TRUE,
-              method = "svmRadial",
-              trControl = fitControl)
-
+# 
+# mod2 <- train(TARGET ~ ., data = training,
+#               metric = "Sens",
+#               maximize = TRUE,
+#               method = "svmRadial",
+#               trControl = fitControl)
+# 
 mod3 <- train(TARGET ~ ., data = training,
               metric = "Sens",
               maximize = TRUE,
                   method = "glm",
                   trControl = fitControl)
-mod4 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
-              maximize = TRUE,
-              method = "bayesglm",
-              trControl = fitControl)
-
-mod5 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
-              maximize = TRUE,
-              method = "rf",
-              trControl = fitControl)
-
-compare <- resamples(list(NN=mod0,
-                          SVM.Linear=mod1,
-                          SVM.Radial=mod2,
-                          LogReg=mod3,
-                          BayesLogReg=mod4,
-                          RandomForest=mod5))
-
-bwplot(compare)	
-summary(compare)
-
-splom(compare)
-
-scales <- list(x=list(relation="free"), y=list(relation="free"))
-bwplot(compare, scales=scales)
-
-
-
-predictions <- predict(mod0, testing)
-confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
-
-which(testing$TARGET=="pos")
-obs <- testing[910,1:58]
-predict(mod0,obs,type = "prob")
+# mod4 <- train(TARGET ~ ., data = training,
+#               metric = "Sens",
+#               maximize = TRUE,
+#               method = "bayesglm",
+#               trControl = fitControl)
+# 
+# mod5 <- train(TARGET ~ ., data = training,
+#               metric = "Sens",
+#               maximize = TRUE,
+#               method = "rf",
+#               trControl = fitControl)
+# 
+# mod6 <- train(TARGET ~ ., data = training,
+#               metric = "Sens",
+#               maximize = TRUE,
+#               method = "bartMachine")
+# 
+# mod7 <- train(TARGET ~ ., data = training,
+#               metric = "Sens",
+#               maximize = TRUE,
+#               method = "mlpML",
+#               trControl = fitControl)
+# 
+# compare <- resamples(list(NN=mod0,
+#                           SVM.Linear=mod1,
+#                           SVM.Radial=mod2,
+#                           LogReg=mod3,
+#                           BayesLogReg=mod4,
+#                           RandomForest=mod5))
+# 
+# bwplot(compare)	
+# summary(compare)
+# 
+# splom(compare)
+# 
+# scales <- list(x=list(relation="free"), y=list(relation="free"))
+# bwplot(compare, scales=scales)
+# 
+# 
+# 
+# predictions <- predict(mod7, testing)
+# confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
