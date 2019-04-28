@@ -7,12 +7,13 @@ library(magrittr)
 library(DataExplorer)
 library(caret)
 library(pROC)
+library(esquisse)
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
 # aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
 # all'effettiva chiamata
-
+esquisse::esquisser(df_bagged)
 #importa tabella degli scontrini
-
+esquisser
 df <-
   read.csv2(file = "tabella_scontrini_text.csv",
             header = T,
@@ -237,9 +238,10 @@ compare <- resamples(list(NN=mod0,
                           SVM.Linear=mod1,
                           SVM.Radial=mod2,
                           LogReg=mod3,
-                          BayesLogReg=mod4))
+                          BayesLogReg=mod4,
+                          RandomForest=mod5))
 
-bwplot(compare,metric="Accuracy")	
+bwplot(compare)	
 summary(compare)
 
 splom(compare)
@@ -249,9 +251,9 @@ bwplot(compare, scales=scales)
 
 
 
-predictions <- predict(mod3, testing)
+predictions <- predict(mod0, testing)
 confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
 
-plot(varImp(mod1))
-
-featurePlot(training)
+which(testing$TARGET=="pos")
+obs <- testing[910,1:58]
+predict(mod0,obs,type = "prob")
