@@ -6,7 +6,8 @@ library(readxl)
 library(magrittr)
 library(DataExplorer)
 library(caret)
-library(pROC)
+library(rlist)
+# library(pROC)
 
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
 # aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
@@ -84,14 +85,31 @@ cols = c(38:88, 2)
 df_bagged[,cols] %<>% lapply(function(x) fct_explicit_na(as.character(x)))
 df_bagged <- df_bagged[,-c(3,6:37)]
 
+#divisione in training e test set
+df_train_index <- createDataPartition(df_bagged$CHIAMATA, p=0.75,list=F,times = 1)
+df_train <- df_bagged[df_train_index,]
+df_test <- df_bagged[-df_train_index,]
+
 
 #divisione in lista di bags
+df_bagged <- df_train
 bags <- as.list(split(df_bagged,f = df_bagged$BAG))
+
+df_test_bag <- as.list(split(df_test,f = df_test$BAG))
 
 #assegnazione label bag positiva o negativa a seconda della presenza, nelle singole
 #bags, di chiamata = 1
 
 bags_label <- lapply(bags,function(bag){
+  if(1%in%bag$CHIAMATA){
+    
+    bags <- list("INSTANCES"=bag, "FLAG"=1)
+  } else{
+    bags <- list("INSTANCES"=bag, "FLAG"=0)
+  }
+})
+
+df_test_label <- lapply(df_test_bag,function(bag){
   if(1%in%bag$CHIAMATA){
     bags <- list("INSTANCES"=bag, "FLAG"=1)
   } else{
@@ -149,11 +167,11 @@ df_meta <- lapply(bags_label,FUN = function(bag){
 
 df_meta_pp <- df_meta[,-which(names(df_meta) %in% c("BAG","CHIAMATA"))]
 df_meta_pp$TARGET <- as.numeric(df_meta_pp$TARGET)
-# pre processing
+# pre processing ####
 
 #one-hot encoding
 dummies <- dummyVars(~.,data = df_meta_pp,fullRank = T)
-head(predict(dummies, newdata = df_meta_pp))
+# head(predict(dummies, newdata = df_meta_pp))
 
 dummied <- as.data.frame(predict(dummies, newdata = df_meta_pp))
 df_meta_pp <- dummied
@@ -171,52 +189,61 @@ data$TARGET <- factor(df_meta_pp$TARGET)
 levels(data$TARGET) <- c("neg", "pos")
 df_meta_pp$TARGET <- factor(df_meta_pp$TARGET)
 levels(df_meta_pp$TARGET) <- c("neg", "pos")
-#data splitting
-trainIndex <- createDataPartition(data$TARGET, p = .75,
-                                  list = FALSE,
-                                  times = 1)
-training <- data[ trainIndex,]
-testing <-  data[-trainIndex,]
 
-# set.seed(9560)
-# down_train <- downSample(x = data[, -which(names(df_meta_pp) %in% "TARGET")],
-#                          y = data$TARGET)
-# down_train <- down_train[,-63]
-# table(down_train$TARGET)
+#preprocess del test set: il test set è una lista di bag. Ogni bag contiene
+# un dataframe di tante righe quanti sono gli scontrini in 5 giorni
+# più la variabile flag che indica se quella bag ha prodotto una
+# chiamata. Il test deve essere processato allo stesso modo fatto per
+# il training senza però trasformare le bag stesse. L'obiettivo
+# è quello di predire la variabile flag. Ogni riga del dataframe verrà predetta
+# la predizione complessiva sarà il valore della variabile flag.
+
+preprocessing <- function(bag){
+  df <- bag$INSTANCES %>% .[,-which(names(.) %in% c("BAG","CHIAMATA"))]
+  #one-hot encoding
+  dummies <- dummyVars(~., data = df, fullRank = T)
+  dummied <- as.data.frame(predict(dummies, newdata = df))
+  df<- dummied
+  
+  #scaling e medianImpute
+  df_no_nzv <- preProcess(df,method = c("range","medianImpute"))
+  df <- predict(df_no_nzv, newdata = df)
+  
+  list("INSTANCES"=df, "FLAG"=bag$FLAG)
+}
+
+df_test_label <- lapply(df_test_label,preprocessing)
+#data splitting
+# trainIndex <- createDataPartition(data$TARGET, p = .75,
+#                                   list = FALSE,
+#                                   times = 1)
+# training <- data[ trainIndex,]
+# testing <-  data[-trainIndex,]
 
 fitControl <- trainControl(method = "repeatedcv", 
                            number = 10, 
-                           repeats = 10, 
+                           repeats = 3, 
                            classProbs = TRUE,
                            verboseIter=T,allowParallel = T,
                             summaryFunction = twoClassSummary)
-                           # sampling = "smote")
-# 
-# svmGrid <-  expand.grid(size=seq(1, 5,1),
-#                         decay=seq(0.1,1,0.1))
-mod0 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
+
+#training ####
+mod0 <- train(TARGET ~ ., data = data,
+              metric = "ROC",
               maximize = TRUE,
               method = "nnet",
-               # tuneGrid = svmGrid,
               trControl = fitControl)
-# 
-# predictions <- predict(mod3, testing)
-# confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
-
-# saveRDS(mod0, "model0.rds")
-# my_model <- readRDS(here("model.rds"))
 
 
-mod1 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
+mod1 <- train(TARGET ~ ., data = data,
+              metric = "ROC",
               maximize = TRUE,
                   method = "svmLinear",
                   trControl = fitControl)
 
  
-mod3 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
+mod3 <- train(TARGET ~ ., data = data,
+              metric = "ROC",
               maximize = TRUE,
                   method = "glm",
                   trControl = fitControl)
@@ -231,8 +258,8 @@ mod3 <- train(TARGET ~ ., data = training,
 
 
 
-# predictions <- predict(mod7, testing)
-# confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
+ predictions <- predict(lsvm, testing)
+confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
 saveRDS(mod0, "nn.rds")
 saveRDS(mod1, "lsvm.rds")
 saveRDS(mod3, "logreg.rds")
@@ -250,3 +277,12 @@ densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
 
 scales <- list(x=list(relation="free"), y=list(relation="free"))
 bwplot(compare, scales=scales)
+
+
+#valutazione con test set ####
+evaluate <- function(bag){
+  predictions <- predict(mod1, bag$INSTANCES,type = "prob")
+  list("INSTANCES"=bag$INSTANCES, "FLAG"=bag$FLAG, "PREDICTIONS"=predictions)
+}
+
+test <- lapply(df_test_label, evaluate)
