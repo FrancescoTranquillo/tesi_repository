@@ -200,9 +200,9 @@ mod0 <- train(TARGET ~ ., data = training,
               method = "nnet",
                # tuneGrid = svmGrid,
               trControl = fitControl)
-
-predictions <- predict(mod3, testing)
-confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
+# 
+# predictions <- predict(mod3, testing)
+# confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
 
 # saveRDS(mod0, "model0.rds")
 # my_model <- readRDS(here("model.rds"))
@@ -213,57 +213,40 @@ mod1 <- train(TARGET ~ ., data = training,
               maximize = TRUE,
                   method = "svmLinear",
                   trControl = fitControl)
-# 
-# mod2 <- train(TARGET ~ ., data = training,
-#               metric = "Sens",
-#               maximize = TRUE,
-#               method = "svmRadial",
-#               trControl = fitControl)
-# 
+
+ 
 mod3 <- train(TARGET ~ ., data = training,
               metric = "Sens",
               maximize = TRUE,
                   method = "glm",
                   trControl = fitControl)
-# mod4 <- train(TARGET ~ ., data = training,
-#               metric = "Sens",
-#               maximize = TRUE,
-#               method = "bayesglm",
-#               trControl = fitControl)
-# 
-# mod5 <- train(TARGET ~ ., data = training,
-#               metric = "Sens",
-#               maximize = TRUE,
-#               method = "rf",
-#               trControl = fitControl)
-# 
-# mod6 <- train(TARGET ~ ., data = training,
-#               metric = "Sens",
-#               maximize = TRUE,
-#               method = "bartMachine")
-# 
-# mod7 <- train(TARGET ~ ., data = training,
-#               metric = "Sens",
-#               maximize = TRUE,
-#               method = "mlpML",
-#               trControl = fitControl)
-# 
-# compare <- resamples(list(NN=mod0,
-#                           SVM.Linear=mod1,
-#                           SVM.Radial=mod2,
-#                           LogReg=mod3,
-#                           BayesLogReg=mod4,
-#                           RandomForest=mod5))
-# 
-# bwplot(compare)	
-# summary(compare)
-# 
-# splom(compare)
-# 
-# scales <- list(x=list(relation="free"), y=list(relation="free"))
-# bwplot(compare, scales=scales)
-# 
-# 
-# 
+
+ compare <- resamples(list(NN=mod0,
+                          SVM.Linear=mod1,
+                          LogReg=mod3))
+ 
+ bwplot(compare)	
+ summary(compare)
+ splom(compare)
+
+
+
 # predictions <- predict(mod7, testing)
 # confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
+saveRDS(mod0, "nn.rds")
+saveRDS(mod1, "lsvm.rds")
+saveRDS(mod3, "logreg.rds")
+saveRDS(compare, "compare_models.rds")
+
+nn <- readRDS(here("nn.rds"))
+lsvm <- readRDS(here("lsvm.rds"))
+logreg <- readRDS(here("logreg.rds"))
+compare <- readRDS(here("compare_models.rds"))
+
+
+
+
+densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
+
+scales <- list(x=list(relation="free"), y=list(relation="free"))
+bwplot(compare, scales=scales)
