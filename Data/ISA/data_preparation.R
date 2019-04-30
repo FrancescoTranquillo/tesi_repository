@@ -50,7 +50,9 @@ df$TIPO.CICLO <- factor(df$TIPO.CICLO)
 # head(timetable)
 # summary(as.numeric(timediff))
 
-#caricamento coswin ####
+#caricamento coswin####
+# vengono eliminate le righe corrispondenti a chiamate relative all'inserimento
+# nel db della macchina di un nuovo strumento.
 coswin <- read.csv2(file = "coswin-isa/108841.csv",
                     header = T,
                     stringsAsFactors = F) %>% 
@@ -69,12 +71,30 @@ df <- df %>%
 #aggiunta della colonna CHIAMATA nella tabella degli scontrini
 #l'istanza avrà CHIAMATA = 1 se il giorno corrisponde ad una delle date in coswin
 
+
 #aggiunta della bag-label
 df <- df %>%
-  mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)),
-         "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
+  mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)))
+# "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
 
+#trovo i giorni in cui ci sono state chiamate a coswin
+giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 
+#trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
+# attraverso la funzione backprop
+backprop <- function(giorno){
+  as.list(seq(from=giorno-1,to =giorno-5,by = -1))
+}
+
+giorni_predittivi <- sapply(giorni_guasti, backprop)
+
+# assegno flag=1 in corrispondenza dei giorni predittivi
+df%<>%mutate(flag=ifelse(as.Date(df$GIORNO)%in%giorni_predittivi,1,0))
+
+df_pos <- df[which(df$flag==1),] %>% 
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "5 days",labels = F)))
+df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
+#le righe con flag=1 sono le bag positive
 
 ignore_columns <- c("testo","TEST.DI.TENUTA","NUMERO.CICLO",
                     "INIZIO.CICLO", "GIORNO")

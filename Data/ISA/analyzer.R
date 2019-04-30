@@ -22,43 +22,69 @@ scontrino_footer1 <- scontrino1[16:(length(scontrino1) - 2)]
 View(scontrino_footer1)
 
 
-#### funzione che pulisce il nome di un processo 
+#### funzione che pulisce il nome di un processo
 # presente in uno scontrino, standardizzandolo
-trimmer <- function(nome_processo){
-  processo <- as.character(nome_processo) %>% 
-    gsub(pattern =  " \\(.*\\)|:(?<=:).*",replacement = "",x = .,perl = T)
+trimmer <- function(nome_processo) {
+  processo <- as.character(nome_processo) %>%
+    gsub(
+      pattern =  " \\(.*\\)|:(?<=:).*",
+      replacement = "",
+      x = .,
+      perl = T
+    )
   return(processo)
   
 }
 #### funzione che filtra e da la lista solamente degli scontrini "validi"####
 bouncer <- function(path_scontrino) {
-  n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
-  scontrino <- readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8")
-  if(last(grepl("REGOLARE|IRREGOLARE",scontrino,perl = T))==F){
+  n <- str_extract(path_scontrino, "(\\d*)(?= [Strumento])")
+  scontrino <-
+    readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8")
+  if (last(grepl("REGOLARE|IRREGOLARE", scontrino, perl = T)) == F) {
     return(as.numeric(n))
   }
 }
 
 #### funzione che dato in input uno scontrino lo trasforma in una tabella####
 morpher <- function(path_scontrino) {
-  scontrino <- readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8")
+  scontrino <-
+    readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8")
   
-  scontrino_text <- paste(scontrino,collapse="")
-  n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
-  if(last(grepl("REGOLARE|IRREGOLARE",scontrino,perl = T))==T){
+  #n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
+  if (last(grepl("REGOLARE|IRREGOLARE", scontrino, perl = T)) == T) {
     # print(n)
     
     scontrino_header <-
-      na.omit(gsub(scontrino, pattern = "\\d\\d:\\d\\d:\\d\\d .*", replacement = NA)) %>%
+      na.omit(gsub(scontrino, 
+                   pattern = "\\d\\d:\\d\\d:\\d\\d .*", 
+                   replacement = NA)) %>%
       .[5:(length(.) - 1)]
+    
+    sclean_header <- scontrino_header[length(scontrino_header) - 1]
+    
     scontrino_regolare <-
-      na.omit(str_extract(scontrino, pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>% 
-      gsub("(\\d\\d:){2,}\\d\\d ", "", .) %>% last(.)
+      na.omit(str_extract(scontrino, 
+                          pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>%
+      gsub("(\\d\\d:){2,}\\d\\d ", "", .) %>%
+      last(.)
+    
     scontrino_footer <-
-      na.omit(str_extract(scontrino, pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>% 
+      na.omit(str_extract(scontrino, 
+                          pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>%
       .[1:(length(.) - 1)]
     
+    sclean_footer <-
+      gsub(scontrino_footer,
+           pattern = "\\d\\d:\\d\\d:\\d\\d ",
+           replacement = "")
     
+    if (any(grepl("PRELEVATO", sclean_footer))) {
+      sclean_footer %<>% .[-which(grepl("PRELEVATO", sclean_footer))]
+    }
+    
+    sclean <- paste(sclean_header,
+                    paste(sclean_footer, collapse = " "),
+                    scontrino_regolare)
     #trasformazione header:
     #estrazione di inizio ciclo, tipo ciclo e numero ciclo
     
@@ -69,9 +95,11 @@ morpher <- function(path_scontrino) {
           "(?<=INIZIO CICLO: ).*|(?<=TIPO CICLO: ).*|(?<=NUMERO CICLO: ).*"
         )
       )
-    label_dati_header <- c("INIZIO CICLO", "TIPO CICLO", "NUMERO CICLO")
-    df_header <- data.frame(cbind(label_dati_header,dati_header), stringsAsFactors = F)
-    tmydf_header = setNames(data.frame(t(df_header[, -1])), df_header[, 1])
+    label_dati_header <-
+      c("INIZIO CICLO", "TIPO CICLO", "NUMERO CICLO")
+    df_header <-
+      data.frame(cbind(label_dati_header, dati_header), stringsAsFactors = F)
+    tmydf_header = setNames(data.frame(t(df_header[,-1])), df_header[, 1])
     head(tmydf_header)
     df_header <- tmydf_header
     
@@ -85,32 +113,47 @@ morpher <- function(path_scontrino) {
     
     
     
-    temperature <- na.omit(str_extract(processi,"(\\d*)(?=°)"))
-    if(length(temperature)!=0){
+    temperature <- na.omit(str_extract(processi, "(\\d*)(?=°)"))
+    if (length(temperature) != 0) {
       temp_flag <- 1
-      temperature_labels <- paste0("temp.", seq(1, length(temperature), 1))
-      temperature_table <- data.frame(cbind(temperature_labels,temperature),stringsAsFactors = F)
-      temperature_table_header <- setNames(data.frame(t(temperature_table[, -1])), temperature_table[, 1])
-    } else temp_flag <- 0
+      temperature_labels <-
+        paste0("temp.", seq(1, length(temperature), 1))
+      temperature_table <-
+        data.frame(cbind(temperature_labels, temperature),
+                   stringsAsFactors = F)
+      temperature_table_header <-
+        setNames(data.frame(t(temperature_table[,-1])), temperature_table[, 1])
+    } else
+      temp_flag <- 0
     
     #### tabelle footer ####
-    processi <- sapply(processi, trimmer,USE.NAMES = F,simplify = T)
+    processi <- sapply(processi,
+                       trimmer,
+                       USE.NAMES = F,
+                       simplify = T)
     processi_table <-
       data.frame(cbind(unique(processi), "1"), stringsAsFactors = F)
     processi_table_header <-
-      setNames(data.frame(t(processi_table[, -1])), processi_table[, 1])
+      setNames(data.frame(t(processi_table[,-1])), processi_table[, 1])
     
     t.labels <- paste0("t.", seq(1, length(dt), 1))
     
     dt_table <-
       data.frame(cbind(t.labels, as.numeric(dt)), stringsAsFactors = F)
     
-    dt_table_header = setNames(data.frame(t(dt_table[, -1])), dt_table[, 1])
+    dt_table_header = setNames(data.frame(t(dt_table[,-1])), dt_table[, 1])
     
     #unione delle tabelle del footer
-    if(temp_flag==1){
-      df_footer <- data.frame(cbind(processi_table_header, dt_table_header,temperature_table_header))
-    } else df_footer <- data.frame(cbind(processi_table_header, dt_table_header))
+    if (temp_flag == 1) {
+      df_footer <-
+        data.frame(cbind(
+          processi_table_header,
+          dt_table_header,
+          temperature_table_header
+        ))
+    } else
+      df_footer <-
+      data.frame(cbind(processi_table_header, dt_table_header))
     
     
     #trasformazione footer
@@ -119,11 +162,13 @@ morpher <- function(path_scontrino) {
         grepl("CICLO IRREGOLARE", scontrino_regolare) == TRUE
       ), 0, 1))
     
-    df <- cbind(df_header,df_footer,testo=scontrino_text)
+    df <- cbind(df_header, df_footer, testo = sclean)
     return(df)
-  } else data.frame()
   }
-  
+  else
+    data.frame()
+}
+
 #scontrino <- readLines(file.choose())
 
 
@@ -141,7 +186,8 @@ message("Analisi degli scontrini in corso...")
 tabella_scontrini <- pblapply(lista_scontrini, morpher) %>%
   bind_rows(.)
 
-tabella_scontrini<-tabella_scontrini[,order(colnames(tabella_scontrini),decreasing=TRUE)]
+tabella_scontrini <-
+  tabella_scontrini[, order(colnames(tabella_scontrini), decreasing = TRUE)]
 #tabella_scontrini <- tabella_scontrini[, 2:12]
 head(tabella_scontrini)
 
