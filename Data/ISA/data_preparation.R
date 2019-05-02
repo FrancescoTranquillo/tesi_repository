@@ -77,6 +77,15 @@ df <- df %>%
   mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)))
 # "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
 
+ignore_columns <- c("testo","TEST.DI.TENUTA","NUMERO.CICLO",
+                    "INIZIO.CICLO")
+df <- df[,-which(names(df) %in% ignore_columns)]
+
+#conversione multipla delle feature da int a fattori
+cols = c(38:86,88, 2)
+df[,cols] %<>% lapply(function(x) fct_explicit_na(as.character(x)))
+df%<>%.[,-c(3,6:37)]
+
 #trovo i giorni in cui ci sono state chiamate a coswin
 giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 
@@ -96,58 +105,43 @@ df_pos <- df[which(df$flag==1),] %>%
 df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
 #le righe con flag=1 sono le bag positive
 
-ignore_columns <- c("testo","TEST.DI.TENUTA","NUMERO.CICLO",
-                    "INIZIO.CICLO", "GIORNO")
-df_bagged <- df[,-which(names(df) %in% ignore_columns)]
+#bag "negative", separate in bags da 5 giorni
+df_neg <- df[-which(df$flag==1),] %>% 
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "5 days",labels = F)))
+df_neg_bag <- as.list(split(df_neg,f = df_neg$BAG))
 
-#conversione multipla delle feature da int a fattori
-cols = c(38:88, 2)
-df_bagged[,cols] %<>% lapply(function(x) fct_explicit_na(as.character(x)))
-df_bagged <- df_bagged[,-c(3,6:37)]
+# assegno ad ogni elemento delle bag create il flag 1 o 0
+df_pos_bag <- lapply(df_pos_bag,function(x) list("INSTANCES"=x,
+                                   "BAG_FLAG"=1))
 
-#divisione in training e test set
-df_train_index <- createDataPartition(df_bagged$CHIAMATA, p=0.75,list=F,times = 1)
-df_train <- df_bagged[df_train_index,]
-df_test <- df_bagged[-df_train_index,]
+df_neg_bag <- lapply(df_neg_bag,function(x) list("INSTANCES"=x,
+                                                 "BAG_FLAG"=0))
 
 
-#divisione in lista di bags
-df_bagged <- df_train
-bags <- as.list(split(df_bagged,f = df_bagged$BAG))
+# divido in train e test
+train_pos <- sample(df_pos_bag, length(df_pos_bag)*0.75,replace = F)
+train_neg <- sample(df_neg_bag, length(df_neg_bag)*0.75,replace = F)
+train <- c(train_pos, train_neg)
 
-df_test_bag <- as.list(split(df_test,f = df_test$BAG))
+test_pos <- sample(df_pos_bag, length(df_pos_bag)*0.25,replace = F)
+test_neg <- sample(df_neg_bag, length(df_neg_bag)*0.25,replace = F)
+test <- c(test_pos, test_neg)
 
-#assegnazione label bag positiva o negativa a seconda della presenza, nelle singole
-#bags, di chiamata = 1
+#shuffling finale
+train <- sample(train, length(train), replace = T)
+test <- sample(test, length(test),replace=T)
 
-bags_label <- lapply(bags,function(bag){
-  if(1%in%bag$CHIAMATA){
-    
-    bags <- list("INSTANCES"=bag, "FLAG"=1)
-  } else{
-    bags <- list("INSTANCES"=bag, "FLAG"=0)
-  }
-})
+#trasformazione di train nel dataframe di learning ####
 
-df_test_label <- lapply(df_test_bag,function(bag){
-  if(1%in%bag$CHIAMATA){
-    bags <- list("INSTANCES"=bag, "FLAG"=1)
-  } else{
-    bags <- list("INSTANCES"=bag, "FLAG"=0)
-  }
-})
+train <- lapply(train, function(x) {
+  list("INSTANCES"=x$INSTANCES[,-which(names(x$INSTANCES) %in% c("BAG","CHIAMATA", "GIORNO"))],
+       "BAG_FLAG"=x$BAG_FLAG)
+  })
 
-table(factor(lapply(bags_label,function(bag){
-  s <- bag$FLAG
-}) %>% do.call("rbind",.)))
-
-
-#Trasformazione delle bag nel dataframe di ESEMPI
 #ciclando sulle bags, se il flag è 0, tutte le istances diventano esempi,
-#se il flag è 1, viene creato un metaesempio tramite la funzione meta
+#se il flag è 1, viene creato un metaesempio tramite la funzione meta.
 
-
-#la funzione meta prende in ingresso un dataframe e riporta in uscita
+#la funzione "meta" prende in ingresso un dataframe e riporta in uscita
 # un unico vettore con lo stesso numero di colonne del dataframe iniziale
 # ma con un'unica riga. Il vettore rappresenta una "media" di tutte le righe 
 # presenti nel dataframe iniziale, diventando così un meta-esempio da inserire nel
@@ -177,19 +171,25 @@ meta <- function(df_instances){
   return(cbind(fct,temps,alarms,TARGET))
 }
 
-df_meta <- lapply(bags_label,FUN = function(bag){
-  if(bag$FLAG==1){
+
+df_meta <- lapply(train,FUN = function(bag){
+  if(bag$BAG_FLAG==1){
     meta_example <- meta(bag$INSTANCES)
   } else{
     examples <- cbind(bag$INSTANCES, TARGET=0)
   }
 }) %>% do.call("rbind",.)
 
-df_meta_pp <- df_meta[,-which(names(df_meta) %in% c("BAG","CHIAMATA"))]
+
+df_meta_pp <- df_meta[,-which(names(df_meta) %in% c("BAG","CHIAMATA", "GIORNO","flag"))]
+
+# View(colnames(df_meta_pp))
 df_meta_pp$TARGET <- as.numeric(df_meta_pp$TARGET)
 # pre processing ####
 
 #one-hot encoding
+
+# df_meta_pp[,-which(names(df_meta_pp)%in%"TARGET")] <- factor(df_meta_pp[,-which(names(df_meta_pp)%in%"TARGET")])
 dummies <- dummyVars(~.,data = df_meta_pp,fullRank = T)
 # head(predict(dummies, newdata = df_meta_pp))
 
@@ -210,63 +210,50 @@ levels(data$TARGET) <- c("neg", "pos")
 df_meta_pp$TARGET <- factor(df_meta_pp$TARGET)
 levels(df_meta_pp$TARGET) <- c("neg", "pos")
 
-#preprocess del test set: il test set è una lista di bag. Ogni bag contiene
-# un dataframe di tante righe quanti sono gli scontrini in 5 giorni
-# più la variabile flag che indica se quella bag ha prodotto una
-# chiamata. Il test deve essere processato allo stesso modo fatto per
-# il training senza però trasformare le bag stesse. L'obiettivo
-# è quello di predire la variabile flag. Ogni riga del dataframe verrà predetta
-# la predizione complessiva sarà il valore della variabile flag.
 
-preprocessing <- function(bag){
-  df <- bag$INSTANCES %>% .[,-which(names(.) %in% c("BAG","CHIAMATA"))]
-  #one-hot encoding
-  dummies <- dummyVars(~., data = df, fullRank = T)
-  dummied <- as.data.frame(predict(dummies, newdata = df))
-  df<- dummied
-  
-  #scaling e medianImpute
-  df_no_nzv <- preProcess(df,method = c("range","medianImpute"))
-  df <- predict(df_no_nzv, newdata = df)
-  
-  list("INSTANCES"=df, "FLAG"=bag$FLAG)
-}
-
-df_test_label <- lapply(df_test_label,preprocessing)
-#data splitting
-# trainIndex <- createDataPartition(data$TARGET, p = .75,
-#                                   list = FALSE,
-#                                   times = 1)
-# training <- data[ trainIndex,]
-# testing <-  data[-trainIndex,]
+# data splitting
+trainIndex <- createDataPartition(data$TARGET, p = .75,
+                                  list = FALSE,
+                                  times = 1)
+training <- data[ trainIndex,]
+testing <-  data[-trainIndex,]
 
 fitControl <- trainControl(method = "repeatedcv", 
                            number = 10, 
                            repeats = 3, 
                            classProbs = TRUE,
                            verboseIter=T,allowParallel = T,
-                            summaryFunction = twoClassSummary)
+                           summaryFunction = twoClassSummary)
 
 #training ####
-mod0 <- train(TARGET ~ ., data = data,
-              metric = "ROC",
+mod0 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
               maximize = TRUE,
               method = "nnet",
               trControl = fitControl)
 
+grid <- expand.grid(C = c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,5))
 
-mod1 <- train(TARGET ~ ., data = data,
-              metric = "ROC",
+mod1 <- train(TARGET ~.,
+              data = training,
+              method = "rf",
+              trControl = fitControl
+              # tuneLength = 5,
+              # tuneGrid=grid
+              )
+mod2 <- train(TARGET ~ ., data = data,
+              metric = "Sens",
               maximize = TRUE,
-                  method = "svmLinear",
-                  trControl = fitControl)
-
+              method = "svmRadial",
+              trControl = fitControl,
+              tuneLength = 10
+)
  
-mod3 <- train(TARGET ~ ., data = data,
-              metric = "ROC",
+mod3 <- train(TARGET ~ ., data = training,
+              metric = "Sens",
               maximize = TRUE,
-                  method = "glm",
-                  trControl = fitControl)
+              method = "glm",
+              trControl = fitControl)
 
  compare <- resamples(list(NN=mod0,
                           SVM.Linear=mod1,
@@ -278,8 +265,8 @@ mod3 <- train(TARGET ~ ., data = data,
 
 
 
- predictions <- predict(lsvm, testing)
-confusionMatrix(predictions, testing$TARGET,mode = "sens_spec",positive = "pos")
+ predictions <- predict(mod1, testing)
+confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
 saveRDS(mod0, "nn.rds")
 saveRDS(mod1, "lsvm.rds")
 saveRDS(mod3, "logreg.rds")
@@ -300,9 +287,36 @@ bwplot(compare, scales=scales)
 
 
 #valutazione con test set ####
-evaluate <- function(bag){
-  predictions <- predict(mod1, bag$INSTANCES,type = "prob")
-  list("INSTANCES"=bag$INSTANCES, "FLAG"=bag$FLAG, "PREDICTIONS"=predictions)
-}
+#preprocess del test set: il test set è una lista di bag. Ogni bag contiene
+# un dataframe di tante righe quanti sono gli scontrini in 5 giorni
+# più la variabile flag che indica se quella bag ha prodotto una
+# chiamata. Il test deve essere processato allo stesso modo fatto per
+# il training senza però trasformare le bag stesse. L'obiettivo
+# è quello di predire la variabile flag. Ogni riga del dataframe verrà predetta
+# la predizione complessiva sarà il valore della variabile flag.
 
-test <- lapply(df_test_label, evaluate)
+#trasformo il test in un unico dataframe aggiungendo la variabile bag_flag
+test_df <- lapply(test, function(bag){
+  cbind(bag$INSTANCES,"BAG_FLAG"=bag$BAG_FLAG)
+  }) %>% do.call("rbind",.)
+
+bag_index <- test_df$BAG
+test_df%<>%.[,-which(names(.) %in% c("BAG","flag","CHIAMATA", "GIORNO"))]
+
+#one-hot encoding
+ dummies <- dummyVars(~., data = test_df, fullRank = T)
+ dummied <- as.data.frame(predict(dummies, newdata = test_df))
+ test_df<- dummied
+   
+#scaling e medianImpute
+ test_df_no_nzv <- preProcess(test_df,method = c("range","medianImpute"))
+ test_df <- predict(test_df_no_nzv, newdata = test_df)
+ 
+ test_df$BAG_FLAG <- factor(test_df$BAG_FLAG)
+ levels(test_df$BAG_FLAG) <- c("neg", "pos")
+ 
+test_df_predicted <- test_df %>%  mutate(.,"predictions"=predict(mod1, newdata = test_df),
+                    "BAG"=bag_index)
+
+test_list <- as.list(split(test_df_predicted,f = test_df$BAG))
+confusionMatrix(test_df_predicted$predictions, test_df$BAG_FLAG,mode = "everything",positive = "pos")

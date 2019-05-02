@@ -6,6 +6,7 @@ library(pbapply)
 library(forcats)
 library(readr)
 library(tm)
+library(magrittr)
 
 path1 = here("isareport16-19")
 scontrino1 <- readLines(
@@ -213,5 +214,5 @@ table(test$`TIPO CICLO`)
 #scrittura tabella
 
 write.csv2(test,
-           file = here("tabella_scontrini_text.csv"),
+           file = "tabella_scontrini_text.csv",
            row.names = F)
