@@ -7,6 +7,8 @@ library(magrittr)
 library(DataExplorer)
 library(caret)
 library(rlist)
+library(nnet)
+library(NeuralNetTools)
 # library(pROC)
 
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
@@ -218,72 +220,88 @@ trainIndex <- createDataPartition(data$TARGET, p = .75,
 training <- data[ trainIndex,]
 testing <-  data[-trainIndex,]
 
-fitControl <- trainControl(method = "repeatedcv", 
+fitControl1 <- trainControl(method = "repeatedcv", 
                            number = 10, 
                            repeats = 3, 
                            classProbs = TRUE,
                            verboseIter=T,allowParallel = T,
-                           summaryFunction = twoClassSummary)
+                           summaryFunction = twoClassSummary,
+                           sampling = "down")
+
+fitControl2 <- trainControl(method = "repeatedcv", 
+                            number = 10, 
+                            repeats = 3, 
+                            classProbs = TRUE,
+                            verboseIter=T,allowParallel = T,
+                            summaryFunction = twoClassSummary)
 
 #training ####
-mod0 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
-              maximize = TRUE,
-              method = "nnet",
-              trControl = fitControl)
+gbm.nosample <- train(TARGET ~ ., data = training,
+              method = "gbm",
+              trControl = fitControl2)
+xgbtree.nosample <- train(TARGET ~ ., data = training,
+              method = "xgbTree",
+              trControl = fitControl2)
 
-grid <- expand.grid(C = c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,5))
 
-mod1 <- train(TARGET ~.,
+gbm.down <- train(TARGET ~.,
               data = training,
-              method = "rf",
-              trControl = fitControl
-              # tuneLength = 5,
-              # tuneGrid=grid
+              method = "gbm",
+              trControl = fitControl1
               )
-mod2 <- train(TARGET ~ ., data = data,
-              metric = "Sens",
-              maximize = TRUE,
-              method = "svmRadial",
-              trControl = fitControl,
-              tuneLength = 10
+xgbtree.smote <- train(TARGET ~.,
+                   data = training,
+                   method = "xgbTree",
+                   trControl = fitControl1
 )
+
+nnet <- train(
+  TARGET ~ .,
+  data = training,
+  method = "nnet",
+  trControl = fitControl1,
+  tuneLength = 10
+)
+
+nnetGrid <-  expand.grid(size = seq(from = 1, to = 10, by = 1),
+                         decay = seq(from = 0.1, to = 0.5, by = 0.1))
+nnet2 <- train(
+  TARGET ~ .,
+  data = training,
+  method = "nnet",
+  tuneLength = 10,
+  trControl=trainControl(verboseIter=T,method = "boot"),
+  tuneGrid = nnetGrid
+)
+
+compare <- resamples(list("GradientBoosting"=gbm.nosample,
+                          "ExtremeGradientBoosting"=xgbtree.nosample,
+                          "GB.smote"=gbm.smote,
+                          "XGB.smote"=xgbtree.smote,
+                          "NN.downsampling"=nnet))
  
-mod3 <- train(TARGET ~ ., data = training,
-              metric = "Sens",
-              maximize = TRUE,
-              method = "glm",
-              trControl = fitControl)
+summary(compare)
+bwplot(compare)	
 
- compare <- resamples(list(NN=mod0,
-                          SVM.Linear=mod1,
-                          LogReg=mod3))
- 
- bwplot(compare)	
- summary(compare)
- splom(compare)
-
-
-
- predictions <- predict(mod1, testing)
+ predictions <- predict(nnet, testing)
 confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
-saveRDS(mod0, "nn.rds")
-saveRDS(mod1, "lsvm.rds")
-saveRDS(mod3, "logreg.rds")
-saveRDS(compare, "compare_models.rds")
+saveRDS(nnet, "nn-downsampling.rds")
+# saveRDS(mod1, "lsvm.rds")
+# saveRDS(mod3, "logreg.rds")
+# saveRDS(compare, "compare_models.rds")
+# 
+# nn <- readRDS(here("nn.rds"))
+# lsvm <- readRDS(here("lsvm.rds"))
+# logreg <- readRDS(here("logreg.rds"))
+# compare <- readRDS(here("compare_models.rds"))
+ densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
+# 
+# scales <- list(x=list(relation="free"), y=list(relation="free"))
+# bwplot(compare, scales=scales)
 
-nn <- readRDS(here("nn.rds"))
-lsvm <- readRDS(here("lsvm.rds"))
-logreg <- readRDS(here("logreg.rds"))
-compare <- readRDS(here("compare_models.rds"))
 
 
 
-
-densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
-
-scales <- list(x=list(relation="free"), y=list(relation="free"))
-bwplot(compare, scales=scales)
 
 
 #valutazione con test set ####
@@ -314,9 +332,42 @@ test_df%<>%.[,-which(names(.) %in% c("BAG","flag","CHIAMATA", "GIORNO"))]
  
  test_df$BAG_FLAG <- factor(test_df$BAG_FLAG)
  levels(test_df$BAG_FLAG) <- c("neg", "pos")
- 
-test_df_predicted <- test_df %>%  mutate(.,"predictions"=predict(mod1, newdata = test_df),
-                    "BAG"=bag_index)
 
-test_list <- as.list(split(test_df_predicted,f = test_df$BAG))
-confusionMatrix(test_df_predicted$predictions, test_df$BAG_FLAG,mode = "everything",positive = "pos")
+ test_predictions <- predict(nnet, newdata = test_df,type = "prob")
+test_df_predicted <- test_df %>%
+  mutate(.,
+         # "prediction"=predict(gbm.smote, newdata = test_df),
+         # "predictions_pos"=test_predictions[,1],
+         #  "predictions_neg"=test_predictions[,2],
+         "BAG"=bag_index,
+         "bag_prediction_pos"=test_predictions[,2]) %>% 
+  .[,which(names(.) %in% c("BAG_FLAG","bag_prediction_pos","BAG"))]
+  
+
+
+test_list <- as.list(split(test_df_predicted,f = test_df_predicted$BAG))
+
+
+df <- lapply(test_list, function(element){
+  if(nrow(element)>0){ 
+  predicted <- factor(ifelse(max(element$bag_prediction_pos)>.7,"pos","neg"))
+  actual <- element$BAG_FLAG[1]
+  data.frame(predicted,actual)
+  
+  } })%>% do.call("rbind",.)
+
+df$predicted <- fct_rev(df$predicted)
+levels(df$actual)
+
+confusionMatrix(
+  df$predicted,
+  df$actual,
+  mode = "sens_spec",
+  positive = "pos"
+) 
+
+plot(varImp(nnet))
+summary(nnet)
+
+plotnet(nnet$finalModel, y_names = "ScontrinoPredittivo")
+title("Graphical Representation of our Neural Network")
