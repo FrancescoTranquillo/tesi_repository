@@ -9,6 +9,9 @@ library(caret)
 library(rlist)
 library(tm)
 library(e1071)
+library(nnet)
+library(NeuralNetTools)
+
 # library(pROC)
 
 # Lo script unisce la tabella degli scontrini a quella di coswin, 
@@ -53,9 +56,9 @@ df <- df %>%
   mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)))
 # "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
 
-ignore_columns <- c("TEST.DI.TENUTA","NUMERO.CICLO",
-                    "INIZIO.CICLO")
-df <- df[,-which(names(df) %in% ignore_columns)]
+# ignore_columns <- c("TEST.DI.TENUTA","NUMERO.CICLO",
+#                     "INIZIO.CICLO")
+# df <- df[,-which(names(df) %in% ignore_columns)]
 
 #trovo i giorni in cui ci sono state chiamate a coswin
 giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
@@ -100,12 +103,13 @@ descr_corpus_clean_test<-clean_corpus(descr_corpus_test)
 
 
 descr_dict <- findFreqTerms(descr_dtm_train, lowfreq = 1)
-descr_dtm_test <- DocumentTermMatrix(descr_corpus_clean_test, list(dictionary=descr_dict))
+descr_dtm_freq_test <- DocumentTermMatrix(descr_corpus_clean_test, list(dictionary=descr_dict))
+descr_dtm_freq_train <- DocumentTermMatrix(descr_corpus_clean_train, list(dictionary=descr_dict))
 
-descr_dtm_freq_train <- descr_dtm_train[, descr_freq_words]
-descr_dtm_freq_test <- descr_dtm_test[, descr_freq_words]
+# descr_dtm_freq_train <- descr_dtm_train[, descr_freq_words]
+# descr_dtm_freq_test <- descr_dtm_test[, descr_freq_words]
 convert_counts <- function(x) {
-  x <- ifelse(x > 0, 1, 0)
+  x <- ifelse(x > 0, "Yes", "No")
 }
 
 
@@ -113,46 +117,87 @@ descr_train <-as.data.frame(apply(descr_dtm_freq_train, MARGIN = 2, convert_coun
 descr_test <- as.data.frame(apply(descr_dtm_freq_test, MARGIN = 2, convert_counts))
 
 
-descr_classifier2 <-
-  naiveBayes(descr_train, descr_train_labels, laplace = 1)
-
- descr_test_pred2 <- predict(descr_classifier2, descr_test)
+# descr_classifier2 <-
+#   naiveBayes(descr_train, descr_train_labels, laplace = 1)
 # 
- levels(descr_test_pred2) <- c("neg", "pos")
- confusionMatrix(descr_test_pred2, descr_test_labels,positive = "pos")
+# descr_test_pred2 <- predict(descr_classifier2, descr_test)
+# # 
+# levels(descr_test_pred2) <- c("neg", "pos")
+# levels(descr_test_labels) <- c("neg", "pos")
+# confusionMatrix(descr_test_pred2, descr_test_labels,positive = "1")
 
-fitControl <- trainControl(method = "repeatedcv", 
-                           number = 10,
-                           classProbs = TRUE,
-                           repeats = 3,
-                           verboseIter=T,
-                           allowParallel = T,
-                          sampling = "up")
 
 descr_train %<>%
-  mutate_each_(funs(factor(.)),c(1:47))
+  mutate_each_(funs(factor(.)),c(1:61)) %>%
+  .[, sapply(descr_train, function(col) length(unique(col))) > 1]
+
+descr_test %<>%
+  mutate_each_(funs(factor(.)),c(1:61)) %>%
+  .[, sapply(descr_test, function(col) length(unique(col))) > 1]
+
 
 descr_train$TARGET <- factor(nlp_training$flag)
 levels(descr_train$TARGET) <- c("neg", "pos")
 levels(descr_test_labels) <- c("neg", "pos")
 
-dummies <- dummyVars(~., data = descr_train, fullRank =T)
-dummied <- as.data.frame(predict(dummies, newdata = descr_train))
-test_df<- dummied
+# dummies <- dummyVars(~., data = descr_train, fullRank =F)
+# dummied <- as.data.frame(predict(dummies, newdata = descr_train))
+# test_df<- dummied
 # train_pp_nozv <- preProcess(descr_train[ , -which(names(descr_train) %in% "TARGET")],
 #            method = c("range","nzv"))
 # 
 # train_pp_nozv
 # train_pp_nozv <- predict(train_pp_nozv, newdata = descr_train[,-which(names(descr_train) %in% "TARGET")])
 
-grid <- expand.grid(C = c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,5))
+grid <- expand.grid(size = c(1,3,5,10,15,20,15,50),
+                    decay= seq(from=0, to=1, by=0.01))
 
-train_pp_nozv$TARGET <- factor(nlp_training$flag)
-levels(train_pp_nozv$TARGET) <- c("neg", "pos")
-nlp_classifier <- caret::train(TARGET~.,
-                               data=descr_train,
-                               method="svmLinear",
-                               trControl = fitControl)
-nlp_classifier
+# train_pp_nozv$TARGET <- factor(nlp_training$flag)
+# levels(train_pp_nozv$TARGET) <- c("neg", "pos")
+
+
+
+fitControl <- trainControl(method = "repeatedcv", 
+                           number = 10,
+                           repeats = 5,
+                           verboseIter=T,
+                           # classProbs = TRUE,
+                           allowParallel = T,
+                            # summaryFunction = twoClassSummary,
+                           )
+
+
+nlp_classifier <-
+  train(
+    x = descr_train[, -which(names(descr_train) %in% "TARGET")],
+    y = descr_train$TARGET,
+    # TARGET~.,
+    # data=descr_train,
+    method = "nb",
+    trControl = fitControl,
+    tuneLength = 10
+  )
+# tuneGrid=grid)
+
 predictions <- predict(nlp_classifier,newdata = descr_test)
 confusionMatrix(predictions, descr_test_labels, positive = "pos")
+nlp_classifier
+
+grid_gbm <- expand.grid( n.trees = c(1,5,10,15,20,50,100,200,400)
+                         )
+
+set.seed(825)
+nlp_classifier2 <- train(TARGET ~ .,
+                         data = descr_train,
+                         method = "svmLinear3",
+                         trControl = fitControl,
+                         # tuneGrid = grid_gbm,
+                         tuneLength=10,
+                        )
+                         
+nlp_classifier2
+plot(nlp_classifier2)
+predictions <- predict(nlp_classifier2,newdata = descr_test)
+confusionMatrix(predictions, descr_test_labels, positive = "pos")
+
+plotnet(nlp_classifier$finalModel)
