@@ -101,7 +101,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 #trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
 # attraverso la funzione backprop
 backprop <- function(giorno){
-  as.list(seq(from=giorno-1,to =giorno-4,by = -1))
+  as.list(seq(from=giorno,to =giorno-5,by = -1))
 }
 
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -225,28 +225,45 @@ trainIndex <- createDataPartition(data$TARGET, p = .75,
 training <- data[ trainIndex,]
 testing <-  data[-trainIndex,]
 
-fitControl1 <- trainControl(method = "repeatedcv", 
-                           number = 10, 
-                           repeats = 3, 
-                            # classProbs = TRUE,
+model_weights <- ifelse(training$TARGET == "pos",
+                        (1/table(training$TARGET)[1]) * 0.5,
+                        (1/table(training$TARGET)[2]) * 0.5)
+
+fitControl1 <- trainControl(method = "repeatedcv",
+                            number = 10, repeats = 3,
+                           #  adaptive = list(min = 5, alpha = 0.05, 
+                           #                  method = "gls", complete = TRUE), 
+                           # # number = 10, 
+                           # repeats = 3, 
+                          # classProbs = TRUE,
                            verboseIter=T,
                            allowParallel = T,
                            # summaryFunction = twoClassSummary,
-                           sampling = "down")
+                           sampling  ="down"
+                          )
 
 #training ####
-svm.downsample <- train(TARGET ~ ., data = training,
-              method = "svmLinear3",
+mod1 <- train(x=training[,-which(names(training)%in%"TARGET")],
+              y=training$TARGET,
+              method = "pcaNNet",
+              trControl = fitControl1)
+             
+             # tuneGrid=expand.grid(size=10,decay=0.1))
+             #  )
+
+
+predictions <- predict(mod1,newdata = testing)
+confusionMatrix(predictions,testing$TARGET,positive = "pos",
+                mode = "everything")
+
+mod2 <- train(TARGET ~ ., data = training,
+              method = "gbm",
               trControl = fitControl1,
-              tuneGrid=expand.grid()
-              )
-
-predictions <- predict(svm.downsample,newdata = testing)
-confusionMatrix(predictions,testing$TARGET,positive = "pos")
-
-xgbtree.nosample <- train(TARGET ~ ., data = training,
-              method = "xgbTree",
-              trControl = fitControl2)
+              # tuneGrid=expand.grid(size=3, decay=0.05),
+              # maxit=500,
+              weights = model_weights,
+              metric="ROC"
+)
 
 
 gbm.down <- train(TARGET ~.,
