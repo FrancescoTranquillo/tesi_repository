@@ -101,7 +101,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 #trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
 # attraverso la funzione backprop
 backprop <- function(giorno){
-  as.list(seq(from=giorno,to =giorno-4,by = -1))
+  as.list(seq(from=giorno,to =giorno-9,by = -1))
 }
 
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -114,13 +114,13 @@ df%<>%mutate(flag=ifelse(as.Date(df$GIORNO)%in%giorni_predittivi,1,0))
 
 
 df_pos <- df[which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "5 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "10 days",labels = F)))
 df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
 #le righe con flag=1 sono le bag positive
 
 #bag "negative", separate in bags da 5 giorni
 df_neg <- df[-which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "5 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "10 days",labels = F)))
 df_neg_bag <- as.list(split(df_neg,f = df_neg$BAG))
 
 # assegno ad ogni elemento delle bag create il flag 1 o 0
@@ -223,14 +223,14 @@ fitControl <- trainControl(method = "repeatedcv",
                            repeats = 2,
                            verboseIter=T,
                            classProbs = TRUE,
-                           allowParallel = T
-                           # sampling = "down"
+                           allowParallel = T,
+                           sampling = "down"
                            # summaryFunction = twoClassSummary
 )
 
-# model_weights <- ifelse(tm_training$TARGET == "pos",
-#                         (1/table(tm_training$TARGET)[1]) * 0.5,
-#                         (1/table(tm_training$TARGET)[2]) * 0.5)
+model_weights <- ifelse(tm_training$TARGET == "pos",
+                        (1/table(tm_training$TARGET)[1]) * 0.5,
+                        (1/table(tm_training$TARGET)[2]) * 0.5)
 
 
 
@@ -238,25 +238,26 @@ set.seed(1045)
 nn <-
   train(TARGET~., 
         data=tm_training,
-        method = 'svmLinear',
+        method = 'naive_bayes',
         trControl = fitControl,
-        tuneLength=3
+        tuneLength=5,
         # # maxit=200,
-        # preProcess=c("medianImpute","pca","nzv")
+        preProcess=c("medianImpute","pca","nzv")
           # weights = model_weights
   )
+
 
 #internal test, non conta
 predictions <- predict(nn,newdata =tm_testing)
 confusionMatrix(predictions, tm_testing$TARGET, positive = "pos",mode = "sens_spec")
 nn
 
-# saveRDS(nn, here("tm_bag_nnet"))
+# saveRDS(nn, here("tm_bag_xgbTree.rds"))
 # saveRDS(nn, here("tm_bag_svmLinear.rds"))
-# saveRDS(nn, here("tm_bag_svmLinear3.rds"))
+# saveRDS(nn, here("tm_bag_naivebayes.rds"))
 # saveRDS(nn, here("tm_bag_ada.rds"))
 # saveRDS(nn, here("tm_bag_adaboost.rds"))
-# saveRDS(nn, here("tm_bag_mlp.rds"))
+# saveRDS(nn, here("tm_bag_gbm.rds"))
 # 
 # #trasformo il test in un unico dataframe aggiungendo la variabile bag_flag
 # test_df <- pblapply(test,meta) %>% do.call("rbind",.)
