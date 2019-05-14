@@ -101,7 +101,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 #trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
 # attraverso la funzione backprop
 backprop <- function(giorno){
-  as.list(seq(from=giorno,to =giorno-5,by = -1))
+  as.list(seq(from=giorno,to =giorno-9, by = -1))
 }
 
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -110,13 +110,13 @@ giorni_predittivi <- sapply(giorni_guasti, backprop)
 df%<>%mutate(flag=ifelse(as.Date(df$GIORNO)%in%giorni_predittivi,1,0))
 
 df_pos <- df[which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "5 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "10 days",labels = F)))
 df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
 #le righe con flag=1 sono le bag positive
 
 #bag "negative", separate in bags da 5 giorni
 df_neg <- df[-which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "5 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "10 days",labels = F)))
 df_neg_bag <- as.list(split(df_neg,f = df_neg$BAG))
 
 # assegno ad ogni elemento delle bag create il flag 1 o 0
@@ -231,24 +231,23 @@ model_weights <- ifelse(training$TARGET == "pos",
 
 fitControl1 <- trainControl(method = "repeatedcv",
                             number = 10, repeats = 3,
-                           #  adaptive = list(min = 5, alpha = 0.05, 
-                           #                  method = "gls", complete = TRUE), 
-                           # # number = 10, 
-                           # repeats = 3, 
-                          # classProbs = TRUE,
+              
+                           classProbs = TRUE,
                            verboseIter=T,
                            allowParallel = T,
+                            sampling="down"
                            # summaryFunction = twoClassSummary,
-                           sampling  ="down"
                           )
-
+table(training$TARGET)
 #training ####
-mod1 <- train(x=training[,-which(names(training)%in%"TARGET")],
-              y=training$TARGET,
-              method = "pcaNNet",
+mod1 <- train(TARGET ~ temp.1+temp.2+ALTRO.1,
+              data = training,
+              method = "xgbTree",
+              # tuneLength = 10,
+              
+              # weigths=model_weights,
               trControl = fitControl1)
-             
-             # tuneGrid=expand.grid(size=10,decay=0.1))
+              # tuneGrid=expand.grid(size=3,decay=0.1))
              #  )
 
 
@@ -256,86 +255,86 @@ predictions <- predict(mod1,newdata = testing)
 confusionMatrix(predictions,testing$TARGET,positive = "pos",
                 mode = "everything")
 
-mod2 <- train(TARGET ~ ., data = training,
-              method = "gbm",
-              trControl = fitControl1,
-              # tuneGrid=expand.grid(size=3, decay=0.05),
-              # maxit=500,
-              weights = model_weights,
-              metric="ROC"
-)
-
-
-gbm.down <- train(TARGET ~.,
-              data = training,
-              method = "glm",
-              trControl = fitControl1
-              )
-xgbtree.smote <- train(TARGET ~.,
-                   data = training,
-                   method = "xgbTree",
-                   trControl = fitControl1
-)
-
-nnet <- train(
-  TARGET ~ .,
-  data = training,
-  method = "nnet",
-  trControl = fitControl1,
-  tuneLength = 10
-)
-
-nnetGrid <-  expand.grid(size = seq(from = 1, to = 10, by = 1),
-                         decay = seq(from = 0.1, to = 0.5, by = 0.1))
-nnet2 <- train(
-  TARGET ~ .,
-  data = training,
-  method = "nnet",
-  tuneLength = 10,
-  trControl=trainControl(verboseIter=T,method = "boot"),
-  tuneGrid = nnetGrid
-)
-
-compare <- resamples(list("GradientBoosting"=gbm.nosample,
-                          "ExtremeGradientBoosting"=xgbtree.nosample,
-                          "GB.smote"=gbm.smote,
-                          "XGB.smote"=xgbtree.smote,
-                          "NN.downsampling"=nnet))
- 
-summary(compare)
-bwplot(compare)	
-
- predictions <- predict(nnet, testing)
-confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
-saveRDS(nnet, "nn-downsampling.rds")
-# saveRDS(mod1, "lsvm.rds")
-# saveRDS(mod3, "logreg.rds")
-# saveRDS(compare, "compare_models.rds")
+# mod2 <- train(TARGET ~ ., data = training,
+#               method = "xgbTree",
+#               trControl = fitControl1,
+#               # tuneGrid=expand.grid(size=3, decay=0.05),
+#               # maxit=500,
+#               weights = model_weights,
+#               metric="ROC"
+# )
 # 
-# nn <- readRDS(here("nn.rds"))
-# lsvm <- readRDS(here("lsvm.rds"))
-# logreg <- readRDS(here("logreg.rds"))
-# compare <- readRDS(here("compare_models.rds"))
- densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
 # 
-# scales <- list(x=list(relation="free"), y=list(relation="free"))
-# bwplot(compare, scales=scales)
-
-
-
-
-
-
-#valutazione con test set ####
-#preprocess del test set: il test set è una lista di bag. Ogni bag contiene
-# un dataframe di tante righe quanti sono gli scontrini in 5 giorni
-# più la variabile flag che indica se quella bag ha prodotto una
-# chiamata. Il test deve essere processato allo stesso modo fatto per
-# il training senza però trasformare le bag stesse. L'obiettivo
-# è quello di predire la variabile flag. Ogni riga del dataframe verrà predetta
-# la predizione complessiva sarà il valore della variabile flag.
-
-#trasformo il test in un unico dataframe aggiungendo la variabile bag_flag
+# gbm.down <- train(TARGET ~.,
+#               data = training,
+#               method = "glm",
+#               trControl = fitControl1
+#               )
+# xgbtree.smote <- train(TARGET ~.,
+#                    data = training,
+#                    method = "xgbTree",
+#                    trControl = fitControl1
+# )
+# 
+# nnet <- train(
+#   TARGET ~ .,
+#   data = training,
+#   method = "nnet",
+#   trControl = fitControl1,
+#   tuneLength = 10
+# )
+# 
+# nnetGrid <-  expand.grid(size = seq(from = 1, to = 10, by = 1),
+#                          decay = seq(from = 0.1, to = 0.5, by = 0.1))
+# nnet2 <- train(
+#   TARGET ~ .,
+#   data = training,
+#   method = "nnet",
+#   tuneLength = 10,
+#   trControl=trainControl(verboseIter=T,method = "boot"),
+#   tuneGrid = nnetGrid
+# )
+# 
+# compare <- resamples(list("GradientBoosting"=gbm.nosample,
+#                           "ExtremeGradientBoosting"=xgbtree.nosample,
+#                           "GB.smote"=gbm.smote,
+#                           "XGB.smote"=xgbtree.smote,
+#                           "NN.downsampling"=nnet))
+#  
+# summary(compare)
+# bwplot(compare)	
+# 
+#  predictions <- predict(nnet, testing)
+# confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
+# saveRDS(nnet, "nn-downsampling.rds")
+# # saveRDS(mod1, "lsvm.rds")
+# # saveRDS(mod3, "logreg.rds")
+# # saveRDS(compare, "compare_models.rds")
+# # 
+# # nn <- readRDS(here("nn.rds"))
+# # lsvm <- readRDS(here("lsvm.rds"))
+# # logreg <- readRDS(here("logreg.rds"))
+# # compare <- readRDS(here("compare_models.rds"))
+#  densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
+# # 
+# # scales <- list(x=list(relation="free"), y=list(relation="free"))
+# # bwplot(compare, scales=scales)
+# 
+# 
+# 
+# 
+# 
+# 
+# #valutazione con test set ####
+# #preprocess del test set: il test set è una lista di bag. Ogni bag contiene
+# # un dataframe di tante righe quanti sono gli scontrini in 5 giorni
+# # più la variabile flag che indica se quella bag ha prodotto una
+# # chiamata. Il test deve essere processato allo stesso modo fatto per
+# # il training senza però trasformare le bag stesse. L'obiettivo
+# # è quello di predire la variabile flag. Ogni riga del dataframe verrà predetta
+# # la predizione complessiva sarà il valore della variabile flag.
+# 
+# #trasformo il test in un unico dataframe aggiungendo la variabile bag_flag
 test_df <- lapply(test, function(bag){
   cbind(bag$INSTANCES,"BAG_FLAG"=bag$BAG_FLAG)
   }) %>% do.call("rbind",.)
@@ -364,7 +363,7 @@ test_df <- predict(test_df_no_nzv, newdata = test_df)
  test_df$BAG_FLAG <- factor(test_df$BAG_FLAG)
  levels(test_df$BAG_FLAG) <- c("neg", "pos")
 
- test_predictions <- predict(glm.nosample, newdata = test_df,type = "prob")
+ test_predictions <- predict(mod1, newdata = test_df,type = "prob")
 test_df_predicted <- test_df %>%
   mutate(.,
          # "prediction"=predict(gbm.smote, newdata = test_df),
@@ -381,24 +380,25 @@ test_list <- as.list(split(test_df_predicted,f = test_df_predicted$BAG))
 
 df <- lapply(test_list, function(element){
   if(nrow(element)>0){ 
-  predicted <- factor(ifelse(max(element$bag_prediction_pos)>.6,"pos","neg"))
+  predicted <- factor(ifelse(max(element$bag_prediction_pos)>.92,"pos","neg"))
   actual <- element$BAG_FLAG[1]
   data.frame(predicted,actual)
   
   } })%>% do.call("rbind",.)
 
 df$predicted <- fct_rev(df$predicted)
-levels(df$actual)
+
+
 
 confusionMatrix(
   df$predicted,
   df$actual,
-  mode = "sens_spec",
+  mode = "everything",
   positive = "pos"
 ) 
 
-plot(varImp(nnet))
-summary(nnet)
+plot(varImp(mod1))
+summary(mod1)
 
 plotnet(nnet$finalModel, y_names = "ScontrinoPredittivo")
 title("Graphical Representation of our Neural Network")

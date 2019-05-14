@@ -48,7 +48,9 @@ df$TIPO.CICLO <- factor(df$TIPO.CICLO)
 # nel db della macchina di un nuovo strumento.
 coswin <- read.csv2(file = "coswin-isa/108841.csv",
                     header = T,
-                    stringsAsFactors = F) %>% 
+                    stringsAsFactors = F) %>%
+
+
   .[-which(grepl("inseri", x = .$Descrizione,ignore.case = T)),24] %>% 
   as.character(.) %>%
   dmy_hm(.) %>%
@@ -76,7 +78,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 #trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
 # attraverso la funzione backprop
 backprop <- function(giorno){
-  as.list(seq(from=giorno-1,to =giorno-10,by = -1))
+  as.list(seq(from=giorno-1,to =giorno-5,by = -1))
 }
 
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -137,7 +139,7 @@ nn <-
     # metric = "ROC"
   )
 
-predictions <- predict(nn,newdata =test.df)
+predictions <- predict(nlp_classifier,newdata =test.df)
 confusionMatrix(predictions, test.df_labels, positive = "pos",mode = "everything")
 
 plot(nn)
@@ -145,3 +147,4 @@ nlp_classifier
 
 
 # saveRDS(nlp_classifier,file =here("nlp_classifier.rds") )
+nlp_classifier <- read_rds(here("nlp_classifier.rds"))

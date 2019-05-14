@@ -61,13 +61,14 @@ df$INIZIO.CICLO <-
 coswin <- read.csv2(file = "coswin-isa/108841.csv",
                     header = T,
                     stringsAsFactors = F) %>% 
-  .[-which(grepl("inseri|verifica|ordinaria", x = .$Descrizione,ignore.case = T)),24] %>% 
-  as.character(.) %>%
-  dmy_hm(.) %>%
-  as_date(.) %>%
-  .[which(complete.cases(.))] %>%
+  .[-which(grepl("inseri|verifica|ordinaria", x = .$Descrizione,ignore.case = T)),c(22,24)] %>% 
+  .[which(complete.cases(.)),] %>%
   unique(.)
-
+  
+coswin$Data.Richiesta <- dmy_hm(coswin$Data.Richiesta) %>% 
+  as_date()
+  
+coswin$Data.Richiesta[2]
 
 #aggiunta colonna dei giorni nella tabella di scontrini
 df <- df %>%
@@ -81,9 +82,9 @@ df <- df %>%
 
 #aggiunta della bag-label
 df <- df %>%
-  mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)))
+  mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin$Data.Richiesta, 1, 0)))
 # "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
-
+table(df$CHIAMATA)
 
 
 ignore_columns <- c("testo","TEST.DI.TENUTA","NUMERO.CICLO",
@@ -101,7 +102,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 #trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
 # attraverso la funzione backprop
 backprop <- function(giorno){
-  as.list(seq(from=giorno-1,to =giorno-4,by = -1))
+  as.list(seq(from=giorno-1,to =giorno-5,by = -1))
 }
 
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -126,8 +127,7 @@ df_pos_bag <- lapply(df_pos_bag,function(x) list("INSTANCES"=x,
 df_neg_bag <- lapply(df_neg_bag,function(x) list("INSTANCES"=x,
                                                  "BAG_FLAG"=0))
 
-
-# divido in train e test
+# divido in train e test ####
 train_pos <- sample(df_pos_bag, length(df_pos_bag)*0.75,replace = F)
 train_neg <- sample(df_neg_bag, length(df_neg_bag)*0.75,replace = F)
 train <- c(train_pos, train_neg)
@@ -225,6 +225,7 @@ trainIndex <- createDataPartition(data$TARGET, p = .75,
 training <- data[ trainIndex,]
 testing <-  data[-trainIndex,]
 
+table(training$TARGET)
 fitControl1 <- trainControl(method = "repeatedcv", 
                            number = 10, 
                            repeats = 3, 
@@ -232,65 +233,66 @@ fitControl1 <- trainControl(method = "repeatedcv",
                            verboseIter=T,
                            allowParallel = T,
                            # summaryFunction = twoClassSummary,
-                           sampling = "down")
+                           sampling = "smote")
+
 
 #training ####
 svm.downsample <- train(TARGET ~ ., data = training,
-              method = "svmLinear3",
-              trControl = fitControl1,
-              tuneGrid=expand.grid()
+              method = "glm",
+              trControl = fitControl1
+              # tuneGrid=expand.grid()
               )
 
 predictions <- predict(svm.downsample,newdata = testing)
 confusionMatrix(predictions,testing$TARGET,positive = "pos")
-
-xgbtree.nosample <- train(TARGET ~ ., data = training,
-              method = "xgbTree",
-              trControl = fitControl2)
-
-
-gbm.down <- train(TARGET ~.,
-              data = training,
-              method = "glm",
-              trControl = fitControl1
-              )
-xgbtree.smote <- train(TARGET ~.,
-                   data = training,
-                   method = "xgbTree",
-                   trControl = fitControl1
-)
-
-nnet <- train(
-  TARGET ~ .,
-  data = training,
-  method = "nnet",
-  trControl = fitControl1,
-  tuneLength = 10
-)
-
-nnetGrid <-  expand.grid(size = seq(from = 1, to = 10, by = 1),
-                         decay = seq(from = 0.1, to = 0.5, by = 0.1))
-nnet2 <- train(
-  TARGET ~ .,
-  data = training,
-  method = "nnet",
-  tuneLength = 10,
-  trControl=trainControl(verboseIter=T,method = "boot"),
-  tuneGrid = nnetGrid
-)
-
-compare <- resamples(list("GradientBoosting"=gbm.nosample,
-                          "ExtremeGradientBoosting"=xgbtree.nosample,
-                          "GB.smote"=gbm.smote,
-                          "XGB.smote"=xgbtree.smote,
-                          "NN.downsampling"=nnet))
- 
-summary(compare)
-bwplot(compare)	
-
- predictions <- predict(nnet, testing)
-confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
-saveRDS(nnet, "nn-downsampling.rds")
+# 
+# xgbtree.nosample <- train(TARGET ~ ., data = training,
+#               method = "xgbTree",
+#               trControl = fitControl2)
+# 
+# 
+# gbm.down <- train(TARGET ~.,
+#               data = training,
+#               method = "glm",
+#               trControl = fitControl1
+#               )
+# xgbtree.smote <- train(TARGET ~.,
+#                    data = training,
+#                    method = "xgbTree",
+#                    trControl = fitControl1
+# )
+# 
+# nnet <- train(
+#   TARGET ~ .,
+#   data = training,
+#   method = "nnet",
+#   trControl = fitControl1,
+#   tuneLength = 10
+# )
+# 
+# nnetGrid <-  expand.grid(size = seq(from = 1, to = 10, by = 1),
+#                          decay = seq(from = 0.1, to = 0.5, by = 0.1))
+# nnet2 <- train(
+#   TARGET ~ .,
+#   data = training,
+#   method = "nnet",
+#   tuneLength = 10,
+#   trControl=trainControl(verboseIter=T,method = "boot"),
+#   tuneGrid = nnetGrid
+# )
+# 
+# compare <- resamples(list("GradientBoosting"=gbm.nosample,
+#                           "ExtremeGradientBoosting"=xgbtree.nosample,
+#                           "GB.smote"=gbm.smote,
+#                           "XGB.smote"=xgbtree.smote,
+#                           "NN.downsampling"=nnet))
+#  
+# summary(compare)
+# bwplot(compare)	
+# 
+#  predictions <- predict(nnet, testing)
+# confusionMatrix(predictions, testing$TARGET,mode = "everything",positive = "pos")
+# saveRDS(nnet, "nn-downsampling.rds")
 # saveRDS(mod1, "lsvm.rds")
 # saveRDS(mod3, "logreg.rds")
 # saveRDS(compare, "compare_models.rds")
@@ -299,7 +301,7 @@ saveRDS(nnet, "nn-downsampling.rds")
 # lsvm <- readRDS(here("lsvm.rds"))
 # logreg <- readRDS(here("logreg.rds"))
 # compare <- readRDS(here("compare_models.rds"))
- densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
+ # densityplot(compare,metric = "ROC",auto.key = list(columns = 3))
 # 
 # scales <- list(x=list(relation="free"), y=list(relation="free"))
 # bwplot(compare, scales=scales)
@@ -347,7 +349,7 @@ test_df <- predict(test_df_no_nzv, newdata = test_df)
  test_df$BAG_FLAG <- factor(test_df$BAG_FLAG)
  levels(test_df$BAG_FLAG) <- c("neg", "pos")
 
- test_predictions <- predict(glm.nosample, newdata = test_df,type = "prob")
+ test_predictions <- predict(svm.downsample, newdata = test_df,type = "prob")
 test_df_predicted <- test_df %>%
   mutate(.,
          # "prediction"=predict(gbm.smote, newdata = test_df),
@@ -364,7 +366,7 @@ test_list <- as.list(split(test_df_predicted,f = test_df_predicted$BAG))
 
 df <- lapply(test_list, function(element){
   if(nrow(element)>0){ 
-  predicted <- factor(ifelse(max(element$bag_prediction_pos)>.6,"pos","neg"))
+  predicted <- factor(ifelse(max(element$bag_prediction_pos)>.65,"pos","neg"))
   actual <- element$BAG_FLAG[1]
   data.frame(predicted,actual)
   
@@ -380,8 +382,8 @@ confusionMatrix(
   positive = "pos"
 ) 
 
-plot(varImp(nnet))
-summary(nnet)
-
-plotnet(nnet$finalModel, y_names = "ScontrinoPredittivo")
-title("Graphical Representation of our Neural Network")
+# plot(varImp(nnet))
+# summary(nnet)
+# 
+# plotnet(nnet$finalModel, y_names = "ScontrinoPredittivo")
+# title("Graphical Representation of our Neural Network")
