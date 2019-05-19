@@ -12,6 +12,7 @@ library(shinydashboard)
 library(shinyalert)
 library(shinyWidgets)
 library(DT)
+library(shinythemes)
 
 source(file = "morpher.r")
 source(file = "estrazione_nomi_allarmi.r")
@@ -35,7 +36,8 @@ sidebar <- dashboardSidebar(
         menuItem(
             tags$strong("Analizza scontrini"),
             tabName = "cs",
-            icon = icon("upload")
+            icon = icon("upload"),
+            selected = T
         )))
 
 
@@ -51,13 +53,9 @@ body<-dashboardBody(
                     column(width=12,
                            box(width=12,
                                   title="Benvenuto in SMS/RMS",
-                                status =  "success")),
-                                  
-                    column(width=12,
-                           box(title = "ciao cucchi",
-                               status = "danger",
-                               collapsible = T)
-                           ))),
+                                status =  "success")
+                           )
+                    )),
         tabItem(tabName = "cs",
                 fluidRow(
                     box(title = strong("Carica gli scontrini"),
@@ -69,16 +67,21 @@ body<-dashboardBody(
                             label = NULL,
                             accept = c("text/csv", "text/comma-separated-values,text/plain", ".txt"),
                             multiple = T)
+                    )
                     ),
+                
                     box(title=strong("visualizza scontrino / TEST"),
-                        DTOutput("scontrino_table"))
+                        DTOutput("scontrino_table"),width = 100)
+                
+                    
                     )
                 )
-                ))
+                )
     
 ui <- dashboardPage(header,
                     sidebar,
-                    body)
+                    body,
+                    skin = "green")
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
@@ -86,19 +89,20 @@ server <- function(input, output, session) {
     scontrino_txt <- reactive({
         
         path <- input$txt$datapath
-        text <- readLines(path,encoding = "UTF8")
+        text <- lapply(path,readLines,encoding = "UTF8")
         return(text)
     })
     scontrino_df <- reactive({ 
         req(input$txt)
-        df <- morpher(scontrino_txt())
+        df <- lapply(scontrino_txt(),morpher) %>% do.call("rbind",.)
         return(df)
     })
     
     output$scontrino_table <- DT::renderDT({
         datatable(scontrino_df(),
                   options = list(scrollX = TRUE,
-                                 dom = 't')
+                                 dom = 't', max
+                                )
                   )
         
         
