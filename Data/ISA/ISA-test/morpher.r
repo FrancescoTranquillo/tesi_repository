@@ -9,6 +9,7 @@ library(tm)
 library(magrittr)
 library(tabulizer)
 
+
 morpher <- function(scontrino) {
   
   # n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
@@ -72,30 +73,30 @@ morpher <- function(scontrino) {
                     paste(sclean_footer, collapse = " "),
                     scontrino_regolare)
     # 
-    righe_allarmi <- which(grepl("allarme|alarm", sclean_footer,perl = T,ignore.case = T))
-    
-    if (!is_empty(righe_allarmi)) {
-      nome_allarmi_rilevati <-
-        nomi_allarmi[which(grepl(
-          sclean_footer[righe_allarmi],
-          nomi_allarmi,
-          perl = F,
-          ignore.case = T,
-          fixed = F
-        ))]
-      if (is_empty(nome_allarmi_rilevati)) {
-        nome_allarmi_rilevati <- "ALTRO"
-      }
-      allarmi_rilevati <- ifelse(nome_allarmi_rilevati == nomi_allarmi, 1, 0) %>%
-        t() %>%
-        data.frame() %>%
-        set_colnames(nomi_allarmi)
-    } else {
-      allarmi_rilevati <- rep(0, length(nomi_allarmi)) %>%
-        t() %>%
-        data.frame()%>%
-        set_colnames(nomi_allarmi)
-    }
+    righe_allarmi <- grepl(pattern = "allarme|alarm", sclean_footer,perl = T,ignore.case = T)
+    allarmi_rilevati <- sclean_footer[which(righe_allarmi==T)]
+    # if (!is_empty(righe_allarmi)) {
+    #   nome_allarmi_rilevati <-
+    #     nomi_allarmi[which(grepl(
+    #       sclean_footer[righe_allarmi],
+    #       nomi_allarmi,
+    #       perl = F,
+    #       ignore.case = T,
+    #       fixed = F
+    #     ))]
+    #   if (is_empty(nome_allarmi_rilevati)) {
+    #     nome_allarmi_rilevati <- "ALTRO"
+    #   }
+    #   allarmi_rilevati <- ifelse(nome_allarmi_rilevati == nomi_allarmi, 1, 0) %>%
+    #     t() %>%
+    #     data.frame() %>%
+    #     set_colnames(nomi_allarmi)
+    # } else {
+    #   allarmi_rilevati <- rep(0, length(nomi_allarmi)) %>%
+    #     t() %>%
+    #     data.frame()%>%
+    #     set_colnames(nomi_allarmi)
+    # }
     
     #trasformazione header:
     #estrazione di inizio ciclo, tipo ciclo e numero ciclo
@@ -122,7 +123,7 @@ morpher <- function(scontrino) {
     # dt <- difftime(tempi, lag(tempi, default = first(tempi)))
     
     processi <- gsub("(\\d\\d:){2,}\\d\\d ", "", scontrino_footer)
-    temperature <- as.numeric(na.omit(str_extract(processi, "(\\d*)(?=Â°)")))
+    temperature <- as.numeric(na.omit(str_extract(processi, "(\\d*)(?=°)")))
     # if (length(temperature) != 0) {
     #   temp_flag <- 1
     #   temperature_labels <-
@@ -163,8 +164,16 @@ morpher <- function(scontrino) {
     # } else
       #allarmi_rilevati
     
-    df_header_2 <- df_header_2[,1:(ncol(df_header_2)-2)]
+    df_header_2 <- df_header_2[,-which(names(df_header_2)%in%c("TIPO CICLO",
+                                                               "INIZIO CICLO"
+                                                               ))]
       df <- cbind(df_header,df_header_2)
+      df <- df[,1:11]
+      df%<>%mutate("ALLARMI"=ifelse(length(allarmi_rilevati)==0,
+                                             yes = "Nessun allarme rilevato",
+                                             no = allarmi_rilevati))
+      df%<>%.[,-which(colnames(.)%in%c("MEDICO",
+                                       "PAZIENTE"))]
     
     
     #trasformazione footer
