@@ -243,3 +243,6 @@ confusionMatrix(predictions,df_meta_test$TARGET, positive = "pos",mode = "sens_s
 # saveRDS(nn, here("tm_bag_prediction7_bayesglm.rds"))
 # saveRDS(nn, here("tm_bag_prediction7_pcannet.rds"))
 plotnet(nn)
+
+modelli <- lapply(as.list(list.files(here(),"*7_*")),read_rds)
+l_predictions <- lapply(modelli, function(modello) predict(modello, df_meta_test))

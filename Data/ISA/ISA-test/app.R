@@ -18,13 +18,20 @@ library(here)
 library(shinyBS)
 library(shinytest)
 library(plotly)
-source(file = "morpher.r")
-source(file = "estrazione_nomi_allarmi.r")
+
+modelli <- lapply(as.list(list.files(here(),"*7_*")),read_rds)
+
+# modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
+
+source(file = here("ISA-test","morpher.r"))
+# source(file = here("ISA-test","estrazione_nomi_allarmi.r"))
+# 
+
 
 ui <- tagList(dashboardPage(
+  
   # HEADER ------------------------------------------------------------------
-  dashboardHeader(title = "Sistema di monitoraggio per lavaendoscopi ISA MEDIVATORS",
-                  titleWidth = 450),
+  dashboardHeader(title = "SML"),
   # sidebar -----------------------------------------------------------------
   dashboardSidebar(sidebarMenu(
     menuItem(
@@ -65,62 +72,65 @@ ui <- tagList(dashboardPage(
     tabItems(
       tabItem(
         tabName = "Welcomepage",
-        fluidRow(
-          div(id = 'clickdiv1',
-              valueBoxOutput("ib1")),
-          div(id = 'clickdiv2',
-              valueBoxOutput("ib2")),
-          valueBoxOutput("ib3")
-        ),
-        bsTooltip(
-          "ib2",
-          "Clicca per visualizzare gli allarmi",
-          placement = "bottom",
-          trigger = "hover",
-          options = NULL
-        ),
-        bsModal(
-          "modalExample1",
-          "Allarmi rilevati",
-          "clickdiv2",
-          size = "large",
-          dataTableOutput("table")
-        ),
-        bsTooltip(
-          "ib1",
-          "Clicca per visualizzare la tabella generale",
-          placement = "bottom",
-          trigger = "hover",
-          options = NULL
-        ),
-        bsModal(
-          "modalExample2",
-          "Scontrini analizzati",
-          "clickdiv1",
-          size = "large",
-          dataTableOutput("scontrino_table")
-        ),
-        fluidRow(
-          box(title = "Numero di allarmi rilevati nel periodo di attività analizzato",
-            plotlyOutput("plot1")
+        fluidPage(
+          style = "max-height: 100vh; overflow-y: auto;" ,
+          
+          fluidRow(
+            div(id = 'clickdiv1',
+                valueBoxOutput("ib1")),
+            div(id = 'clickdiv2',
+                valueBoxOutput("ib2")),
+            column(infoBox("BOX",value = "test"),width = 4)
+            
+            ),
+          
+          fluidRow(
+            valueBoxOutput("ib3"),
+            valueBoxOutput("ib4")
           ),
-          box(title = "Numero di cicli per categoria di strumento",
-            plotlyOutput("plot2")
+          bsTooltip(
+            "ib2",
+            "Clicca per visualizzare gli allarmi",
+            placement = "bottom",
+            trigger = "hover",
+            options = NULL
+          ),
+          bsModal(
+            "modalExample1",
+            "Allarmi rilevati",
+            "clickdiv2",
+            size = "large",
+            dataTableOutput("table")
+          ),
+          bsTooltip(
+            "ib1",
+            "Clicca per visualizzare il resoconto dei cicli",
+            placement = "bottom",
+            trigger = "hover",
+            options = NULL
+          ),
+          bsModal(
+            "modalExample2",
+            "Scontrini analizzati",
+            "clickdiv1",
+            size = "large",
+            dataTableOutput("scontrino_table")
+          ),
+          fluidRow(
+            box(title = "Numero di allarmi rilevati nel periodo di attività analizzato",
+                plotlyOutput("plot1")
+            ),
+            box(title = "Numero di cicli per categoria di strumento",
+                plotlyOutput("plot2")
+            )
+            
           )
           
+          
         )
-        
+          
+        ),
 
-        
-        # 
-        # 
-        # box(
-        #   title = strong(textOutput(outputId = "titletab")),
-        #   DTOutput("scontrino_table"),
-        #   width = 100
-        # )
-        
-      ),
       
       tabItem(
         tabName = "plot",
@@ -152,6 +162,11 @@ server <- function(input, output, session) {
     
     df$`INIZIO CICLO` <-
       parse_date_time(df$`INIZIO CICLO`, orders = "dmy HMS")
+    
+    colnames(df)[which(names(df) == "MATRICOLA")] <- "NUMERO SERIALE STRUMENTO"
+    colnames(df)[which(names(df) =="STRUMENTO")] <- "MODELLO DELLO STRUMENTO"
+    colnames(df)[which(names(df) =="NUMERO SERIALE")] <- "NUMERO SERIALE LAVAENDOSCOPI"
+  
     
     return(df)
   })
@@ -185,22 +200,28 @@ server <- function(input, output, session) {
     return(vista_giorni)
   })
   
-  output$scontrino_table <- DT::renderDT({
-    df <- scontrino_df()
+  output$scontrino_table <- DT::renderDT(server=FALSE,{
+    df <- scontrino_df()[,-ncol(scontrino_df())]
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
-    datatable(df,
+    info <- info_giorni()
+    filename <- info[[4]]
+    DT::datatable(df,
+                 
               rownames = FALSE,
-              extensions = c('Buttons','FixedColumns'),
+              extensions = 'Buttons',
               options = list(
                 dom = 'Bfrtipl',
-                buttons = list('copy', 'csv', 'excel', 'print',
+                buttons = list('copy', 'csv', 'excel',
                                          list(
                                            extend = 'pdf',
                                            pageSize = 'A4',
-                                           orientation = 'landscape')),
-                scrollX = TRUE,
-                # scrollY = "600px",
-                fixedColumns = list(leftColumns = 2, rightColumns = 1)
+                                           orientation = 'landscape',
+                                           filename=paste0("Resoconto cicli_",filename),
+                                           title = paste("ISA Monitoring System",
+                                                         paste0("Resoconto cicli effettuati"),
+                                                         filename,
+                                                         sep = "\n"))),
+                scrollX = TRUE
               )
     )
 
@@ -243,24 +264,31 @@ server <- function(input, output, session) {
     )
   })
   
-  output$table <- DT::renderDT({
-    df <- scontrino_df()
+  output$table <- DT::renderDT(server=FALSE,{
+    df <- scontrino_df()[,-ncol(scontrino_df())]
+    
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
     info <- info_giorni()
     filename <- info[[4]]
-    datatable(df[which(df$ALLARMI != "Nessun allarme rilevato"), ],
+
+    DT::datatable(df[which(df$ALLARMI != "Nessun allarme rilevato"), ],
+              
               rownames = FALSE,
               extensions = c('Buttons','FixedColumns'),
               options = list(
                 dom = 'Bfrtipl',
                 orientation ='landscape',
-                buttons = list('copy', 'csv', 'excel', 'print',
+                buttons = list('copy', 'csv', 'excel',
                             list(
                               extend = 'pdf',
                               pageSize = 'A4',
                               orientation = 'landscape',
-                              filename=filename)),
-                scrollX = TRUE,
+                              filename=paste0("Resoconto allarmi_",filename),
+                              title = paste("ISA Monitoring System",
+                                            paste0("Resoconto allarmi rilevati"),
+                                            filename,
+                                            sep = "\n"))),
+                scrollX = TRUE, 
                 fixedColumns = list(leftColumns = 2, rightColumns = 1),
                 scrollY = "600px"
                 )
@@ -305,10 +333,38 @@ server <- function(input, output, session) {
     ggplotly(ggplot(data = scontrino_df()) +
       aes(x = `TIPO CICLO`, fill = CATEGORIA) +
       geom_bar(position = "dodge") +
-      scale_fill_brewer(palette = "Paired") +
+        scale_fill_viridis_d(option  = "viridis")+
       labs(y = "Numero di cicli effettuati") +
       theme_classic() +
       coord_flip())
+  })
+  
+  predizione <- reactive({
+    
+    df_ib <- scontrino_df()
+    df_ib %<>% mutate("GIORNO" = factor(cut.Date(
+      as.Date(.$`INIZIO CICLO`),
+      breaks = "1 day",
+      labels = F
+    )))
+    
+    df_giorni <- as.list(split(df_ib, f = df_ib$GIORNO))
+    df <- last(df_giorni)
+
+    df_predizione <- meta(df)
+    risultati <- lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>% 
+      do.call("rbind",.) %>% 
+      summarise_all(.,mean,na.rm=T)
+    return(risultati)
+  })
+  
+  output$ib4 <- renderValueBox({
+    valueBox(
+      paste0(round((predizione()$pos)*100,digits = 2),"%"),
+      subtitle = strong("Probabilità di guasto nei prossimi 7 giorni di utilizzo"),
+      icon = icon("robot",lib = "font-awesome"),
+      color = "teal"
+    )
   })
 }
 

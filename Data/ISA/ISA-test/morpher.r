@@ -9,7 +9,19 @@ library(tm)
 library(magrittr)
 library(tabulizer)
 
+testo_dict <-
+  read.table("dizionario_scontrini.txt") %>%
+  .$V1 %>%
+  as.character.factor() %>%
+  .[-1]
 
+clean_corpus <- function(corpus) {
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeNumbers)
+  # corpus <- tm_map(corpus, stemDocument)
+}
 morpher <- function(scontrino) {
   
   # n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
@@ -122,9 +134,9 @@ morpher <- function(scontrino) {
     # 
     # dt <- difftime(tempi, lag(tempi, default = first(tempi)))
     
-    processi <- gsub("(\\d\\d:){2,}\\d\\d ", "", scontrino_footer)
-    temperature <- as.numeric(na.omit(str_extract(processi, "(\\d*)(?=°)")))
-    # if (length(temperature) != 0) {
+    # processi <- gsub("(\\d\\d:){2,}\\d\\d ", "", scontrino_footer)
+    # temperature <- as.numeric(na.omit(str_extract(processi, "(\\d*)(?=?)")))
+    # # if (length(temperature) != 0) {
     #   temp_flag <- 1
     #   temperature_labels <-
     #     paste0("temp.", seq(1, length(temperature), 1))
@@ -174,6 +186,8 @@ morpher <- function(scontrino) {
                                              no = allarmi_rilevati))
       df%<>%.[,-which(colnames(.)%in%c("MEDICO",
                                        "PAZIENTE"))]
+      
+      df <- cbind(df,"testo"=sclean)
     
     
     #trasformazione footer
@@ -199,4 +213,14 @@ morpher <- function(scontrino) {
   }
   else
     data.frame()
+}
+meta <- function(df){
+  bag_text <- df$testo
+  bag_corpus <- VCorpus(VectorSource(bag_text)) %>% 
+    clean_corpus(.)
+  bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(bag_corpus,
+                                                        control=list(dictionary=testo_dict,
+                                                                     weighting = function(x) weightTfIdf(x, normalize = FALSE)))))
+  tfidf <- summarise_all(bag_dtm,sum,na.rm=T)
+  
 }
