@@ -18,8 +18,9 @@ library(here)
 library(shinyBS)
 library(shinytest)
 library(plotly)
+library(readr)
 
-modelli <- lapply(as.list(list.files(here(),"*7_*")),read_rds)
+# modelli <- lapply(as.list(list.files(here(),"*7_*")),readRDS)
 
 # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
@@ -354,7 +355,7 @@ server <- function(input, output, session) {
     df_predizione <- meta(df)
     risultati <- lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>% 
       do.call("rbind",.) %>% 
-      summarise_all(.,mean,na.rm=T)
+      summarise_all(.,median,na.rm=T)
     return(risultati)
   })
   
