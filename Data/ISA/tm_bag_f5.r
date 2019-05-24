@@ -222,21 +222,36 @@ model_weights <- ifelse(tm_training$TARGET == "pos",
 
 
 set.seed(1045)
+library(doParallel)
+cl <- makeCluster(5)
+registerDoParallel(cl)
+fitControl <- trainControl(method = "repeatedcv", 
+                           number = 10,
+                           repeats = 10,
+                           verboseIter=T,
+                           classProbs = TRUE,
+                           allowParallel = T,
+                           sampling = "down"
+                           # summaryFunction = twoClassSummary
+)
 nn <-
   train(TARGET~., 
         data=tm_training,
-        method = 'mlp',
+        method = 'xgbTree',
         trControl = fitControl,
         tuneLength=10,
         # maxit=200,
         preProcess=c("scale", 'center', "nzv")
-        # metric="ROC",
+        # metric="Kappa"
        # weights = model_weights
   )
 
+stopCluster(cl)
 predictions <- predict(nn,newdata =df_meta_test)
-confusionMatrix(predictions,df_meta_test$TARGET, positive = "pos",mode = "sens_spec") 
+confusionMatrix(predictions,df_meta_test$TARGET, positive = "pos",mode = "everything") 
 
+library(mltools)
+mcc(preds = predictions, df_meta_test$TARGET)
 # saveRDS(nn, here("tm_bag_prediction7_neuralnet.rds"))
 # saveRDS(nn, here("tm_bag_prediction7_naivebayes.rds"))
 # saveRDS(nn, here("tm_bag_prediction7_glm.rds"))
@@ -246,3 +261,35 @@ plotnet(nn)
 
 modelli <- lapply(as.list(list.files(here(),"*7_*")),read_rds)
 l_predictions <- lapply(modelli, function(modello) predict(modello, df_meta_test))
+
+round(mcc(l_predictions[[1]],df_meta_test$TARGET),2)
+
+a <- confusionMatrix(l_predictions[[1]], df_meta_test$TARGET, "pos",mode="everything")
+
+nomi_modelli <- lapply(modelli,
+                       function(modello) data.frame("Model name"=modello[["modelInfo"]][["label"]])) %>% 
+  
+  do.call("rbind",.)
+
+performance <- lapply(l_predictions, 
+                              function(predizioni){
+                                cm <- confusionMatrix(predizioni, 
+                                                      df_meta_test$TARGET,
+                                                      "pos",
+                                                      mode="everything")
+                                performance <-
+                                  tibble(
+                                    "Accuracy" = round(cm[["overall"]][["Accuracy"]], 2),
+                                    "Sensitivity" = round(cm$byClass[1], 2),
+                                    "Specificity" = round(cm$byClass[2], 2),
+                                    "Precision" = round(cm$byClass[5], 2),
+                                    "Recall" = round(cm$byClass[6], 2))
+                                return(performance)}) %>% 
+  do.call("rbind",.)
+
+
+tabella_performance <- cbind(nomi_modelli,performance)
+tabella_performance
+write.csv(tabella_performance, here("tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
+
+

@@ -27,3 +27,13 @@ giorno|testo|temp.1|temp.2|...|ciclo regolare|
 4) "preprocessing.r" esegue le operazioni preliminari necessari alla costruzione del modello di predizione. Queste ultime possono essere suddivise in due categorie:
   - Operazioni per analisi di text mining
   - Operazioni
+
+
+
+  |                              | Accuracy| Sensitivity| Specificity| Precision| Recall|
+|:---------------------------------------|--------:|-----------:|-----------:|---------:|------:|
+|Bayesian Generalized Linear Model       |     0.66|        0.62|        0.66|      0.06|   0.62|
+|Generalized Linear Model                |     0.66|        0.62|        0.66|      0.06|   0.62|
+|Naive Bayes                             |     0.75|        0.67|        0.75|      0.08|   0.67|
+|Neural Network                          |     0.77|        0.71|        0.77|      0.09|   0.71|
+|Neural Networks with Feature Extraction |     0.71|        0.79|        0.71|      0.08|   0.79|
