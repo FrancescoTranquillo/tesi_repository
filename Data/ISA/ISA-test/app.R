@@ -20,9 +20,10 @@ library(shinytest)
 library(plotly)
 library(readr)
 
-# modelli <- lapply(as.list(list.files(here(),"*7_*")),readRDS)
+rds <- as.list(list.files(here(),"*7_*"))
+modelli <- lapply(rds,function(x) readRDS(x))
 
-# modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
+ # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
 source(file = here("ISA-test","morpher.r"))
 # source(file = here("ISA-test","estrazione_nomi_allarmi.r"))
@@ -78,6 +79,7 @@ ui <- tagList(dashboardPage(
           
           fluidRow(
             div(id = 'clickdiv1',
+                
                 valueBoxOutput("ib1")),
             div(id = 'clickdiv2',
                 valueBoxOutput("ib2")),
@@ -331,13 +333,14 @@ server <- function(input, output, session) {
       )
   })
   output$plot2 <- renderPlotly({
-    ggplotly(ggplot(data = scontrino_df()) +
+    ggplot(data = scontrino_df()) +
       aes(x = `TIPO CICLO`, fill = CATEGORIA) +
       geom_bar(position = "dodge") +
         scale_fill_viridis_d(option  = "viridis")+
       labs(y = "Numero di cicli effettuati") +
       theme_classic() +
-      coord_flip())
+      theme(legend.position = "bottom")+
+      coord_flip() 
   })
   
   predizione <- reactive({

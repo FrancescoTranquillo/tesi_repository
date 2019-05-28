@@ -78,7 +78,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 
 
 backprop <- function(giorno){
-  as.list(seq(from=giorno,to =giorno-6,by = -1))
+  as.list(seq(from=giorno,to =giorno-5,by = -1))
 }
 # ------------------------------------------------------------------------
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -94,21 +94,26 @@ clean_corpus <- function(corpus) {
   # corpus <- tm_map(corpus, stemDocument)
 }
 
-meta <- function(bag){
+meta <- function(bag) {
   bag_text <- bag$INSTANCES$testo
-  bag_corpus <- VCorpus(VectorSource(bag_text)) %>% 
+  bag_corpus <- VCorpus(VectorSource(bag_text)) %>%
     clean_corpus(.)
-  bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(bag_corpus,
-                                                        control=list(dictionary=testo_dict,
-                                                                     weighting = function(x) weightTfIdf(x, normalize = FALSE)))))
-  tfidf <- summarise_all(bag_dtm,sum,na.rm=T)
-  cbind("TARGET"=bag$BAG_FLAG,tfidf)
+  bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
+    bag_corpus,
+    control = list(
+      dictionary = testo_dict,
+      weighting = function(x)
+        weightTfIdf(x, normalize = FALSE)
+    )
+  )))
+  tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
+  cbind("TARGET" = bag$BAG_FLAG, tfidf)
   
 }
 testo_corpus <- VCorpus(VectorSource(df$testo))
 testo_corpus_clean<-clean_corpus(testo_corpus)
 testo_dtm<- DocumentTermMatrix(testo_corpus_clean)
-testo_dict <- findFreqTerms(testo_dtm, lowfreq = 1)
+testo_dict <- findFreqTerms(testo_dtm, lowfreq = 5)
 
 trainIndex <- createDataPartition(df$flag, p = .95,
                                   list = FALSE,
@@ -150,13 +155,13 @@ levels(df_meta_test$TARGET) <- c("neg", "pos")
 # al gruppo flag = 1 (scontrini 5 giorni prima di un guasto)
 
 df_pos <- df[which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "1 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "6 days",labels = F)))
 df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
 #le righe con flag=1 sono le bag positive
 
 #bag "negative", separate in bags da 5 giorni
 df_neg <- df[-which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "1 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "6 days",labels = F)))
 df_neg_bag <- as.list(split(df_neg,f = df_neg$BAG))
 
 # assegno ad ogni elemento delle bag create il flag 1 o 0
@@ -204,7 +209,7 @@ levels(tm_training$TARGET) <- c("neg", "pos")
 levels(tm_testing$TARGET) <- c("neg", "pos")
 
 table(tm_training$TARGET)
-
+table(df_meta_test$TARGET)
 fitControl <- trainControl(method = "repeatedcv", 
                            number = 10,
                            repeats = 2,
@@ -222,12 +227,12 @@ model_weights <- ifelse(tm_training$TARGET == "pos",
 
 
 set.seed(1045)
-library(doParallel)
-cl <- makeCluster(5)
-registerDoParallel(cl)
+# library(doParallel)
+# cl <- makeCluster(16)
+# registerDoParallel(cl)
 fitControl <- trainControl(method = "repeatedcv", 
                            number = 10,
-                           repeats = 10,
+                           repeats = 3,
                            verboseIter=T,
                            classProbs = TRUE,
                            allowParallel = T,
@@ -237,16 +242,16 @@ fitControl <- trainControl(method = "repeatedcv",
 nn <-
   train(TARGET~., 
         data=tm_training,
-        method = 'xgbTree',
+        method = 'svmLinear2',
         trControl = fitControl,
-        tuneLength=10,
+        tuneLength=4,
         # maxit=200,
-        preProcess=c("scale", 'center', "nzv")
+        preProcess=c("range", "nzv")
         # metric="Kappa"
        # weights = model_weights
   )
 
-stopCluster(cl)
+# stopCluster(cl)
 predictions <- predict(nn,newdata =df_meta_test)
 confusionMatrix(predictions,df_meta_test$TARGET, positive = "pos",mode = "everything") 
 

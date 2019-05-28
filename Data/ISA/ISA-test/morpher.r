@@ -224,3 +224,5 @@ meta <- function(df){
   tfidf <- summarise_all(bag_dtm,sum,na.rm=T)
   
 }
+
+# modelli <- lapply(as.list(list.files(here(),"*7_*")),readRDS)
