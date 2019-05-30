@@ -58,9 +58,7 @@ morpher <- function(scontrino) {
     
     scontrino_regolare <-
       na.omit(str_extract(scontrino, 
-                          pattern = "\\d\\d:\\d\\d:\\d\\d .*")) %>%
-      gsub("(\\d\\d:){2,}\\d\\d ", "", .) %>%
-      last(.)
+                          pattern ="CICLO IRREGOLARE|CICLO REGOLARE"))
 
 # estrazione fasi del reprocessing ----------------------------------------
 
@@ -187,7 +185,7 @@ morpher <- function(scontrino) {
       df%<>%.[,-which(colnames(.)%in%c("MEDICO",
                                        "PAZIENTE"))]
       
-      df <- cbind(df,"testo"=sclean)
+      df <- cbind(df,"testo"=sclean,"ESITO CICLO"=scontrino_regolare)
     
     
     #trasformazione footer
