@@ -21,6 +21,8 @@ library(readr)
 library(arm)
 library(caret)
 library(naivebayes)
+library(dygraphs)
+library(xts)
 rds <- as.list(list.files(here("ISA-test/"),"*7_*"))
 modelli <- lapply(rds,function(x) readRDS(x))
 
@@ -43,8 +45,10 @@ modulo_upload <- fileInput(
 
 
 ui <- tagList(dashboardPage( skin = "green",
+            
   
   ## HEADER ------------------------------------------------------------------
+  
   dashboardHeader(title = "SML"),
   ## SIDEBAR -----------------------------------------------------------------
   dashboardSidebar(sidebarMenu(
@@ -71,6 +75,12 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName = "alarms",
         icon = icon("warning"),
         selected = F
+      ),
+      menuSubItem(
+        tags$strong("Strumentazione"),
+        tabName = "strum",
+        icon = icon("stethoscope",lib = "font-awesome"),
+        selected = F
       )
       
 
@@ -83,6 +93,7 @@ ui <- tagList(dashboardPage( skin = "green",
   
   
   dashboardBody(
+    useSweetAlert(),
     tabItems(
       tabItem(
         tabName="cs",
@@ -143,7 +154,9 @@ ui <- tagList(dashboardPage( skin = "green",
               tabPanel(title = "Numero di cicli per categoria di strumento",
                        plotlyOutput("plot2")),
               tabPanel(title = "Numero di cicli per operatore",
-                       plotlyOutput("plot3"))
+                       plotlyOutput("plot3")),
+              tabPanel(title = "Cicli effettuati nel periodo selezionato",
+                       dygraphOutput("dygraph"))
             )
           ))
         )
@@ -154,10 +167,18 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName = "alarms",
         fluidPage(
           h2("Analisi degli allarmi"),
-          box(title = "Numero di allarmi rilevati nel periodo di attività analizzato",
-                   plotlyOutput("plot1"))
+          box(title = "Allarmi per categoria di strumento",
+                   plotlyOutput("plot4"),width = 12)
           )
+        ),
+      tabItem(
+        tabName = "strum",
+        fluidPage(
+          h2("Strumentazione riprocessata"),
+          uiOutput("picker_str")
         )
+        
+      )
 
       )
     )
@@ -234,6 +255,40 @@ server <- function(input, output, session) {
     return(vista_giorni)
   })
   data_r <- reactiveValues(data = iris, name = "scontrini")
+  cicli <- reactive({
+    req(input$txt)
+    df <- scontrino_df()
+    
+    df %<>% mutate("GIORNO" = factor(cut.Date(
+      as.Date(.$`INIZIO CICLO`),
+      breaks = "1 day",
+      labels = F
+    )))
+    df_giorni <- as.list(split(df, f = df$GIORNO))
+    
+    
+    n_allarmi <- function(df_giorno){
+      nirreg <-  as.numeric(nrow(df_giorno[-which(df_giorno$ESITO.CICLO=="CICLO REGOLARE"),]))
+      nreg <- as.numeric(nrow(df_giorno[-which(df_giorno$ESITO.CICLO=="CICLO IRREGOLARE"),]))
+      
+      giorno <- unique(as.Date(df_giorno$`INIZIO CICLO`))
+      return(data.frame("giorno"=giorno,
+                        "numero di cicli irregolari"=nirreg,
+                        "numero di cicli regolari"=nreg))
+      
+    }
+    
+    andamento_allarmi <- lapply(df_giorni,n_allarmi) %>% do.call("rbind",.)
+    cicli_irregolari <- as.xts(ts(start = c(first(andamento_allarmi$giorno)), 
+                                  end=c(last(andamento_allarmi$giorno)),
+                                  data = c(andamento_allarmi$numero.di.cicli.irregolari)))
+    cicli_regolari <-  as.xts(ts(start = c(first(andamento_allarmi$giorno)), 
+                                 end=c(last(andamento_allarmi$giorno)),
+                                 data = c(andamento_allarmi$numero.di.cicli.regolari)))
+    
+    giorni <- cbind(cicli_irregolari,cicli_regolari)
+    return(giorni)
+    })
   
   observeEvent(scontrino_df(), {
     if (is_empty(scontrino_df()) == F) {
@@ -394,7 +449,26 @@ server <- function(input, output, session) {
       theme_classic() +
       facet_wrap(vars(ESITO.CICLO))
   })
-  
+  output$plot4 <- renderPlotly({
+    ggplot(data = scontrino_df()[-which(scontrino_df()$ALLARMI=="Nessun allarme rilevato"),]) +
+        aes(fill = ALLARMI, x = CATEGORIA) +
+        geom_bar()+
+        scale_fill_viridis_d(option  = "viridis",direction = -1) +
+        theme_minimal() +
+        facet_wrap(vars(ESITO.CICLO)) +
+        coord_flip()
+    
+  })
+  output$dygraph <- renderDygraph({
+    dygraph(cicli())%>%
+      dyRangeSelector() %>%
+      dyRoller(rollPeriod = 4) %>%
+      dyHighlight(highlightCircleSize = 5, 
+                  highlightSeriesBackgroundAlpha = 0.4,
+                  hideOnMouseOut = TRUE,
+                  highlightSeriesOpts = list(strokeWidth = 3)) %>%
+      dyOptions(colors = c("red", "green"))
+  })
 
 # predizione --------------------------------------------------------------
 
@@ -416,6 +490,28 @@ server <- function(input, output, session) {
       do.call("rbind",.) %>% 
       summarise_all(.,median,na.rm=T)
     return(risultati)
+  })
+  
+
+# controlli ---------------------------------------------------------------
+output$picker_str <- renderUI({
+  req(input$txt)
+  pickerInput(
+    inputId = "picker_str",
+    label = "Seleziona uno strumento", 
+    choices = levels(scontrino_df()$CATEGORIA)
+  )
+})
+
+# alerts ------------------------------------------------------------------
+
+  observeEvent(input$txt, {
+    sendSweetAlert(
+      session = session,
+      title = "File caricati",
+      text = "Caricamento avvenuto con successo",
+      type = "success"
+    )
   })
   
   
