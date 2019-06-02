@@ -13,16 +13,18 @@ library(arm)
 library(dygraphs)
 library(xts)
 library(tidyquant)
+library(pbapply)
 
-path <- here("isareport16-19")
-lista_scontrini <- as.list(list.files(path, pattern = "*.txt"))
-
-scontrino <- lapply(lista_scontrini, function(path_scontrino)
-  readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8"))
-
-tabella_scontrini <- lapply(scontrino[c(1980:1990)], morpher) %>%
-  bind_rows(.)
-
+# path <- here("isareport16-19")
+# lista_scontrini <- as.list(list.files(path, pattern = "*.txt"))
+# 
+# scontrinol <- lapply(lista_scontrini, function(path_scontrino)
+#   readLines(paste0(path, "\\", path_scontrino), encoding = "UTF-8"))
+# 
+# tabella_scontrini <- pblapply(scontrinol, morpher) %>%
+#   bind_rows(.)
+# 
+tabella_scontrini <- read.csv2(here("tabella_scontrini_multimacchina.csv"),header = T)
 tabella_scontrini$`INIZIO CICLO` <-  parse_date_time(tabella_scontrini$`INIZIO CICLO`, orders = "dmy HMS")
 tabella_scontrini$`TIPO CICLO` <- factor(tabella_scontrini$`TIPO CICLO`)
 tabella_scontrini$STRUMENTO <- factor(tabella_scontrini$STRUMENTO)
@@ -32,6 +34,10 @@ tabella_scontrini$OPERATORE <- factor(tabella_scontrini$OPERATORE)
 tabella_scontrini$ALLARMI <- factor(tabella_scontrini$ALLARMI)
 tabella_scontrini$`ESITO CICLO` <- factor(tabella_scontrini$`ESITO CICLO`)
 
+col <-  c(1:2637)
+tabella_scontrini$NUMERO.SERIALE <- as.character(tabella_scontrini$NUMERO.SERIALE)
+tabella_scontrini$NUMERO.SERIALE[col] <- "lava.2"
+tabella_scontrini$NUMERO.SERIALE <- factor(tabella_scontrini$NUMERO.SERIALE)
 colnames(tabella_scontrini)[which(names(tabella_scontrini) == "ESITO CICLO")] <- "ESITO.CICLO"
 
 

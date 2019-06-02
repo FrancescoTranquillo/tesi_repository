@@ -24,8 +24,10 @@ clean_corpus <- function(corpus) {
 }
 morpher <- function(scontrino) {
   
-  # n <- str_extract(path_scontrino,"(\\d*)(?= [Strumento])")
-  if (last(grepl("REGOLARE|IRREGOLARE", scontrino, perl = T)) == T) {
+  # n <- na.omit(str_extract(scontrino,"NUMERO CICLO: "))
+  if (last(grepl("\\d\\d:\\d\\d:\\d\\d CICLO REGOLARE|\\d\\d:\\d\\d:\\d\\d CICLO IRREGOLARE", 
+                 scontrino, 
+                 perl = T)) == T) {
     # print(n)
     
 
@@ -37,7 +39,7 @@ morpher <- function(scontrino) {
                    pattern = "\\d\\d:\\d\\d:\\d\\d .*", 
                    replacement = NA)) %>%
       .[5:(length(.) - 1)]
-    
+    # print(scontrino_header[11])
     scontrino_header2 <- scontrino_header[-2]
     nomi_header <- str_extract(scontrino_header2,".*(?=: )")
     
@@ -82,6 +84,7 @@ morpher <- function(scontrino) {
     sclean <- paste(sclean_header,
                     paste(sclean_footer, collapse = " "),
                     scontrino_regolare)
+    
     # 
     righe_allarmi <- grepl(pattern = "allarme|alarm", sclean_footer,perl = T,ignore.case = T)
     allarmi_rilevati <- sclean_footer[which(righe_allarmi==T)]
@@ -178,7 +181,11 @@ morpher <- function(scontrino) {
                                                                "INIZIO CICLO"
                                                                ))]
       df <- cbind(df_header,df_header_2)
+      if(length(df)<11){
+        df%<>%mutate("IDENTIFICATIVO"="ALTRO")
+      }
       df <- df[,1:11]
+      
       df%<>%mutate("ALLARMI"=ifelse(length(allarmi_rilevati)==0,
                                              yes = "Nessun allarme rilevato",
                                              no = allarmi_rilevati))
