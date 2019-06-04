@@ -23,7 +23,7 @@ library(pbapply)
 # 
 # tabella_scontrini <- pblapply(scontrinol, morpher) %>%
 #   bind_rows(.)
-# 
+# # 
 tabella_scontrini <- read.csv2(here("tabella_scontrini_multimacchina.csv"),header = T)
 tabella_scontrini$`INIZIO CICLO` <-  parse_date_time(tabella_scontrini$`INIZIO CICLO`, orders = "dmy HMS")
 tabella_scontrini$`TIPO CICLO` <- factor(tabella_scontrini$`TIPO CICLO`)
@@ -40,6 +40,9 @@ tabella_scontrini$NUMERO.SERIALE[col] <- "lava.2"
 tabella_scontrini$NUMERO.SERIALE <- factor(tabella_scontrini$NUMERO.SERIALE)
 colnames(tabella_scontrini)[which(names(tabella_scontrini) == "ESITO CICLO")] <- "ESITO.CICLO"
 
+levels(tabella_scontrini$OPERATORE)
+operatori_selezionati <- levels(tabella_scontrini$OPERATORE)[8:10]
+t_selected <- tabella_scontrini[which(tabella_scontrini$OPERATORE%in%operatori_selezionati),]
 
 # tabella_scontrini %<>% mutate("GIORNO" = factor(cut.Date(
 #   as.Date(.$`INIZIO CICLO`),
@@ -92,19 +95,33 @@ colnames(tabella_scontrini)[which(names(tabella_scontrini) == "ESITO CICLO")] <-
 # numero di allarmi per tipo di strumento ---------------------------------
 
 esquisser()
+
 library(ggplot2)
 library(viridis)
+
+df <- tabella_scontrini[-which(tabella_scontrini$ALLARMI=="Nessun allarme rilevato"),]
+
+levels(df$ALLARMI)
+df_melted <- data.frame("strumenti"=levels(df$CATEGORIA),
+                        "allarme"=c(levels(df$ALLARMI)))
 ggplotly(
   ggplot(data = tabella_scontrini[-which(tabella_scontrini$ALLARMI=="Nessun allarme rilevato"),]) +
   aes(fill = ALLARMI, x = CATEGORIA) +
-  geom_bar()+
-  scale_fill_viridis_d(option  = "viridis",direction = -1) +
+  geom_bar(color="black",width = 0.8,size=0.2)+
+  scale_fill_viridis_d(option  = "viridis",direction = 1) +
   theme_minimal() +
+  scale_x_discrete()+
   facet_wrap(vars(ESITO.CICLO)) +
   coord_flip()
+            
 )
 
 glimpse(tabella_scontrini)
 df <- tabella_scontrini %>%.[which(.$ALLARMI=="Allarme temperatura massima acqua"),]
 esquisser()
 
+totale_allarmi <- function(strumento){
+  dff <- tabella_scontrini[which(tabella_scontrini$CATEGORIA==strumento),10]
+  
+}
+tabella_scontrini <-sort(x = tabella_scontrini$CATEGORIA,by=count(tabella_scontrini$ALLARMI)) 

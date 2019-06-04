@@ -84,8 +84,9 @@ ui <- tagList(dashboardPage( skin = "green",
       ),
       menuSubItem(
         tags$strong("Operatori"),
-        tabName = "users",
-        icon = icon("user",lib = "font-awesome")
+        tabName = "operatori",
+        icon = icon("user",lib = "font-awesome"),
+        selected = F
       )
 
 
@@ -98,16 +99,52 @@ ui <- tagList(dashboardPage( skin = "green",
 
 
   dashboardBody(
+    tags$head(tags$style(HTML('
+
+                              .modal-lg {
+                              width: 85%;
+                              
+                              }
+                              '))),
     useSweetAlert(),
     tabItems(
+      tabItem(
+        tabName = "operatori",
+        h2("Vista Operatori"),
+        fluidPage(
+          column(
+            width = 3,
+            uiOutput("picker_op"),
+            uiOutput("picker_op_strum"),
+            checkboxGroupButtons(
+              inputId = "opzioni",
+              label = "Opzioni",
+              choices = c("CICLI REGOLARI", 
+                          "CICLI IRREGOLARI"),
+              status = "primary",
+              checkIcon = list(
+                yes = icon("ok", 
+                           lib = "glyphicon")),
+              justified = T,
+              size = "lg",
+              direction = "vertical"
+            )
+          ),
+          column(
+            width=9,
+            plotlyOutput("plot3")
+          )
+          
+        )
+      ),
       tabItem(
         tabName="cs",
         h2("Per iniziare, carica gli scontrini nel menù a sinistra"),
         br(),
-        h2("poi clicca sul sottomenù chiamato \"Overview\"" )
-        ),
+        h2("poi clicca sul sotto menù chiamato \"Overview\"" )
+      ),
       tabItem(
-
+        
         tabName = "Welcomepage",
         fluidPage(
           h2("Overview"),
@@ -118,7 +155,9 @@ ui <- tagList(dashboardPage( skin = "green",
             div(id = 'clickdiv2',
                 valueBoxOutput("ib2")),
             valueBoxOutput("ib3"),
-            valueBoxOutput("ib4")
+            valueBoxOutput("ib4"),
+            valueBoxOutput("cicli_reg_overview"),
+            valueBoxOutput("cicli_irreg_overview")
           )),
 
           bsTooltip(
@@ -137,10 +176,7 @@ ui <- tagList(dashboardPage( skin = "green",
               box(tile="test",
               width=12,
               dataTableOutput("table")
-            ),
-            box(plotlyOutput("plot1")
-          )
-
+            )
 
 
           ),
@@ -156,7 +192,16 @@ ui <- tagList(dashboardPage( skin = "green",
             "Scontrini analizzati",
             "clickdiv1",
             size = "large",
-            dataTableOutput("scontrino_table")
+            fluidRow(
+              column(width = 9,
+                     dataTableOutput("scontrino_table")
+                     ),
+              column(width = 3,
+                     uiOutput("selected")
+                     )
+            )
+            
+            
 
           ),
 
@@ -168,8 +213,7 @@ ui <- tagList(dashboardPage( skin = "green",
 
               tabPanel(title = "Numero di cicli per categoria di strumento",
                        plotlyOutput("plot2")),
-              tabPanel(title = "Numero di cicli per operatore",
-                       plotlyOutput("plot3")),
+              tabPanel(title = "Numero di cicli per operatore"),
               tabPanel(title = "Cicli effettuati nel periodo selezionato",
                        dygraphOutput("dygraph"))
             )
@@ -186,20 +230,33 @@ ui <- tagList(dashboardPage( skin = "green",
                    plotlyOutput("plot4"),width = 12)
           )
         ),
+      
       tabItem(
         tabName = "strum",
         fluidPage(
           h2("Strumentazione riprocessata"),
           fluidRow(
+            plotlyOutput("plot1")
+          ),
+          fluidRow(
             column(width = 3,
                    uiOutput("picker_str")),
             column(width=9,
-              valueBoxOutput("ib5"),
-              valueBoxOutput("ib6")
+                   valueBoxOutput("ib5"),
+                   valueBoxOutput("ib6"),
+                   valueBoxOutput("ib7")
             )
             ),
           fluidRow(
-            dataTableOutput("table_strumentazione")
+            tabBox(width = 12,
+              tabPanel("CICLI REGOLARI",
+                       dataTableOutput("table_strumentazione_reg")
+                       ),
+              tabPanel("CICLI IRREGOLARI",
+                       dataTableOutput("table_strumentazione_irreg")
+                       )
+            )
+            
           )
         )
 
@@ -333,23 +390,23 @@ server <- function(input, output, session) {
     info <- info_giorni()
     filename <- info[[4]]
     DT::datatable(df,
-
-              rownames = FALSE,
-              extensions = 'Buttons',
-              options = list(
-                dom = 'Bfrtipl',
-                buttons = list('copy', 'csv', 'excel',
-                                         list(
-                                           extend = 'pdf',
-                                           pageSize = 'A4',
-                                           orientation = 'landscape',
-                                           filename=paste0("Resoconto cicli_",filename),
-                                           title = paste("ISA Monitoring System",
-                                                         paste0("Resoconto cicli effettuati"),
-                                                         filename,
-                                                         sep = "\n"))),
-                scrollX = TRUE
-              )
+                  selection="single",
+                  rownames = FALSE,
+                  extensions = 'Buttons',
+                  options = list(
+                    dom = 'Bfrtipl',
+                    buttons = list('copy', 'csv', 'excel',
+                                   list(
+                                     extend = 'pdf',
+                                     pageSize = 'A4',
+                                     orientation = 'landscape',
+                                     filename=paste0("Resoconto cicli_",filename),
+                                     title = paste("ISA Monitoring System",
+                                                   paste0("Resoconto cicli effettuati"),
+                                                   filename,
+                                                   sep = "\n"))),
+                    scrollX = TRUE
+                  )
     )
 
   })
@@ -383,14 +440,16 @@ server <- function(input, output, session) {
     )
 
   })
-  output$table_strumentazione <- DT::renderDT(server=FALSE,{
-    df <- scontrino_df()[which(scontrino_df()$CATEGORIA==input$picker_str & scontrino_df()$ESITO.CICLO=="CICLO IRREGOLARE"),
-                               -which(names(scontrino_df())%in% "testo")]
-    
+  
+
+# rendering_tabelle_strumentazione ----------------------------------------
+
+  output$table_strumentazione_reg <- DT::renderDT(server=FALSE,{
+    df <- scontrino_df()[which(scontrino_df()$CATEGORIA==input$picker_str & scontrino_df()$ESITO.CICLO%in%"CICLO REGOLARE"),
+                         -which(names(scontrino_df())%in% "testo")]
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
     info <- info_giorni()
     filename <- info[[4]]
-    
     DT::datatable(df,
                   rownames = FALSE,
                   extensions = c('Buttons'),
@@ -413,7 +472,35 @@ server <- function(input, output, session) {
     )
     
   })
-
+  output$table_strumentazione_irreg <- DT::renderDT(server=FALSE,{
+    df <- scontrino_df()[which(scontrino_df()$CATEGORIA==input$picker_str & scontrino_df()$ESITO.CICLO%in%"CICLO IRREGOLARE"),
+                         -which(names(scontrino_df())%in% "testo")]
+    df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
+    info <- info_giorni()
+    filename <- info[[4]]
+    DT::datatable(df,
+                  rownames = FALSE,
+                  extensions = c('Buttons'),
+                  options = list(
+                    dom = 'Bfrtipl',
+                    orientation ='landscape',
+                    buttons = list('copy', 'csv', 'excel',
+                                   list(
+                                     extend = 'pdf',
+                                     pageSize = 'A4',
+                                     orientation = 'landscape',
+                                     filename=paste0("Resoconto allarmi_",filename),
+                                     title = paste("ISA Monitoring System",
+                                                   paste0("Resoconto allarmi rilevati"),
+                                                   filename,
+                                                   sep = "\n"))),
+                    scrollX = TRUE,
+                    scrollY = "600px"
+                  )
+    )
+    
+  })
+  
 
 
   #
@@ -445,7 +532,7 @@ server <- function(input, output, session) {
   })
   output$ib2 <- renderValueBox({
     icona <- ifelse(nrow(scontrino_df()[which(scontrino_df()$ALLARMI != "Nessun allarme rilevato"), ]) >
-             0, "warning", "check-circle")
+             0, "exclamation-circle", "check-circle")
     valueBox(
       nrow(scontrino_df()[which(scontrino_df()$ALLARMI != "Nessun allarme rilevato"),]),
       subtitle = strong("Allarmi rilevati"),
@@ -465,6 +552,25 @@ server <- function(input, output, session) {
       color = "light-blue"
     )
   })
+  output$cicli_reg_overview <- renderValueBox({
+    req(input$txt)
+    df <- scontrino_df()
+    df_filtered <- df[which(df$ESITO.CICLO=="CICLO REGOLARE"),]
+    valueBox(nrow(df_filtered),
+             subtitle = strong("Cicli regolari"),
+             icon = icon("check",lib = "font-awesome"),
+             color = "green")
+  })
+  output$cicli_irreg_overview <- renderValueBox({
+    req(input$txt)
+    df <- scontrino_df()
+    df_filtered <- df[which(df$ESITO.CICLO=="CICLO IRREGOLARE"),]
+    valueBox(nrow(df_filtered),
+             subtitle = strong("Cicli irregolari"),
+             icon = icon("warning",lib = "font-awesome"),
+             color = "red")
+    
+  })
 
   # INFOBOX DELLA PREDIZIONE
   output$ib4 <- renderValueBox({
@@ -481,32 +587,46 @@ server <- function(input, output, session) {
     req(input$txt)
     df <- scontrino_df()
     df_filtered <- df[which(df$CATEGORIA==input$picker_str & df$ESITO.CICLO=="CICLO REGOLARE"),]
-    valueBox(nrow(df_filtered),
+    box5 <- valueBox(nrow(df_filtered),
              subtitle = strong("Cicli regolari"),
              icon = icon("check",lib = "font-awesome"),
-             color = "green")
+             color = "green"
+             )
+    return(box5)
   })
   output$ib6 <- renderValueBox({
     req(input$txt)
     df <- scontrino_df()
     df_filtered <- df[which(df$CATEGORIA==input$picker_str & df$ESITO.CICLO=="CICLO IRREGOLARE"),]
-    valueBox(nrow(df_filtered),
+    box6 <- valueBox(nrow(df_filtered),
              subtitle = strong("Cicli irregolari"),
              icon = icon("warning",lib = "font-awesome"),
-             color = "red")
+             color = "red"
+            )
+    
+    return(box6)
   })
-
+  output$ib7 <- renderValueBox({
+    req(input$txt)
+    df <- scontrino_df()
+    df_filtered <- df[which(df$CATEGORIA==input$picker_str),]
+    valueBox(nrow(df_filtered[-which(df_filtered$ALLARMI=="Nessun allarme rilevato"),]),
+             subtitle = strong("Allarmi"),
+             icon = icon("exclamation-circle",lib = "font-awesome"),
+             color = "orange")
+  })
 # plot --------------------------------------------------------------------
 
 
   output$plot1 <- renderPlotly({
     ggplotly(
-      ggplot(data = scontrino_df()[which(scontrino_df()$ALLARMI!="Nessun allarme rilevato"),]) +
-        aes(x = ALLARMI) +
+      ggplot(data = scontrino_df()) +
+        aes(x = CATEGORIA) +
         geom_bar(fill = "#ff7f00") +
         theme_classic() +
         labs(y = "Numero di allarmi rilevati")+
-        coord_flip()
+        coord_flip()+
+        facet_wrap(vars(ESITO.CICLO))
     )
   })
   output$plot2 <- renderPlotly({
@@ -519,13 +639,49 @@ server <- function(input, output, session) {
       theme(legend.position = "bottom")+
       coord_flip()
   })
+  
+
+# vista op_selezione cicli regolari/irregolari/entrambi -------------------
+
+  sceltacicli <- reactive({
+    req(length(input$opzioni)>0)
+    if(input$opzioni=="CICLI REGOLARI"){
+      return("CICLO REGOLARE")
+    } else
+      return("CICLO IRREGOLARE")
+  })
+  sceltaplot <- reactive({
+    req(length(input$opzioni)>0)
+    if(length(input$opzioni)==1){
+      filtro <- scontrino_df()[which(scontrino_df()$OPERATORE%in%input$picker_op & scontrino_df()$ESITO.CICLO%in%sceltacicli()),]
+      req(nrow(filtro) > 0)
+      g <- ggplot(data = filtro) +
+        aes(x = OPERATORE) +
+        geom_bar(aes(fill=CATEGORIA),color="black",
+                 width = 0.8,size=0.2) +
+        geom_text(stat="count",
+                  aes(label=..count..),
+                  nudge_x=0,nudge_y=0.30)+
+        scale_fill_viridis_d(option  = "viridis",direction = -1)+
+        theme_minimal()
+    } else
+      filtro <- scontrino_df()[which(scontrino_df()$OPERATORE%in%input$picker_op),]
+      req(nrow(filtro) > 0)
+      g <- ggplot(data = filtro) +
+        aes(x = OPERATORE) +
+        geom_bar(aes(fill=CATEGORIA),color="black",
+                 width = 0.8,size=0.2) +
+        geom_text(stat="count",
+                  aes(label=..count..),
+                  nudge_x=0,nudge_y=0.30)+
+        scale_fill_viridis_d(option  = "viridis",direction = -1)+
+        theme_minimal()+
+        facet_wrap(vars(ESITO.CICLO))
+      
+    return(g)
+      }) 
   output$plot3 <- renderPlotly({
-    ggplot(data = scontrino_df()) +
-      aes(fill = CATEGORIA, x = OPERATORE) +
-      geom_bar() +
-      scale_fill_viridis_d(option  = "viridis",direction = -1)+
-      theme_minimal() +
-      facet_wrap(vars(ESITO.CICLO))
+    sceltaplot()
   })
   output$plot4 <- renderPlotly({
     ggplot(data = scontrino_df()[-which(scontrino_df()$ALLARMI=="Nessun allarme rilevato"),]) +
@@ -581,6 +737,20 @@ output$picker_str <- renderUI({
     choices = levels(scontrino_df()$CATEGORIA)
   )
 })
+  output$picker_op <- renderUI({
+    req(input$txt)
+    pickerInput(
+      inputId = "picker_op",
+      label = "Seleziona un operatore",
+      choices = levels(factor(as.character(scontrino_df()$OPERATORE))),
+      multiple = TRUE,
+      options = list(
+        title = "Per iniziare, carica i file nel menù a sinistra",
+        `live-search` = TRUE,
+        `actions-box`= TRUE
+        )
+    )
+  })
 
 # alerts ------------------------------------------------------------------
 
@@ -593,6 +763,30 @@ output$picker_str <- renderUI({
     )
   })
 
+# printaggio scontrino txt ------------------------------------------------
+
+  
+  selectedRow <- eventReactive(input$scontrino_table_rows_selected,{
+    nciclo <- scontrino_df()$`NUMERO CICLO`[input$scontrino_table_rows_selected]
+    return(nciclo)
+  })
+  # output$selected <- renderText({
+  #   rawText <- paste(scontrino_txt()[[selectedRow()]],collapse = "\\n")
+  # })
+  # 
+  output$selected <- renderUI({
+    rawText <- paste(scontrino_txt()[[selectedRow()]],sep = "\\n")
+
+
+    # split the text into a list of character vectors
+    #   Each element in the list contains one line
+    splitText <- stringi::stri_split(str = rawText, regex = '\\n')
+
+    # wrap a paragraph tag around each element in the list
+    replacedText <- lapply(splitText, p)
+
+    return(replacedText)
+  })
 
 }
 
