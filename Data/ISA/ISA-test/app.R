@@ -49,7 +49,7 @@ ui <- tagList(dashboardPage( skin = "green",
 
   ## HEADER ------------------------------------------------------------------
 
-  dashboardHeader(title = "SML"),
+  dashboardHeader(title = "INSIGHT"),
   ## SIDEBAR -----------------------------------------------------------------
   dashboardSidebar(sidebarMenu(
     menuItem(
@@ -112,7 +112,8 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName = "operatori",
         h2("Vista Operatori"),
         fluidPage(
-          column(
+          
+          box(title = "Controlli",status = "success",solidHeader = T,collapsible = T,
             width = 3,
             uiOutput("picker_op"),
             uiOutput("picker_op_strum"),
@@ -121,12 +122,12 @@ ui <- tagList(dashboardPage( skin = "green",
               label = "Opzioni",
               choices = c("CICLI REGOLARI", 
                           "CICLI IRREGOLARI"),
-              status = "primary",
+              status = "success",
               checkIcon = list(
                 yes = icon("ok", 
                            lib = "glyphicon")),
               justified = T,
-              size = "lg",
+              size = "normal",
               direction = "vertical"
             )
           ),
@@ -141,7 +142,12 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName="cs",
         h2("Per iniziare, carica gli scontrini nel menù a sinistra"),
         br(),
-        h2("poi clicca sul sotto menù chiamato \"Overview\"" )
+        h2("poi clicca sul sotto menù chiamato \"Overview\"" ),
+        br(),
+        br(),
+        h4("Alcuni scontrini sono disponibili al seguente ",a("link", href="https://drive.google.com/drive/folders/1HVTU2cPdoGsUC9x6dBFchgi8hIMTWxHT"),", scaricabili ed utilizzabili per testare le funzionalità di INSIGHT"),
+        h4("I file sono situati all'interno dell'archivio.")
+        
       ),
       tabItem(
         
@@ -154,7 +160,9 @@ ui <- tagList(dashboardPage( skin = "green",
                 valueBoxOutput("ib1")),
             div(id = 'clickdiv2',
                 valueBoxOutput("ib2")),
-            valueBoxOutput("ib3"),
+            div(id='clickdiv3',
+                valueBoxOutput("ib3")),
+            
             valueBoxOutput("ib4"),
             valueBoxOutput("cicli_reg_overview"),
             valueBoxOutput("cicli_irreg_overview")
@@ -172,13 +180,7 @@ ui <- tagList(dashboardPage( skin = "green",
             "Allarmi rilevati",
             "clickdiv2",
             size = "large",
-
-              box(tile="test",
-              width=12,
-              dataTableOutput("table")
-            )
-
-
+            dataTableOutput("table")
           ),
           bsTooltip(
             "ib1",
@@ -199,24 +201,27 @@ ui <- tagList(dashboardPage( skin = "green",
               column(width = 3,
                      uiOutput("selected")
                      )
-            )
-            
-            
-
+              )
+            ),
+          bsTooltip(
+            "ib3",
+            "Clicca per visualizzare il dettaglio sulle riprocessazioni effettuate",
+            placement = "bottom",
+            trigger = "hover",
+            options = NULL
+            ),
+          bsModal(
+            "Modal3",
+            "Riprocessazioni effettuate",
+            "clickdiv3",
+            size="large",
+            plotlyOutput("plot2")
           ),
 
           fluidRow(column(
             width = 12,
-            tabBox(
-              width = 12,
-              title = "Grafici-test",
-
-              tabPanel(title = "Numero di cicli per categoria di strumento",
-                       plotlyOutput("plot2")),
-              tabPanel(title = "Numero di cicli per operatore"),
-              tabPanel(title = "Cicli effettuati nel periodo selezionato",
-                       dygraphOutput("dygraph"))
-            )
+            dygraphOutput("dygraph")
+            
           ))
         )
       ),
@@ -226,7 +231,7 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName = "alarms",
         fluidPage(
           h2("Analisi degli allarmi"),
-          box(title = "Allarmi per categoria di strumento",
+          box(title = "Allarmi per categoria di strumento",status = "success",solidHeader = T,
                    plotlyOutput("plot4"),width = 12)
           )
         ),
@@ -235,7 +240,7 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName = "strum",
         fluidPage(
           h2("Strumentazione riprocessata"),
-          fluidRow(
+          box(width = 12,title = "Cicli eseguiti",status = "success",solidHeader = T,collapsible = T,
             plotlyOutput("plot1")
           ),
           fluidRow(
@@ -517,6 +522,7 @@ server <- function(input, output, session) {
    info <- info_giorni()
    info[[4]]
   })
+  
 
 # infoboxes ---------------------------------------------------------------
 
@@ -621,28 +627,36 @@ server <- function(input, output, session) {
   output$plot1 <- renderPlotly({
     ggplotly(
       ggplot(data = scontrino_df()) +
-        aes(x = CATEGORIA) +
-        geom_bar(fill = "#ff7f00") +
-        theme_classic() +
-        labs(y = "Numero di allarmi rilevati")+
-        coord_flip()+
-        facet_wrap(vars(ESITO.CICLO))
+        aes(x = CATEGORIA,fill = ESITO.CICLO) +
+        geom_bar(position = position_dodge(),
+                 color="black",
+                 width = 0.8,
+                 size=0.2,alpha=0.6)+
+        scale_fill_manual(values = c("CICLO REGOLARE" = "#4286f4", "CICLO IRREGOLARE" = "#f44141"))+
+        
+        theme_minimal() +
+        theme(axis.text.x=element_text(angle = 35, hjust = 0))+
+        labs(y = "Numero di cicli effettuati",x="Categoria strumento")
+      
     )
   })
   output$plot2 <- renderPlotly({
     ggplot(data = scontrino_df()) +
-      aes(x = `TIPO CICLO`, fill = CATEGORIA) +
-      geom_bar(position = "dodge") +
-        scale_fill_viridis_d(option  = "viridis")+
+      aes(fill = `TIPO CICLO`, x = CATEGORIA) +
+      geom_bar(position = "dodge",color="black",
+               width = 0.8,size=0.2) +
+      scale_fill_viridis_d(option  = "viridis")+
+      geom_text(stat="count",
+                aes(label=..count..),
+                nudge_x=0.10,nudge_y=0.50)+
       labs(y = "Numero di cicli effettuati") +
-      theme_classic() +
-      theme(legend.position = "bottom")+
+      theme_minimal() +
       coord_flip()
   })
   
 
 # vista op_selezione cicli regolari/irregolari/entrambi -------------------
-
+  
   sceltacicli <- reactive({
     req(length(input$opzioni)>0)
     if(input$opzioni=="CICLI REGOLARI"){
@@ -658,7 +672,7 @@ server <- function(input, output, session) {
       g <- ggplot(data = filtro) +
         aes(x = OPERATORE) +
         geom_bar(aes(fill=CATEGORIA),color="black",
-                 width = 0.8,size=0.2) +
+                 width = 0.8,size=0.2,alpha=0.8) +
         geom_text(stat="count",
                   aes(label=..count..),
                   nudge_x=0,nudge_y=0.30)+
@@ -670,7 +684,7 @@ server <- function(input, output, session) {
       g <- ggplot(data = filtro) +
         aes(x = OPERATORE) +
         geom_bar(aes(fill=CATEGORIA),color="black",
-                 width = 0.8,size=0.2) +
+                 width = 0.8,size=0.2,alpha=0.8) +
         geom_text(stat="count",
                   aes(label=..count..),
                   nudge_x=0,nudge_y=0.30)+
@@ -686,7 +700,8 @@ server <- function(input, output, session) {
   output$plot4 <- renderPlotly({
     ggplot(data = scontrino_df()[-which(scontrino_df()$ALLARMI=="Nessun allarme rilevato"),]) +
         aes(fill = ALLARMI, x = CATEGORIA) +
-        geom_bar()+
+        geom_bar(color="black",
+                 width = 0.8,size=0.2,alpha=0.8)+
         scale_fill_viridis_d(option  = "viridis",direction = -1) +
         theme_minimal() +
         facet_wrap(vars(ESITO.CICLO)) +
@@ -762,7 +777,7 @@ output$picker_str <- renderUI({
       type = "success"
     )
   })
-
+  
 # printaggio scontrino txt ------------------------------------------------
 
   
