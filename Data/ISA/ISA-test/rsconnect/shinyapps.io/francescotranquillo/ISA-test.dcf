@@ -5,9 +5,9 @@ account: francescotranquillo
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 953191
-bundleId: 2114036
+bundleId: 2133154
 url: https://francescotranquillo.shinyapps.io/ISA-test/
-when: 1559063735.4264
+when: 1559752767.22578
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: estrazione_nomi_allarmi.r|isa-manuale.pdf|tabella_scontrini_allarmi.csv|bin/sourcetools_0.1.7.zip|bin/xtable_1.8-4.zip|tests/mytest.R
+ignoredFiles: .RData|debug.log|estrazione_nomi_allarmi.r|isa-manuale.pdf|tabella_scontrini_allarmi.csv|bin/sourcetools_0.1.7.zip|bin/xtable_1.8-4.zip|tests/mytest.R

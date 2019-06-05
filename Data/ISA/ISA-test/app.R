@@ -23,12 +23,12 @@ library(caret)
 library(naivebayes)
 library(dygraphs)
 library(xts)
-rds <- as.list(list.files(here("ISA-test/"),"*7_*"))
+rds <- as.list(list.files(here(),"*7_*"))
 modelli <- lapply(rds,function(x) readRDS(x))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
-source(file = here("ISA-test/morpher.r"))
+source(file = here("morpher.r"))
 # source(file = here("ISA-test","estrazione_nomi_allarmi.r"))
 #
 
