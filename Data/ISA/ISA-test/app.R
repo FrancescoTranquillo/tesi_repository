@@ -28,9 +28,11 @@ modelli <- lapply(rds,function(x) readRDS(x))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
-source(file = here("morpher.r"))
-# source(file = here("ISA-test","estrazione_nomi_allarmi.r"))
-#
+#editing offline
+source(file = here("ISA-TEST/morpher.r"))
+
+#per pubblicare
+# source(file = here("morpher.r"))
 
 
 # MODULI ------------------------------------------------------------------
@@ -41,6 +43,7 @@ modulo_upload <- fileInput(
   accept = c("text/csv", "text/comma-separated-values,text/plain", ".txt"),
   multiple = T
 )
+
 # UI ----------------------------------------------------------------------
 
 
@@ -64,6 +67,7 @@ ui <- tagList(dashboardPage( skin = "green",
     menuItem(
       startExpanded = T,
       tags$strong("Analisi"),
+      uiOutput("picker_isa"),
       menuSubItem(
         tags$strong("Overview"),
         tabName = "Welcomepage",
@@ -294,7 +298,7 @@ server <- function(input, output, session) {
     text <- lapply(path, readLines, encoding = "UTF8")
     return(text)
   })
-  scontrino_df <- reactive({
+  creazione_df <- reactive({
     req(input$txt)
     df <- lapply(scontrino_txt(), morpher) %>% do.call("rbind", .)
 
@@ -309,7 +313,12 @@ server <- function(input, output, session) {
     colnames(df)[which(names(df) =="STRUMENTO")] <- "MODELLO DELLO STRUMENTO"
     colnames(df)[which(names(df) =="NUMERO SERIALE")] <- "NUMERO SERIALE LAVAENDOSCOPI"
 
-
+    return(df)
+  })
+  scontrino_df <- reactive({
+    req(input$txt)
+    df <- creazione_df()
+    df <- df[which(df$`NUMERO SERIALE LAVAENDOSCOPI` %in% input$picker_isa),]
     return(df)
   })
   info_giorni <- reactive({
@@ -752,7 +761,7 @@ output$picker_str <- renderUI({
     choices = levels(scontrino_df()$CATEGORIA)
   )
 })
-  output$picker_op <- renderUI({
+output$picker_op <- renderUI({
     req(input$txt)
     pickerInput(
       inputId = "picker_op",
@@ -766,6 +775,20 @@ output$picker_str <- renderUI({
         )
     )
   })
+output$picker_isa <- renderUI({
+  req(input$txt)
+  pickerInput(
+    inputId = "picker_isa",
+    label = "Seleziona una macchina",
+    choices = levels(factor(as.character(creazione_df()$`NUMERO SERIALE LAVAENDOSCOPI`))),
+    multiple = F,
+    options = list(
+      `live-search` = TRUE,
+      `actions-box`= F
+    )
+  )
+  
+})
 
 # alerts ------------------------------------------------------------------
 
