@@ -192,7 +192,7 @@ morpher <- function(scontrino) {
       df%<>%.[,-which(colnames(.)%in%c("MEDICO",
                                        "PAZIENTE"))]
       
-      df <- cbind(df,"testo"=sclean,"ESITO CICLO"=scontrino_regolare)
+      df <- cbind(df,"testo"=sclean,"ESITO CICLO"=scontrino_regolare,"print"=paste(scontrino,collapse = "\n"))
     
     
     #trasformazione footer

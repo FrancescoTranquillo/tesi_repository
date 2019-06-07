@@ -106,7 +106,7 @@ ui <- tagList(dashboardPage( skin = "green",
     tags$head(tags$style(HTML('
 
                               .modal-lg {
-                              width: 85%;
+                              width: 88%;
                               
                               }
                               '))),
@@ -203,7 +203,10 @@ ui <- tagList(dashboardPage( skin = "green",
                      dataTableOutput("scontrino_table")
                      ),
               column(width = 3,
-                     uiOutput("selected")
+                     box(title="Print-out",
+                        status="success",
+                        solidHeader = T,
+                        uiOutput("selected"),width = NULL)
                      )
               )
             ),
@@ -236,7 +239,17 @@ ui <- tagList(dashboardPage( skin = "green",
         fluidPage(
           h2("Analisi degli allarmi"),
           box(title = "Allarmi per categoria di strumento",status = "success",solidHeader = T,
-                   plotlyOutput("plot4"),width = 12)
+                   plotlyOutput("plot4"),width = 12),
+          column(width = 3,
+                 box(title="Controlli",
+                     uiOutput("picker_str2"),
+                     uiOutput("picker_alarms"),
+                     solidHeader = T,
+                     status = "success",
+                     width = NULL)
+                 ),
+          column(width = 9,
+                 plotlyOutput("plot_alarm_distr"))
           )
         ),
       
@@ -399,7 +412,7 @@ server <- function(input, output, session) {
 
 # tabelle -----------------------------------------------------------------
   output$scontrino_table <- DT::renderDT(server=FALSE,{
-    df <- scontrino_df()[,-which(names(scontrino_df())%in% "testo")]
+    df <- scontrino_df()[,-which(names(scontrino_df())%in% c("testo","print"))]
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
     info <- info_giorni()
     filename <- info[[4]]
@@ -425,7 +438,7 @@ server <- function(input, output, session) {
 
   })
   output$table <- DT::renderDT(server=FALSE,{
-    df <- scontrino_df()[,-which(names(scontrino_df())%in% "testo")]
+    df <- scontrino_df()[,-which(names(scontrino_df())%in% c("testo","print"))]
 
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
     info <- info_giorni()
@@ -460,7 +473,7 @@ server <- function(input, output, session) {
 
   output$table_strumentazione_reg <- DT::renderDT(server=FALSE,{
     df <- scontrino_df()[which(scontrino_df()$CATEGORIA==input$picker_str & scontrino_df()$ESITO.CICLO%in%"CICLO REGOLARE"),
-                         -which(names(scontrino_df())%in% "testo")]
+                         -which(names(scontrino_df())%in% c("testo","print"))]
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
     info <- info_giorni()
     filename <- info[[4]]
@@ -488,7 +501,7 @@ server <- function(input, output, session) {
   })
   output$table_strumentazione_irreg <- DT::renderDT(server=FALSE,{
     df <- scontrino_df()[which(scontrino_df()$CATEGORIA==input$picker_str & scontrino_df()$ESITO.CICLO%in%"CICLO IRREGOLARE"),
-                         -which(names(scontrino_df())%in% "testo")]
+                         -which(names(scontrino_df())%in% c("testo","print"))]
     df$`INIZIO CICLO` <- as.character(df$`INIZIO CICLO`)
     info <- info_giorni()
     filename <- info[[4]]
@@ -645,7 +658,8 @@ server <- function(input, output, session) {
         
         theme_minimal() +
         theme(axis.text.x=element_text(angle = 35, hjust = 0))+
-        labs(y = "Numero di cicli effettuati",x="Categoria strumento")
+        labs(y = "Numero di cicli effettuati",x="Categoria strumento")+
+        facet_wrap(vars(`NUMERO SERIALE LAVAENDOSCOPI`))
       
     )
   })
@@ -699,7 +713,7 @@ server <- function(input, output, session) {
                   nudge_x=0,nudge_y=0.30)+
         scale_fill_viridis_d(option  = "viridis",direction = -1)+
         theme_minimal()+
-        facet_wrap(vars(ESITO.CICLO))
+        facet_wrap(vars(ESITO.CICLO, `NUMERO SERIALE LAVAENDOSCOPI`))
       
     return(g)
       }) 
@@ -713,7 +727,7 @@ server <- function(input, output, session) {
                  width = 0.8,size=0.2,alpha=0.8)+
         scale_fill_viridis_d(option  = "viridis",direction = -1) +
         theme_minimal() +
-        facet_wrap(vars(ESITO.CICLO)) +
+        facet_wrap(vars(`NUMERO SERIALE LAVAENDOSCOPI`)) +
         coord_flip()
 
   })
@@ -727,6 +741,19 @@ server <- function(input, output, session) {
                   highlightSeriesOpts = list(strokeWidth = 3)) %>%
       dyOptions(colors = c("red", "green"),
                 stepPlot = TRUE)
+  })
+  output$plot_alarm_distr <- renderPlotly({
+    ggplot(data = scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &scontrino_df()$CATEGORIA %in%input$picker_str2 ),]) +
+      aes(x = `NUMERO SERIALE LAVAENDOSCOPI`) +
+      geom_bar(color="black",aes(fill=ALLARMI),
+               width = 0.8,size=0.2,alpha=0.8)+
+      geom_text(stat="count",
+                aes(label=..count..),
+                nudge_x=0,nudge_y=0.30)+
+      scale_fill_viridis_d(option  = "viridis",direction = -1) +
+      theme_minimal() 
+    
+    
   })
 
 # predizione --------------------------------------------------------------
@@ -761,6 +788,14 @@ output$picker_str <- renderUI({
     choices = levels(scontrino_df()$CATEGORIA)
   )
 })
+  output$picker_str2 <- renderUI({
+    req(input$txt)
+    pickerInput(
+      inputId = "picker_str2",
+      label = "Seleziona uno strumento",
+      choices = levels(scontrino_df()$CATEGORIA)
+    )
+  })
 output$picker_op <- renderUI({
     req(input$txt)
     pickerInput(
@@ -781,10 +816,24 @@ output$picker_isa <- renderUI({
     inputId = "picker_isa",
     label = "Seleziona una macchina",
     choices = levels(factor(as.character(creazione_df()$`NUMERO SERIALE LAVAENDOSCOPI`))),
-    multiple = F,
+    multiple = T,
     options = list(
-      `live-search` = TRUE,
-      `actions-box`= F
+      `live-search` = F,
+      `actions-box`= T
+    )
+  )
+  
+})
+output$picker_alarms <- renderUI({
+  req(input$txt)
+  pickerInput(
+    inputId = "picker_alarms",
+    label = "Seleziona un allarme",
+    choices = levels(factor(as.character(creazione_df()$ALLARMI))),
+    multiple = T,
+    options = list(
+      `live-search` = F,
+      `actions-box`= T
     )
   )
   
@@ -805,7 +854,7 @@ output$picker_isa <- renderUI({
 
   
   selectedRow <- eventReactive(input$scontrino_table_rows_selected,{
-    nciclo <- scontrino_df()$`NUMERO CICLO`[input$scontrino_table_rows_selected]
+    nciclo <- scontrino_df()$print[input$scontrino_table_rows_selected]
     return(nciclo)
   })
   # output$selected <- renderText({
@@ -813,13 +862,14 @@ output$picker_isa <- renderUI({
   # })
   # 
   output$selected <- renderUI({
-    rawText <- paste(scontrino_txt()[[selectedRow()]],sep = "\\n")
+    # rawText <- paste(scontrino_txt()[[selectedRow()]],sep = "\\n")
 
 
     # split the text into a list of character vectors
     #   Each element in the list contains one line
-    splitText <- stringi::stri_split(str = rawText, regex = '\\n')
-
+    splitText <- stringi::stri_split(str = selectedRow(), regex = '\n')
+    
+    splitText <- as.list(splitText[[1]])
     # wrap a paragraph tag around each element in the list
     replacedText <- lapply(splitText, p)
 
