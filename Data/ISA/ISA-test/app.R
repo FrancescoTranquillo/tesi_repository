@@ -23,13 +23,28 @@ library(caret)
 library(naivebayes)
 library(dygraphs)
 library(xts)
-rds <- as.list(list.files(here(),"*7_*"))
+library(magrittr)
+# library(plyr)
+library(stringr)
+library(rlang)
+library(tm)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(here)
+library(pbapply)
+library(forcats)
+library(readr)
+library(tm)
+library(magrittr)
+library(tabulizer)
+rds <- as.list(list.files(here::here(),"*7_*"))
 modelli <- lapply(rds,function(x) readRDS(x))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
 #editing offline
-source(file = here("ISA-TEST/morpher.r"))
+source(file = here::here("ISA-TEST/morpher.r"))
 
 #per pubblicare
 # source(file = here("morpher.r"))
@@ -243,7 +258,9 @@ ui <- tagList(dashboardPage( skin = "green",
           column(width = 3,
                  box(title="Controlli",
                      uiOutput("picker_str2"),
+                     uiOutput("picker_sn"),
                      uiOutput("picker_alarms"),
+                     
                      solidHeader = T,
                      status = "success",
                      width = NULL)
@@ -334,6 +351,7 @@ server <- function(input, output, session) {
     df <- df[which(df$`NUMERO SERIALE LAVAENDOSCOPI` %in% input$picker_isa),]
     return(df)
   })
+  
   info_giorni <- reactive({
 
     vista_giorni <- valori_infobox()
@@ -408,7 +426,18 @@ server <- function(input, output, session) {
       data_r$name <- "mtcars"
     }
   })
-
+  
+  sankey <- reactive({
+    req(input$picker_alarms)
+    req(input$picker_str2)
+    data <- scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &
+                                   scontrino_df()$CATEGORIA %in%input$picker_str2 &
+                                   scontrino_df()$`MODELLO DELLO STRUMENTO` %in% input$picker_sn ),]
+    p <- ezsankey(tab = data,nome =c("CATEGORIA","MODELLO DELLO STRUMENTO", "NUMERO SERIALE STRUMENTO","ALLARMI","NUMERO SERIALE LAVAENDOSCOPI") )
+    return(p)
+    
+    
+  })
 
 # tabelle -----------------------------------------------------------------
   output$scontrino_table <- DT::renderDT(server=FALSE,{
@@ -663,18 +692,16 @@ server <- function(input, output, session) {
       
     )
   })
+  sankey_plot2 <- reactive({
+    req(input$txt)
+    data <- scontrino_df()
+    p <- ezsankey(tab = data,nome =c("NUMERO SERIALE LAVAENDOSCOPI","CATEGORIA", "ESITO.CICLO") )
+    return(p)
+    
+    
+  })
   output$plot2 <- renderPlotly({
-    ggplot(data = scontrino_df()) +
-      aes(fill = `TIPO CICLO`, x = CATEGORIA) +
-      geom_bar(position = "dodge",color="black",
-               width = 0.8,size=0.2) +
-      scale_fill_viridis_d(option  = "viridis")+
-      geom_text(stat="count",
-                aes(label=..count..),
-                nudge_x=0.10,nudge_y=0.50)+
-      labs(y = "Numero di cicli effettuati") +
-      theme_minimal() +
-      coord_flip()
+    sankey_plot2()
   })
   
 
@@ -694,7 +721,8 @@ server <- function(input, output, session) {
       req(nrow(filtro) > 0)
       g <- ggplot(data = filtro) +
         aes(x = OPERATORE) +
-        geom_bar(aes(fill=CATEGORIA),color="black",
+        geom_bar(aes(fill=CATEGORIA),
+                 color="black",
                  width = 0.8,size=0.2,alpha=0.8) +
         geom_text(stat="count",
                   aes(label=..count..),
@@ -706,7 +734,8 @@ server <- function(input, output, session) {
       req(nrow(filtro) > 0)
       g <- ggplot(data = filtro) +
         aes(x = OPERATORE) +
-        geom_bar(aes(fill=CATEGORIA),color="black",
+        geom_bar(aes(fill=CATEGORIA),
+                 color="black",
                  width = 0.8,size=0.2,alpha=0.8) +
         geom_text(stat="count",
                   aes(label=..count..),
@@ -722,7 +751,7 @@ server <- function(input, output, session) {
   })
   output$plot4 <- renderPlotly({
     ggplot(data = scontrino_df()[-which(scontrino_df()$ALLARMI=="Nessun allarme rilevato"),]) +
-        aes(fill = ALLARMI, x = CATEGORIA) +
+        aes(fill = ALLARMI, x =CATEGORIA) +
         geom_bar(color="black",
                  width = 0.8,size=0.2,alpha=0.8)+
         scale_fill_viridis_d(option  = "viridis",direction = -1) +
@@ -743,15 +772,16 @@ server <- function(input, output, session) {
                 stepPlot = TRUE)
   })
   output$plot_alarm_distr <- renderPlotly({
-    ggplot(data = scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &scontrino_df()$CATEGORIA %in%input$picker_str2 ),]) +
-      aes(x = `NUMERO SERIALE LAVAENDOSCOPI`) +
-      geom_bar(color="black",aes(fill=ALLARMI),
-               width = 0.8,size=0.2,alpha=0.8)+
-      geom_text(stat="count",
-                aes(label=..count..),
-                nudge_x=0,nudge_y=0.30)+
-      scale_fill_viridis_d(option  = "viridis",direction = -1) +
-      theme_minimal() 
+    # ggplot(data = scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &scontrino_df()$CATEGORIA %in%input$picker_str2 ),]) +
+    #   aes(x = `NUMERO SERIALE LAVAENDOSCOPI`) +
+    #   geom_bar(color="black",aes(fill= `MODELLO DELLO STRUMENTO`),
+    #            width = 0.8,size=0.2,alpha=0.8)+
+    #   geom_text(stat="count",
+    #             aes(label=..count..),
+    #             nudge_x=0,nudge_y=0.30)+
+    #   scale_fill_viridis_d(option  = "viridis",direction = -1) +
+    #   theme_minimal() 
+    sankey()
     
     
   })
@@ -793,7 +823,12 @@ output$picker_str <- renderUI({
     pickerInput(
       inputId = "picker_str2",
       label = "Seleziona uno strumento",
-      choices = levels(scontrino_df()$CATEGORIA)
+      choices = levels(scontrino_df()$CATEGORIA),
+      multiple = T,
+      options = list(
+        `live-search` = F,
+        `actions-box`= T
+      )
     )
   })
 output$picker_op <- renderUI({
@@ -836,6 +871,22 @@ output$picker_alarms <- renderUI({
       `actions-box`= T
     )
   )
+  
+})
+output$picker_sn <- renderUI({
+  req(input$picker_str2)
+  df <- scontrino_df()[which(scontrino_df()$CATEGORIA %in% input$picker_str2),]
+  pickerInput(
+    inputId = "picker_sn",
+    label = "Seleziona il modello ",
+    choices = levels(factor(as.character(df$`MODELLO DELLO STRUMENTO`))),
+    multiple = T,
+    options = list(
+      `live-search` = F,
+      `actions-box`= T
+    )
+  )
+    
   
 })
 

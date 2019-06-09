@@ -1,13 +1,3 @@
-library(tidyverse)
-library(dplyr)
-library(lubridate)
-library(here)
-library(pbapply)
-library(forcats)
-library(readr)
-library(tm)
-library(magrittr)
-library(tabulizer)
 
 testo_dict <-
   read.table("dizionario_scontrini.txt") %>%
@@ -231,3 +221,65 @@ meta <- function(df){
 }
 
 # modelli <- lapply(as.list(list.files(here(),"*7_*")),readRDS)
+
+sankey_table <- function(tab,nome){
+
+  
+  pairs <- cbind(nome[-length(nome)], nome[-1])
+  dftot <- apply(pairs, MARGIN =1, function(j) plyr::count(tab,paste0("`",j,"`"))) %>% 
+    lapply(.,stats::setNames, nm=c("source","target", "value")) %>% 
+    do.call("rbind",.)
+  
+  dftot$source <- as.character(dftot$source)
+  dftot$target <- as.character(dftot$target)
+  source <- dftot$source
+  target <- dftot$target
+  value <- dftot$value
+  actors <- unique(c(dftot$source, dftot$target))
+  l <- length(actors)
+  actors_t <- data.frame("actors" = actors, "id" = 0:(l - 1))
+  
+  convert_name_id <- function(node_name) {
+    actors_t$id[which(actors_t$actors %in% node_name)]
+  }
+  
+  sankey_list <-
+    list(
+      nodes = data.frame("actors" = factor(actors_t$actors)),
+      links = data.frame(
+        "source" = sapply(source, convert_name_id, USE.NAMES = F),
+        "target" = sapply(target, convert_name_id, USE.NAMES = F),
+        "value" = value
+      )
+    )
+  sankey_list$nodes <- mutate(sankey_list$nodes,"nodecolor" = viridis(nlevels(sankey_list$nodes$actors), alpha = 0.6, option ="viridis"))
+  sankey_list$links <- mutate(sankey_list$links,"linkcolor" = viridis(nrow(sankey_list$links), alpha = 0.2, option ="viridis"))
+  return(sankey_list)
+}
+ezsankey <- function(tab,nome){
+  stb <- sankey_table(tab,nome)
+  p <- plot_ly(
+    type = "sankey",
+    orientation = "h",
+    arrangement = 'freeform',
+    
+    node = list(
+      
+      label=stb$nodes$actors,
+      color=stb$nodes$nodecolor,
+      line = list(color = "black",
+                  width = 0.5)
+    ),
+    
+    link = list(
+      source = stb$links$source,
+      target = stb$links$target,
+      value = stb$links$value,
+      color=stb$links$linkcolor
+      
+    )
+  ) %>% 
+    layout(font = list(size = 14))
+  return(p)
+  
+}

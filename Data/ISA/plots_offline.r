@@ -1,3 +1,4 @@
+library(plyr)
 library(shiny)
 library(shinydashboard)
 library(shinyalert)
@@ -125,3 +126,115 @@ totale_allarmi <- function(strumento){
   
 }
 tabella_scontrini <-sort(x = tabella_scontrini$CATEGORIA,by=count(tabella_scontrini$ALLARMI)) 
+
+
+
+
+
+
+# sankey ------------------------------------------------------------------
+
+
+# df <- tabella_scontrini[which(tabella_scontrini$ESITO.CICLO=="CICLO IRREGOLARE"),]
+df <- tabella_scontrini
+colnames(df)[which(names(df) == "MATRICOLA")] <- "NUMERO SERIALE STRUMENTO"
+library(rlist)
+sankey_table <- function(tab,nome){
+  library(rlist)
+  library(viridis)
+  
+  pairs <- cbind(nome[-length(nome)], nome[-1])
+  dftot <- apply(pairs, MARGIN =1, function(j) plyr::count(tab,paste0("`",j,"`"))) %>% 
+    lapply(.,setNames, nm=c("source","target", "value")) %>% 
+    do.call("rbind",.)
+      
+  dftot$source <- as.character(dftot$source)
+  dftot$target <- as.character(dftot$target)
+  source <- dftot$source
+  target <- dftot$target
+  value <- dftot$value
+  actors <- unique(c(dftot$source, dftot$target))
+  l <- length(actors)
+  actors_t <- data.frame("actors" = actors, "id" = 0:(l - 1))
+  
+  convert_name_id <- function(node_name) {
+    actors_t$id[which(actors_t$actors %in% node_name)]
+  }
+  
+  sankey_list <-
+    list(
+      nodes = data.frame("actors" = factor(actors_t$actors)),
+      links = data.frame(
+        "source" = sapply(source, convert_name_id, USE.NAMES = F),
+        "target" = sapply(target, convert_name_id, USE.NAMES = F),
+        "value" = value
+      )
+    )
+  sankey_list$nodes <- mutate(sankey_list$nodes,"nodecolor" = viridis(nlevels(sankey_list$nodes$actors), alpha = 0.6, option ="viridis"))
+  sankey_list$links <- mutate(sankey_list$links,"linkcolor" = viridis((nrow(sankey_list$links)*ncol(sankey_list$links)), alpha = 0.2, option ="viridis"))
+  return(sankey_list)
+}
+
+
+stb <- sankey_table(df[which(df$ESITO.CICLO%in%"CICLO IRREGOLARE"&df$CATEGORIA%in%"BRONCOSCOPIO"&!df$ALLARMI%in%"Nessun allarme rilevato"),],
+                    c("ALLARMI","NUMERO SERIALE STRUMENTO"))
+
+
+  p <- plot_ly(
+    type = "sankey",
+    orientation = "h",
+    arrangement = 'freeform',
+    
+    node = list(
+      
+      label=stb$nodes$actors,
+      thickness = 15,
+      pad=10,
+      color=stb$nodes$nodecolor,
+      line = list(color = "black",
+                  width = 0.5)
+    ),
+    
+    link = list(
+      source = stb$links$source,
+      target = stb$links$target,
+      value = stb$links$value,
+      color=stb$links$linkcolor
+      
+    )
+  ) 
+
+  ezsankey <- function(tab,nome){
+    stb <- sankey_table(tab,nome)
+    p <- plot_ly(
+      type = "sankey",
+      orientation = "h",
+      arrangement = 'freeform',
+      
+      node = list(
+        
+        label=stb$nodes$actors,
+        thickness = 15,
+        pad=10,
+        color=stb$nodes$nodecolor,
+        line = list(color = "black",
+                    width = 0.5)
+      ),
+      
+      link = list(
+        source = stb$links$source,
+        target = stb$links$target,
+        value = stb$links$value,
+        color=stb$links$linkcolor
+        
+      )
+    ) %>% 
+      layout(font = list(size = 14))
+    return(p)
+    
+  }
+
+  ezsankey(df[which(!df$ALLARMI%in%"Nessun allarme rilevato"&df$CATEGORIA%in%c("BRONCOSCOPIO","DUODENOSCOPIO")),],
+           c("ESITO.CICLO", "CATEGORIA","MATRICOLA", "ALLARMI"))
+
+              
