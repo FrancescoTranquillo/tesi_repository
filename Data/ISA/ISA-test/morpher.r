@@ -253,7 +253,7 @@ sankey_table <- function(tab,nome){
       )
     )
   sankey_list$nodes <- mutate(sankey_list$nodes,"nodecolor" = viridis(nlevels(sankey_list$nodes$actors), alpha = 0.6, option ="viridis"))
-  sankey_list$links <- mutate(sankey_list$links,"linkcolor" = viridis(nrow(sankey_list$links), alpha = 0.2, option ="viridis"))
+  sankey_list$links <- mutate(sankey_list$links,"linkcolor" = viridis(nrow(sankey_list$links), alpha = 0.3, option ="viridis"))
   return(sankey_list)
 }
 ezsankey <- function(tab,nome){
@@ -282,4 +282,10 @@ ezsankey <- function(tab,nome){
     layout(font = list(size = 14))
   return(p)
   
+}
+
+predict_median <- function(df_predizione){
+  lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>%
+  do.call("rbind",.) %>%
+  summarise_all(.,median,na.rm=T)
 }

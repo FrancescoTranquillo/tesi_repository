@@ -9,6 +9,7 @@
 
 library(shiny)
 library(shinydashboard)
+library(shinycssloaders)
 library(shinyalert)
 library(shinyWidgets)
 library(DT)
@@ -38,8 +39,9 @@ library(readr)
 library(tm)
 library(magrittr)
 library(tabulizer)
+library(viridis)
 rds <- as.list(list.files(here::here(),"*7_*"))
-modelli <- lapply(rds,function(x) readRDS(x))
+modelli <<- lapply(rds,function(x) readRDS(x))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
@@ -58,6 +60,9 @@ modulo_upload <- fileInput(
   accept = c("text/csv", "text/comma-separated-values,text/plain", ".txt"),
   multiple = T
 )
+modulo_calendario <- uiOutput("date")
+                                        
+
 
 # UI ----------------------------------------------------------------------
 
@@ -69,7 +74,7 @@ ui <- tagList(dashboardPage( skin = "green",
 
   dashboardHeader(title = "INSIGHT"),
   ## SIDEBAR -----------------------------------------------------------------
-  dashboardSidebar(sidebarMenu(
+  dashboardSidebar(width = 250,sidebarMenu(
     menuItem(
       tags$strong("Caricamento scontrini"),
       tabName = "cs",
@@ -79,6 +84,7 @@ ui <- tagList(dashboardPage( skin = "green",
 
     ),
     modulo_upload,
+    modulo_calendario,
     menuItem(
       startExpanded = T,
       tags$strong("Analisi"),
@@ -152,7 +158,16 @@ ui <- tagList(dashboardPage( skin = "green",
           ),
           column(
             width=9,
-            plotlyOutput("plot3")
+            tabBox(title = "Numero di cicli per operatore",width = NULL,
+                   tabPanel(title="Per macchina",
+                            plotlyOutput("plot3")
+                            ),
+                   tabPanel(title="Vista totale",
+                            plotlyOutput("totale"))
+                
+               
+                )
+           
           )
           
         )
@@ -182,7 +197,8 @@ ui <- tagList(dashboardPage( skin = "green",
             div(id='clickdiv3',
                 valueBoxOutput("ib3")),
             
-            valueBoxOutput("ib4"),
+            div(id='clickdiv4',
+                valueBoxOutput("ib4")),
             valueBoxOutput("cicli_reg_overview"),
             valueBoxOutput("cicli_irreg_overview")
           )),
@@ -239,6 +255,19 @@ ui <- tagList(dashboardPage( skin = "green",
             size="large",
             plotlyOutput("plot2")
           ),
+          bsTooltip("ib4",
+                    "Clicca per visualizzare lo storico delle previsioni",
+                    placement = "bottom",
+                    trigger = "hover",
+                    options = NULL
+                    ),
+          bsModal(
+            "Modal4",
+            "Storico previsioni guasti",
+            "clickdiv4",
+            size = "large",
+            dygraphOutput("prediction") %>% withSpinner(color="#28a745",type = 8)
+          ),
 
           fluidRow(column(
             width = 12,
@@ -266,7 +295,10 @@ ui <- tagList(dashboardPage( skin = "green",
                      width = NULL)
                  ),
           column(width = 9,
-                 plotlyOutput("plot_alarm_distr"))
+                 box(title = "Diagramma di flusso", solidHeader = T,status = "success",width = NULL,
+                   plotlyOutput("plot_alarm_distr"))
+                 )
+                 
           )
         ),
       
@@ -345,10 +377,30 @@ server <- function(input, output, session) {
 
     return(df)
   })
-  scontrino_df <- reactive({
+  date <- reactive({
     req(input$txt)
     df <- creazione_df()
-    df <- df[which(df$`NUMERO SERIALE LAVAENDOSCOPI` %in% input$picker_isa),]
+    dates <- tibble("min"=min(df$`INIZIO CICLO`),"max"=max(df$`INIZIO CICLO`))
+    return(dates)
+  })
+  
+  date_selezionate <- reactive({
+    req(input$date)
+    if(length(input$date)>1){
+      giorni <- seq(from=input$date[1],to=input$date[2],by=1)
+      return(giorni)
+    } else
+      return(input$date)
+    
+  })
+  
+  scontrino_df <- reactive({
+    req(date_selezionate())
+    
+    giorni <- date_selezionate()
+    df <- creazione_df()
+    df <- df[which(df$`NUMERO SERIALE LAVAENDOSCOPI` %in% input$picker_isa &
+                     as.Date(df$`INIZIO CICLO`) %in% giorni),]
     return(df)
   })
   
@@ -433,6 +485,10 @@ server <- function(input, output, session) {
     data <- scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &
                                    scontrino_df()$CATEGORIA %in%input$picker_str2 &
                                    scontrino_df()$`MODELLO DELLO STRUMENTO` %in% input$picker_sn ),]
+    if(nrow(data)==0){
+      sendSweetAlert(session = session,title = "Impossibile tracciare diagramma di flusso",
+                     type = "error",text = "La combinazione scelta non ha prodotto risultati",closeOnClickOutside = F )
+    }
     p <- ezsankey(tab = data,nome =c("CATEGORIA","MODELLO DELLO STRUMENTO", "NUMERO SERIALE STRUMENTO","ALLARMI","NUMERO SERIALE LAVAENDOSCOPI") )
     return(p)
     
@@ -631,9 +687,12 @@ server <- function(input, output, session) {
 
   # INFOBOX DELLA PREDIZIONE
   output$ib4 <- renderValueBox({
+    req(scontrino_df())
+    n <- length(input$picker_isa)
+    df <- scontrino_df()
     valueBox(
-      paste0(round((predizione()$pos)*100,digits = 2),"%"),
-      subtitle = strong("Probabilità di guasto nei prossimi 7 giorni di utilizzo"),
+      n,
+      subtitle = strong("Lavaendoscopi analizzate"),
       icon = icon("robot",lib = "font-awesome"),
       color = "teal"
     )
@@ -745,9 +804,47 @@ server <- function(input, output, session) {
         facet_wrap(vars(ESITO.CICLO, `NUMERO SERIALE LAVAENDOSCOPI`))
       
     return(g)
-      }) 
+      })
+  scelta_totale <- reactive({
+    
+    req(length(input$opzioni)>0)
+    if(length(input$opzioni)==1){
+      filtro <- scontrino_df()[which(scontrino_df()$OPERATORE%in%input$picker_op & scontrino_df()$ESITO.CICLO%in%sceltacicli()),]
+      req(nrow(filtro) > 0)
+      g <- ggplot(data = filtro) +
+        aes(x = OPERATORE) +
+        geom_bar(aes(fill=CATEGORIA),
+                 color="black",
+                 width = 0.8,size=0.2,alpha=0.8) +
+        geom_text(stat="count",
+                  aes(label=..count..),
+                  nudge_x=0,nudge_y=0.30)+
+        scale_fill_viridis_d(option  = "viridis",direction = -1)+
+        theme_minimal()
+    } else
+      filtro <- scontrino_df()[which(scontrino_df()$OPERATORE%in%input$picker_op),]
+    req(nrow(filtro) > 0)
+    g <- ggplot(data = filtro) +
+      aes(x = OPERATORE) +
+      geom_bar(aes(fill=CATEGORIA),
+               color="black",
+               width = 0.8,size=0.2,alpha=0.8) +
+      geom_text(stat="count",
+                aes(label=..count..),
+                nudge_x=0,nudge_y=0.30)+
+      scale_fill_viridis_d(option  = "viridis",direction = -1)+
+      theme_minimal()+
+      facet_wrap(vars(ESITO.CICLO))
+    
+    return(g)
+    
+    
+  })
   output$plot3 <- renderPlotly({
     sceltaplot()
+  })
+  output$totale <- renderPlotly({
+    scelta_totale()
   })
   output$plot4 <- renderPlotly({
     ggplot(data = scontrino_df()[-which(scontrino_df()$ALLARMI=="Nessun allarme rilevato"),]) +
@@ -771,6 +868,21 @@ server <- function(input, output, session) {
       dyOptions(colors = c("red", "green"),
                 stepPlot = TRUE)
   })
+  output$prediction <- renderDygraph({
+    df_xts <- predizione()
+    dygraph(df_xts) %>%
+      dyRangeSelector() %>%
+      dyRoller(rollPeriod = 4) %>%
+      dyAxis("y", label = "Probabilità di guasto nei successivi 7 giorni", valueRange = c(0, 1)) %>% 
+      dyLegend(show = "follow")
+    
+      # dyHighlight(
+      #   highlightCircleSize = 5,
+      #   highlightSeriesBackgroundAlpha = 0.4,
+      #   hideOnMouseOut = TRUE,
+      #   highlightSeriesOpts = list(strokeWidth = 3)
+      # )
+  })
   output$plot_alarm_distr <- renderPlotly({
     # ggplot(data = scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &scontrino_df()$CATEGORIA %in%input$picker_str2 ),]) +
     #   aes(x = `NUMERO SERIALE LAVAENDOSCOPI`) +
@@ -790,6 +902,9 @@ server <- function(input, output, session) {
 
 
   predizione <- reactive({
+    req(input$picker_isa)
+    giorni <- unique(as.Date(scontrino_df()$`INIZIO CICLO`))
+    
 
     df_ib <- scontrino_df()
     df_ib %<>% mutate("GIORNO" = factor(cut.Date(
@@ -799,17 +914,37 @@ server <- function(input, output, session) {
     )))
 
     df_giorni <- as.list(split(df_ib, f = df_ib$GIORNO))
-    df <- last(df_giorni)
-
-    df_predizione <- meta(df)
-    risultati <- lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>%
-      do.call("rbind",.) %>%
-      summarise_all(.,median,na.rm=T)
-    return(risultati)
+    df_giorni_sn <- lapply(df_giorni, function(df) split(df, f = df$`NUMERO SERIALE LAVAENDOSCOPI`))
+    df_pred_sn <- lapply(df_giorni_sn, function(giorno) lapply(giorno, function(df) meta(df)))
+    predizioni <- lapply(df_pred_sn, function(giorno) lapply(giorno, predict_median))
+    
+    df_ts <- lapply(predizioni, function(giorno) as.tibble(lapply(giorno, function(df) df$pos) )) %>%
+      do.call("rbind",.) %>% mutate(.,"t"=giorni) 
+    
+    df_xts <- xts(df_ts[,-ncol(df_ts)],order.by = df_ts$t)
+    # 
+    # df <- last(df_giorni)
+    # 
+    # df_predizione <- meta(df)
+    # 
+    # 
+    # risultati <- lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>%
+    #   do.call("rbind",.) %>%
+    #   summarise_all(.,median,na.rm=T)
+    return(df_xts)
   })
 
 
 # controlli ---------------------------------------------------------------
+output$date <- renderUI({
+  req(input$txt)
+  airDatepickerInput(minDate = date()$min, maxDate = date()$max,
+                     "date", label = NULL, value = NULL,
+                     multiple = T, range = T, separator = " - ",
+                     placeholder = "Seleziona una data o un intervallo di date", dateFormat = "yyyy-mm-dd",
+                     view = c("days", "months", "years"),  clearButton = T,
+                     autoClose = T)
+})  
 output$picker_str <- renderUI({
   req(input$txt)
   pickerInput(
@@ -846,7 +981,7 @@ output$picker_op <- renderUI({
     )
   })
 output$picker_isa <- renderUI({
-  req(input$txt)
+  req(input$date)
   pickerInput(
     inputId = "picker_isa",
     label = "Seleziona una macchina",
