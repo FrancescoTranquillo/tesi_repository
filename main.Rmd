@@ -1,6 +1,6 @@
 ---
 bibliography: My Library.bib
-csl: style.csl
+# csl: style.csl
 fontsize: 10pt
 geometry: asymmetric
 header-includes:

@@ -115,7 +115,8 @@ ui <- tagList(dashboardPage( skin = "green",
       )
 
 
-    )
+    ),
+    tags$img(src="logo_transparent (3).png", height=250,width=250)
 
   )),
 
@@ -180,7 +181,8 @@ ui <- tagList(dashboardPage( skin = "green",
         br(),
         br(),
         h4("Alcuni scontrini sono disponibili al seguente ",a("link", href="https://drive.google.com/drive/folders/1HVTU2cPdoGsUC9x6dBFchgi8hIMTWxHT"),", scaricabili ed utilizzabili per testare le funzionalità di INSIGHT"),
-        h4("I file sono situati all'interno dell'archivio.")
+        h4("I file sono situati all'interno dell'archivio."),
+        h4("Il manuale utente è consultabile ", a("qui", href="https://francesco-tranquillo.gitbook.io/workspace/"))
         
       ),
       tabItem(
@@ -746,7 +748,7 @@ server <- function(input, output, session) {
         
         theme_minimal() +
         theme(axis.text.x=element_text(angle = 35, hjust = 0))+
-        labs(y = "Numero di cicli effettuati",x="Categoria strumento")+
+        labs(y = "Numero di cicli effettuati", x="\n Categoria di strumento")+
         facet_wrap(vars(`NUMERO SERIALE LAVAENDOSCOPI`))
       
     )
