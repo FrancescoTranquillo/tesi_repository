@@ -1,10 +1,23 @@
-\babel@toc {italian}{}
-\babel@toc {italian}{}
-\contentsline {section}{Sommario}{I}{section*.1}% 
-\contentsline {section}{Abstract}{II}{section*.2}% 
-\contentsline {section}{\numberline {1}Manutenzione predittiva}{1}{section.1}% 
-\contentsline {subsection}{\numberline {1.1}Origine storica e inquadramento normativo}{1}{subsection.1.1}% 
-\contentsline {subsubsection}{\numberline {1.1.1}Industria 4.0 e tecnologie emergenti}{1}{subsubsection.1.1.1}% 
-\contentsline {subsubsection}{\numberline {1.1.2}Il contesto normativo}{2}{subsubsection.1.1.2}% 
-\contentsline {subsection}{\numberline {1.2}Metodi analitici di predizione}{3}{subsection.1.2}% 
-\contentsline {section}{Bibliografia}{4}{section*.6}% 
+\select@language {italian}
+\select@language {italian}
+\contentsline {section}{Sommario}{I}{section*.1}
+\contentsline {section}{Abstract}{II}{section*.2}
+\contentsline {section}{\numberline {1}L'ASST di Vimercate}{III}{section.1}
+\contentsline {subsubsection}{\numberline {1.0.1}Polo Ospedaliero}{IV}{subsubsection.1.0.1}
+\contentsline {subsubsection}{\numberline {1.0.2}Rete Territoriale}{IV}{subsubsection.1.0.2}
+\contentsline {subsubsection}{\numberline {1.0.3}La Missione Aziendale}{V}{subsubsection.1.0.3}
+\contentsline {section}{\numberline {2}Manutenzione predittiva}{VII}{section.2}
+\contentsline {subsection}{\numberline {2.1}Origine storica e inquadramento normativo}{VII}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Industria 4.0 e tecnologie emergenti}{VII}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Il contesto normativo}{VIII}{subsubsection.2.1.2}
+\contentsline {subsection}{\numberline {2.2}Metodi analitici di predizione}{IX}{subsection.2.2}
+\contentsline {section}{\numberline {3}L'ASST di Vimercate 2}{X}{section.3}
+\contentsline {subsubsection}{\numberline {3.0.1}Polo Ospedaliero}{X}{subsubsection.3.0.1}
+\contentsline {subsubsection}{\numberline {3.0.2}Rete Territoriale}{XI}{subsubsection.3.0.2}
+\contentsline {subsubsection}{\numberline {3.0.3}La Missione Aziendale}{XI}{subsubsection.3.0.3}
+\contentsline {section}{\numberline {4}Manutenzione predittiva}{1}{section.4}
+\contentsline {subsection}{\numberline {4.1}Origine storica e inquadramento normativo}{1}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Industria 4.0 e tecnologie emergenti}{1}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Il contesto normativo}{2}{subsubsection.4.1.2}
+\contentsline {subsection}{\numberline {4.2}Metodi analitici di predizione}{3}{subsection.4.2}
+\contentsline {section}{Bibliografia}{4}{section*.6}

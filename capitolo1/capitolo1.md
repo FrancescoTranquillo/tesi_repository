@@ -53,7 +53,7 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 
 Nella \ref{londra} si vede bene il cazzo di Tamigi
 
-![Londra test\label{londra}](img/1.jpg "Londra")
+![Londra test la didascalia va scritta nella definizione dell'immagine. A fine didascalia deve esserci: '\label' \label{londra}](img/1.jpg "Londra")
 
 ### La Missione Aziendale
 La missione dell’Azienda è quella di contribuire alla promozione, al mantenimento e al recupero delle condizioni di salute della popolazione, erogando prestazioni sia sanitarie sia sociosanitarie, secondo standard di eccellenza, di media e elevata complessità, nel rispetto della dignità della persona, del bisogno di salute, dell’equità dell’accesso all’assistenza, della qualità delle cure e della loro appropriatezza, dell’economicità nell’impiego delle risorse ed in coerenza con i principi e gli obiettivi definiti dal Piano Sanitario Nazionale e dal Piano Sanitario Regionale.

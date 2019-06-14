@@ -35,6 +35,15 @@ output:
 ```{r child='sommario_abstract.rmd'}
 ```
 \pagebreak
+```{r child='capitolo1/capitolo1.md'}
+```
+\pagebreak
+```{r child='capitolo predittiva/predittiva.md'}
+```
+\pagebreak
+```{r child='capitolo2.md'}
+```
+\pagebreak
 \tableofcontents
 \newpage
 \listoffigures
