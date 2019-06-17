@@ -483,7 +483,6 @@ server <- function(input, output, session) {
   
   sankey <- reactive({
     req(input$picker_alarms)
-    req(input$picker_str2)
     data <- scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &
                                    scontrino_df()$CATEGORIA %in%input$picker_str2 &
                                    scontrino_df()$`MODELLO DELLO STRUMENTO` %in% input$picker_sn ),]
@@ -491,7 +490,7 @@ server <- function(input, output, session) {
       sendSweetAlert(session = session,title = "Impossibile tracciare diagramma di flusso",
                      type = "error",text = "La combinazione scelta non ha prodotto risultati",closeOnClickOutside = F )
     }
-    p <- ezsankey(tab = data,nome =c("CATEGORIA","MODELLO DELLO STRUMENTO", "NUMERO SERIALE STRUMENTO","ALLARMI","NUMERO SERIALE LAVAENDOSCOPI") )
+    p <- ezsankey(tab = data,nome =c("CATEGORIA","MODELLO DELLO STRUMENTO","ALLARMI", "NUMERO SERIALE STRUMENTO","NUMERO SERIALE LAVAENDOSCOPI") )
     return(p)
     
     
