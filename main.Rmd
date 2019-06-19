@@ -1,9 +1,13 @@
 ---
 bibliography: My Library.bib
-# csl: style.csl 
+csl: ieee.csl
 fontsize: 10pt
 geometry: asymmetric
 header-includes:
+  # - \PassOptionsToPackage{hyphens}{url}
+  # - \usepackage{url}
+  # # - \def\UrlBreaks{\do\/\do-}
+  # - \def\UrlBreaks{\do\/\do-\do?\do.}
   - \usepackage[italian]{babel}
   - \usepackage{placeins}
   - \usepackage{setspace}
@@ -13,6 +17,7 @@ header-includes:
   - \counterwithin{table}{section}
   - \evensidemargin=0in
   - \oddsidemargin=0.5in
+
 linestretch: 1.5
 link-citations: yes
 output:
@@ -29,33 +34,22 @@ output:
 
 ```{r child='dedica.rmd'}
 ```
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
 \cleardoublepage
 \pagenumbering{Roman}
 
 ```{r child='sommario_abstract.rmd'}
 ```
 \pagebreak
-```{r child='capitolo1/capitolo1.md'}
+\pagenumbering{arabic}
+```{r child='introduzione/introduzione.md'}
 ```
 \pagebreak
-```{r child='capitolo predittiva/predittiva.md'}
-```
-\pagebreak
-```{r child='capitolo2.md'}
-```
-\pagebreak
-\tableofcontents
-\newpage
-\listoffigures
-\newpage
-\listoftables
 
-
-
-\pagebreak
-\pagenumbering{arabic} 
-```{r child='capitolo predittiva/predittiva.md'}
-```
 \pagebreak
 
 # Bibliografia

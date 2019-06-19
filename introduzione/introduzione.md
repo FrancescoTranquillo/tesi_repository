@@ -1,14 +1,12 @@
 # L'ASST di Vimercate
 
+Il presente lavoro di tesi è frutto dell'esperienza di tirocinio svolta presso l'ASST Vimercate nel periodo Marzo-Ottobre 2019.
 
-L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.[@khanRealTimeAnalysisSensor2018]
+Di seguito si riporta quanto indicato sul sito dell'ASST [@AziendaSocioSanitariaTerritorialeb].
 
-[@pandeyGetFasterPandas2019]
+L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.
 
-
-
-
-L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015.<br>
+L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015 [@BancaDatiConsiglio].
 
 Le ASST si articolano in due settori aziendali rispettivamente definiti rete territoriale e polo ospedaliero.<br>
 
