@@ -2,11 +2,11 @@
 
 Il presente lavoro di tesi è frutto dell'esperienza di tirocinio svolta presso l'ASST Vimercate nel periodo Marzo-Ottobre 2019.
 
-Di seguito si riporta quanto indicato sul sito dell'ASST [@AziendaSocioSanitariaTerritorialeb].
+Di seguito si riporta quanto indicato sul sito dell'ASST [@noauthor_azienda_nodate].
 
 L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.
 
-L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015 [@BancaDatiConsiglio].
+L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015 [@noauthor_evoluzione_nodate].
 
 Le ASST si articolano in due settori aziendali rispettivamente definiti rete territoriale e polo ospedaliero.<br>
 
@@ -17,12 +17,10 @@ A|B|C
 23|45|67
 
 
-
-
 \pagebreak
 
-Il settore aziendale rete territoriale eroga prestazioni specialistiche, di prevenzione sanitaria, diagnosi, cura e riabilitazione a media e bassa complessità, le cure intermedie e garantisce le funzioni e le prestazioni medico-legali. Il settore rete territoriale eroga, altresì, le prestazioni distrettuali fornite alle persone, che erano erogate dalle ASL ad eccezione di quelle ora espressamente attribuite alle ATS, tra cui: assistenza specialistica ambulatoriale, servizi per la prevenzione e la cura delle tossicodipendenze, servizi consultoriali, servizi per disabili, anziani, cronici e fragili, assistenza domiciliare integrata [@sezdiTwoDifferentMaintenance2016].
-[@nachieroFlessibilitaNelleStrutture2010]
+Il settore aziendale rete territoriale eroga prestazioni specialistiche, di prevenzione sanitaria, diagnosi, cura e riabilitazione a media e bassa complessità, le cure intermedie e garantisce le funzioni e le prestazioni medico-legali. Il settore rete territoriale eroga, altresì, le prestazioni distrettuali fornite alle persone, che erano erogate dalle ASL ad eccezione di quelle ora espressamente attribuite alle ATS, tra cui: assistenza specialistica ambulatoriale, servizi per la prevenzione e la cura delle tossicodipendenze, servizi consultoriali, servizi per disabili, anziani, cronici e fragili, assistenza domiciliare integrata [@sezdi_two_2016].
+[@nachiero_flessibilita_2010]
 
 
 

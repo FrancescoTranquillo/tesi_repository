@@ -1,9 +1,9 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {section}{Sommario}{I}{section*.4}% 
-\contentsline {section}{Abstract}{1}{section*.5}% 
-\contentsline {section}{\numberline {1}L'ASST di Vimercate}{2}{section.1}% 
-\contentsline {subsubsection}{\numberline {1.0.1}Polo Ospedaliero}{3}{subsubsection.1.0.1}% 
-\contentsline {subsubsection}{\numberline {1.0.2}Rete Territoriale}{3}{subsubsection.1.0.2}% 
-\contentsline {subsubsection}{\numberline {1.0.3}La Missione Aziendale}{4}{subsubsection.1.0.3}% 
-\contentsline {section}{Bibliografia}{6}{section*.6}% 
+\contentsline {section}{Sommario}{I}{section*.4}
+\contentsline {section}{Abstract}{1}{section*.5}
+\contentsline {section}{\numberline {1}L'ASST di Vimercate}{2}{section.1}
+\contentsline {subsubsection}{\numberline {1.0.1}Polo Ospedaliero}{3}{subsubsection.1.0.1}
+\contentsline {subsubsection}{\numberline {1.0.2}Rete Territoriale}{3}{subsubsection.1.0.2}
+\contentsline {subsubsection}{\numberline {1.0.3}La Missione Aziendale}{4}{subsubsection.1.0.3}
+\contentsline {section}{Bibliografia}{6}{section*.6}
