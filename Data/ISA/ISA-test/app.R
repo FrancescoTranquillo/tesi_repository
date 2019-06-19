@@ -41,7 +41,7 @@ library(magrittr)
 library(tabulizer)
 library(viridis)
 rds <- as.list(list.files(here::here(),"*7_*"))
-modelli <<- lapply(rds,function(x) readRDS(x))
+modelli <<- lapply(rds,function(x) readRDS(here(x)))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
