@@ -78,7 +78,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 
 
 backprop <- function(giorno){
-  as.list(seq(from=giorno,to =giorno-5,by = -1))
+  as.list(seq(from=giorno,to =giorno-6,by = -1))
 }
 # ------------------------------------------------------------------------
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -110,6 +110,7 @@ meta <- function(bag) {
   cbind("TARGET" = bag$BAG_FLAG, tfidf)
   
 }
+df$testo <- iconv(enc2utf8(df$testo),sub="byte")
 testo_corpus <- VCorpus(VectorSource(df$testo))
 testo_corpus_clean<-clean_corpus(testo_corpus)
 testo_dtm<- DocumentTermMatrix(testo_corpus_clean)
@@ -155,13 +156,13 @@ levels(df_meta_test$TARGET) <- c("neg", "pos")
 # al gruppo flag = 1 (scontrini 5 giorni prima di un guasto)
 
 df_pos <- df[which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "6 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "7 days",labels = F)))
 df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
 #le righe con flag=1 sono le bag positive
 
 #bag "negative", separate in bags da 5 giorni
 df_neg <- df[-which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "6 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "7 days",labels = F)))
 df_neg_bag <- as.list(split(df_neg,f = df_neg$BAG))
 
 # assegno ad ogni elemento delle bag create il flag 1 o 0
@@ -242,7 +243,7 @@ fitControl <- trainControl(method = "repeatedcv",
 nn <-
   train(TARGET~., 
         data=tm_training,
-        method = 'svmLinear2',
+        method = 'pcaNNet',
         trControl = fitControl,
         tuneLength=4,
         # maxit=200,
@@ -262,8 +263,17 @@ mcc(preds = predictions, df_meta_test$TARGET)
 # saveRDS(nn, here("tm_bag_prediction7_glm.rds"))
 # saveRDS(nn, here("tm_bag_prediction7_bayesglm.rds"))
 # saveRDS(nn, here("tm_bag_prediction7_pcannet.rds"))
+
+#linux
+# saveRDS(nn, here("linux_tm_bag_prediction7_neuralnet.rds"))
+# saveRDS(nn, here("linux_tm_bag_prediction7_naivebayes.rds"))
+# saveRDS(nn, here("linux_tm_bag_prediction7_glm.rds"))
+# saveRDS(nn, here("linux_tm_bag_prediction7_bayesglm.rds"))
+# saveRDS(nn, here("linux_tm_bag_prediction7_pcannet.rds"))
 plotnet(nn)
 
+#linux
+# modelli <- lapply(as.list(list.files(here(),"linux")),read_rds)
 modelli <- lapply(as.list(list.files(here(),"*7_*")),read_rds)
 l_predictions <- lapply(modelli, function(modello) predict(modello, df_meta_test))
 
@@ -296,5 +306,8 @@ performance <- lapply(l_predictions,
 tabella_performance <- cbind(nomi_modelli,performance)
 tabella_performance
 write.csv(tabella_performance, here("tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
+
+#linux
+# write.csv(tabella_performance, here("linux_tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
 
 
