@@ -1,10 +1,11 @@
 ---
 output: pdf_document
 ---
+
 # Sommario {-}
 Il  sommario  deve  contenere  3  o  4  frasi  tratte  dall’introduzione  di  cui  la prima  inquadra  l’area  dove  si  svolge  il  lavoro  (eventualmente  la  seconda inquadra la sottoarea più specifica del lavoro),  la seconda o la terza frase dovrebbe iniziare con le parole “Lo scopo della tesi è...”  e infine la terza o quarta frase riassume brevemente l’attività svolta, i risultati ottenuti e deventuali valutazioni di questi.
-
-\pagebreak
+ 
+\newpage
 
 # Abstract {-}
 The abstract must contains 3 or 4 sentences from the introduction. The first one should be related to the area of the study, with the second one more, possibly, specific about the same area. The third one should start with the formula: "The goal of this dissertation is...". Finally, the fourth sentence should be a brief summary of the activity, with the relatives results and possible evaluation of the same.

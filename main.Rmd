@@ -1,6 +1,6 @@
 ---
 bibliography: My Library.bib
-csl: ieee.csl
+csl: style.csl
 fontsize: 10pt
 geometry: asymmetric
 header-includes:
@@ -34,22 +34,23 @@ output:
 
 ```{r child='dedica.rmd'}
 ```
+\newpage
+\pagenumbering{Roman}
 \tableofcontents
 \newpage
 \listoffigures
 \newpage
 \listoftables
 \cleardoublepage
-\pagenumbering{Roman}
-
 ```{r child='sommario_abstract.rmd'}
 ```
-\pagebreak
+\newpage
 \pagenumbering{arabic}
 ```{r child='introduzione/introduzione.md'}
 ```
 \pagebreak
-
+```{r child='capitolo2/capitolo2.md'}
+```
 \pagebreak
 
 # Bibliografia

@@ -1,30 +1,27 @@
-# L'ASST di Vimercate
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# L'ASST Vimercate
+## Organizzazione
 
-Il presente lavoro di tesi è frutto dell'esperienza di tirocinio svolta presso l'ASST Vimercate nel periodo Marzo-Ottobre 2019.
+Il presente lavoro di tesi è frutto dell'esperienza di tirocinio svolta presso l'ASST Vimercate da Marzo a Ottobre 2019.
 
-Di seguito si riporta quanto indicato sul sito dell'ASST [@noauthor_azienda_nodate].
+Di seguito si riporta quanto indicato sul sito dell'ASST [@AziendaSocioSanitariaTerritoriale].
 
 L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.
 
-L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015 [@noauthor_evoluzione_nodate].[@VersoVeraPredictive2018]
+L'attuale assetto organizzativo dell’Azienda deriva dalla riorganizzazione del Sistema Socio-Sanitario Lombardo conseguente all’approvazione della L.R. n. 23 del 11 agosto 2015.
 
 Le ASST si articolano in due settori aziendali rispettivamente definiti rete territoriale e polo ospedaliero.<br>
 
-Il settore aziendale polo ospedaliero si articola in presidi ospedalieri e/o in dipartimenti organizzati in diversi livelli di intensità di cura, tecnologica e organizzativa, in coerenza con la normativa nazionale.<br>  
+Il settore aziendale polo ospedaliero si articola in presidi ospedalieri e/o in dipartimenti organizzati in diversi livelli di intensità di cura, tecnologica e organizzativa, in coerenza con la normativa nazionale.<br>
 
-A|B|C
--|-|-
-23|45|67
-
-
-\pagebreak
-
-Il settore aziendale rete territoriale eroga prestazioni specialistiche, di prevenzione sanitaria, diagnosi, cura e riabilitazione a media e bassa complessità, le cure intermedie e garantisce le funzioni e le prestazioni medico-legali. Il settore rete territoriale eroga, altresì, le prestazioni distrettuali fornite alle persone, che erano erogate dalle ASL ad eccezione di quelle ora espressamente attribuite alle ATS, tra cui: assistenza specialistica ambulatoriale, servizi per la prevenzione e la cura delle tossicodipendenze, servizi consultoriali, servizi per disabili, anziani, cronici e fragili, assistenza domiciliare integrata [@sezdi_two_2016].
-[@nachiero_flessibilita_2010]
-
-
+Il settore aziendale rete territoriale eroga prestazioni specialistiche, di prevenzione sanitaria, diagnosi, cura e riabilitazione a media e bassa complessità, le cure intermedie e garantisce le funzioni e le prestazioni medico-legali. Il settore rete territoriale eroga, altresì, le prestazioni distrettuali fornite alle persone, che erano erogate dalle ASL ad eccezione di quelle ora espressamente attribuite alle ATS, tra cui: assistenza specialistica ambulatoriale, servizi per la prevenzione e la cura delle tossicodipendenze, servizi consultoriali, servizi per disabili, anziani, cronici e fragili, assistenza domiciliare integrata.
 
 ### Polo Ospedaliero
+Si riportano le strutture facenti parte del Polo Ospedaliero:
 
 - Ospedale Vittorio Emanuele III a Carate Brianza
 - Ospedale C. Borella a Giussano
@@ -47,11 +44,54 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 - Nuchlei operativi alcologia di Seregno, Vimercate
 - Servizio dipendenze di Carate Brianza
 
-Nella \ref{londra} si vede bene il cazzo di Tamigi
-
-![Londra test la didascalia va scritta nella definizione dell'immagine. A fine didascalia deve esserci: '\label' \label{londra}](img/1.jpg "Londra")
-
 ### La Missione Aziendale
 La missione dell’Azienda è quella di contribuire alla promozione, al mantenimento e al recupero delle condizioni di salute della popolazione, erogando prestazioni sia sanitarie sia sociosanitarie, secondo standard di eccellenza, di media e elevata complessità, nel rispetto della dignità della persona, del bisogno di salute, dell’equità dell’accesso all’assistenza, della qualità delle cure e della loro appropriatezza, dell’economicità nell’impiego delle risorse ed in coerenza con i principi e gli obiettivi definiti dal Piano Sanitario Nazionale e dal Piano Sanitario Regionale.
 
 L’Azienda intende strutturare un sistema “che si prenda cura” della persona e del suo benessere, collaborando attivamente con tutti gli attori del Sistema Socio-Sanitario, al fine di perseguire l’obiettivo di rafforzare nel cittadino la percezione di un’identità comune, garantendo così a tutti parità di accesso ai servizi.
+
+### Il presidio di Vimercate
+Nella \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
+
+![Ospedale di Vimercate, ingresso \label{os1}](img/ospedale.jpg)
+
+
+Il Presidio di Vimercate vanta una storia millenaria: nacque, grazie all'azione dei Monaci di Sant'Ambrogio, come ricovero per pellegrini nell'833 con il nome di “L’Hospitale di San Damiano”. Fu ribattezzato nel 1447 dapprima con il nome di "Hospitale di San Giuseppe" e quindi "Hospitale Pauperum", infine venne indicato con il nome di "Hospitale del Borgo di Vicomercato", a seguito di un'opera di riorganizzazione indotta dall'allora arcivescovo di Milano, Enrico Rampini.
+Nel 1778, sotto la spinta del Conte Trotti, sovrintendente dell'ospedale, il nosocomio venne ristrutturato e si costruì un nuovo fabbricato, l'"Opera Pia ed Ospitale dei Poveri e luoghi Pii Uniti di Vimercate" inaugurato nel 1783 e tuttora esistente.
+Altri interventi di ristrutturazione e di riforma portarono alla costruzione nel 1926 dell'Ospedale di Circolo, nel 1937 del Padiglione Sanitario, nel 1954 del Dispensario, nel 1958 del Padiglione Maternità, e nel 1961 del Poliambulatorio Inam. Nel 1973 venne inaugurato il primo monoblocco chirurgico: Vimercate diventò il presidio ospedaliero della Ussl 60, e nel 1995 della Ussl 28.
+
+Dal gennaio 1998 Vimercate è l'Ospedale capofila dell'Azienda Ospedaliera "Ospedale Civile di Vimercate", ridenominata nell'anno 2009 "Azienda Ospedaliera di Desio e Vimercate".
+
+Importante è sottolineare che dal 30 ottobre 2010 l'Ospedale di Vimercate ha iniziato una nuova vita: l'attività si è infatti trasferita nella nuova sede di via Santi Cosma e Damiano, nel Nuovo Complesso Ospedaliero voluto, insieme a Como, Legnano, Milano Niguarda e Bergamo, dalla Giunta Regionale lombarda.
+
+Il nuovo Ospedale, vero fiore all'occhiello dell'Azienda, progettato dall'arch. Mario Botta e costruito in soli tre anni, si sviluppa su tre piani fuori terra e due interrati, per una superficie totale di 113.000 mq (nella figura \ref{os2} si riporta una ricostruzione di una visualizzazione aerea tratta dai piani di costruzione del nuovo Ospedale [@pessinacostruzioniPessinaCostruzioni2009]).
+
+![Ospedale di Vimercate, vista aerea \label{os2}](img/ospedale-aereo.png)
+
+L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre al centro dei percorsi logistici e diagnostico-terapeutici il paziente, con le sue patologie e il suo vissuto familiare e sociale; anche per questo motivo l'assistenza è organizzata secondo il modello per intensità di cura.
+
+## L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate
+
+### Organizzazione e attivià della Struttura
+L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica partecipa alla cura della salute garantendo un uso sicuro, appropriato, efficiente ed economico delle apparecchiature elettromedicali in dotazione all’Azienda. L’U.O.C. Ingegneria Clinica si articola territorialmente con una sede centrale a Vimercate e un ufficio a Carate, è diretta da un Ingegnere Biomedico e si avvale delle seguenti risorse umane:
+* 2 collaboratori tecnici
+* 2 assistenti tecnici
+* 1 collaboratore amministrativo
+
+La Struttura si occupa dell’aspetto gestionale e strategico delle tecnologie biomediche, svolgendo un ruolo di supporto alla Direzione Strategica attraverso:
+
+- La programmazione e la valutazione degli acquisti
+- La manutenzione delle apparecchiature elettromedicali in dotazione all’Azienda
+- Valutazioni di Hospital Based Health Technology Assessment finalizzate all’introduzione di nuove tecnologie ed ottimizzazione nell’utilizzo delle risorse tecnologiche a disposizione.
+
+La Struttura svolge la propria attività coordinandosi con altre strutture
+tecniche, amministrative, con il personale sanitario dirigente e del comparto per il perseguimento di obiettivi comuni e la realizzazione di attività e progetti di interesse aziendale.
+Le principali attività svolte all’interno dell’U.O.C. Ingegneria Clinica comprendono:
+- **Gestione strategica degli investimenti**:
+  effettuata mediante azioni di ricognizione delle esigenze (in supporto alla Direzione Strategica), attività di programmazione delle acquisizioni di apparecchiature elettromedicali attraverso strategie di Health Technology Assessment, attività di supporto alla U.O.C. Approvigionamenti per la predisposizione di capitolati di fornitura tramite elaborazione di fabbisogni e dettagli tecnici necessari e infine attività di valutazione tecnica delle offerte pervenute e partecipazione alle commissioni giudicatrici.
+- **Gestione tecnica e operativa**:
+  include la gestione e la supervisione delle attività facenti parte del "ciclo di vita" delle tecnologie biomedicali (accettazione e collaudo, manutenzione correttiva, preventiva, straordinaria, verifiche elettriche, controlli qualità, gestione database tecnico delle apparecchiature, training degli operatori, dismissione) tramite il supporto di un servizio di manutenzione esternalizzata e contratti con i produttori.
+- **Gestione dei contratti**:
+  le specifiche competenze sono relative all’esecuzione dei contratti di manutenzione, acquisizione in noleggio o proprietà di apparecchiature elettromedicali.
+
+## L'attività di manutenzione
+La gestione delle attività di manutenzione, come visto nel precedente paragrafo, rientra in una delle principali competenze del Servizio di Ingegneria Clinica (SIC), ovvero la gestione tecnica e operativa. In particolare, l'Azienda, come da Captiolato Speciale di Appalto delle Apparecchiature Elettromedicali, si avvale dal dicembre 2015 del servizio di manutenzione esternalizzata erogato da un'azienda di Global Service (Tecnologie Sanitarie S.p.A.), la quale si occupa delle attività di manutenzione (correttiva, preventiva, verifiche elettriche, controlli qualità) secondo quanto stabilito dal contratto di ingaggio.
