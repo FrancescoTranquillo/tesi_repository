@@ -1,0 +1,4 @@
+# La manutenzione predittiva in Ospedale: l'esperienza di Vimercate
+
+In questo capitolo si parlerà dell'applicabilità di una strategia di manutenzione predittiva nell'ambito dell'Ospedale di Vimercate. In questi termini, verrà indicata innanzitutto la modalità di ricerca intrapresa al fine di identificare la classe di dispositivi di maggiore interesse e quella più adatta per essere analizzata con l'obiettivo di progettare e applicare un programma di manutenzione predittiva.
+Si indagheranno quindi i requisiti necessari per l'applicabilità di questa tipologia di manutenzione, andando poi a valutare il parco macchine presente in ospedale dal punto di vista dell'applicabilità stessa. Nella seconda metà del capitolo verrà quindi riportato il risultato della ricerca preliminare e si evidenzieranno, oltre ai risultati ottenuti dal punto di vista di algoritmi sviluppati, le criticità e le limitazioni incontrate.

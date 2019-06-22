@@ -1,0 +1,3 @@
+# La manutenzione dei dispositivi medici
+
+Nella prima parte di questo capitolo verranno introdotte le definizioni di "dispositivo medico", "manutenzione correttiva" e "manutenzione preventiva" secondo le norme attualmente in vigore. Successivamente verranno illustrate le principali strategie di manutenzione negli ospedali, con riferimento alla realtà ospedaliera di Vimercate. Verranno quindi presentati gli attori coinvolti nella gestione della manutenzione e i loro ruoli. Infine verranno riportati alcuni esempi di manutenzione (sia correttiva che preventiva) a cui si è assistito durante il periodo di tirocinio presso l'ospedale.

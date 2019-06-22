@@ -1,19 +1,19 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {section}{Sommario}{V}{section*.4}% 
-\contentsline {section}{Abstract}{VI}{section*.5}% 
-\contentsline {section}{\numberline {1}L'ASST Vimercate}{1}{section.1}% 
-\contentsline {subsection}{\numberline {1.1}Organizzazione}{1}{subsection.1.1}% 
-\contentsline {subsubsection}{\numberline {1.1.1}Polo Ospedaliero}{2}{subsubsection.1.1.1}% 
-\contentsline {subsubsection}{\numberline {1.1.2}Rete Territoriale}{2}{subsubsection.1.1.2}% 
-\contentsline {subsubsection}{\numberline {1.1.3}La Missione Aziendale}{3}{subsubsection.1.1.3}% 
-\contentsline {subsubsection}{\numberline {1.1.4}Il presidio di Vimercate}{3}{subsubsection.1.1.4}% 
-\contentsline {subsection}{\numberline {1.2}L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate}{6}{subsection.1.2}% 
-\contentsline {subsubsection}{\numberline {1.2.1}Organizzazione e attivi\IeC {\`a} della Struttura}{6}{subsubsection.1.2.1}% 
-\contentsline {subsection}{\numberline {1.3}L'attivit\IeC {\`a} di manutenzione}{7}{subsection.1.3}% 
-\contentsline {section}{\numberline {2}Manutenzione predittiva}{8}{section.2}% 
-\contentsline {subsection}{\numberline {2.1}Origine storica e inquadramento normativo}{8}{subsection.2.1}% 
-\contentsline {subsubsection}{\numberline {2.1.1}Industria 4.0 e tecnologie emergenti}{8}{subsubsection.2.1.1}% 
-\contentsline {subsubsection}{\numberline {2.1.2}Il contesto normativo}{9}{subsubsection.2.1.2}% 
-\contentsline {subsection}{\numberline {2.2}Metodi analitici di predizione}{10}{subsection.2.2}% 
-\contentsline {section}{Bibliografia}{11}{section*.6}% 
+\contentsline {section}{Sommario}{V}{section*.4}
+\contentsline {section}{Abstract}{VI}{section*.5}
+\contentsline {section}{\numberline {1}Introduzione}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Organizzazione}{1}{subsection.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}Polo Ospedaliero}{2}{subsubsection.1.1.1}
+\contentsline {subsubsection}{\numberline {1.1.2}Rete Territoriale}{2}{subsubsection.1.1.2}
+\contentsline {subsubsection}{\numberline {1.1.3}La Missione Aziendale}{3}{subsubsection.1.1.3}
+\contentsline {subsubsection}{\numberline {1.1.4}Il presidio di Vimercate}{3}{subsubsection.1.1.4}
+\contentsline {subsection}{\numberline {1.2}L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate}{6}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}Organizzazione e attivi\IeC {\`a} della Struttura}{6}{subsubsection.1.2.1}
+\contentsline {subsection}{\numberline {1.3}L'attivit\IeC {\`a} di manutenzione}{7}{subsection.1.3}
+\contentsline {section}{\numberline {2}La manutenzione dei dispositivi medici}{8}{section.2}
+\contentsline {section}{\numberline {3}Industria 4.0: tra manutenzione predittiva e tecnologie digitali}{9}{section.3}
+\contentsline {section}{\numberline {4}La manutenzione predittiva in Ospedale: l'esperienza di Vimercate}{10}{section.4}
+\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia}{11}{section.5}
+\contentsline {section}{\numberline {6}Conclusioni}{12}{section.6}
+\contentsline {section}{Bibliografia}{13}{section*.6}

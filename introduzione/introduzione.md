@@ -3,12 +3,12 @@ output:
   pdf_document: default
   html_document: default
 ---
-# L'ASST Vimercate
-## Organizzazione
+# Introduzione
+Questo capitolo introduttivo sarà dedicato all'organizzazione dell'ASST Vimercate, alla sua origine istituzionale e alla descrizione del ruolo e delle attività svolte dalla U.O.C. Ingegneria Clinica, con particolare riferimento al tema della gestione della manutenzione dagli aspetti più convenzionali a quelli più innovativi oggetto del presente elaborato di tesi.
+
+## Organizzazione della ASST Vimercate
 
 Il presente lavoro di tesi è frutto dell'esperienza di tirocinio svolta presso l'ASST Vimercate da Marzo a Ottobre 2019.
-
-Di seguito si riporta quanto indicato sul sito dell'ASST [@AziendaSocioSanitariaTerritoriale].
 
 L’Azienda Socio Sanitaria Territoriale di Vimercate è parte del Sistema Socio-Sanitario Regionale, nell’ambito del quale esercita le proprie funzioni di prevenzione, diagnosi, cura, riabilitazione e presa in carico, con la finalità primaria di contribuire al miglioramento dello stato di salute della popolazione.
 
@@ -18,7 +18,7 @@ Le ASST si articolano in due settori aziendali rispettivamente definiti rete ter
 
 Il settore aziendale polo ospedaliero si articola in presidi ospedalieri e/o in dipartimenti organizzati in diversi livelli di intensità di cura, tecnologica e organizzativa, in coerenza con la normativa nazionale.<br>
 
-Il settore aziendale rete territoriale eroga prestazioni specialistiche, di prevenzione sanitaria, diagnosi, cura e riabilitazione a media e bassa complessità, le cure intermedie e garantisce le funzioni e le prestazioni medico-legali. Il settore rete territoriale eroga, altresì, le prestazioni distrettuali fornite alle persone, che erano erogate dalle ASL ad eccezione di quelle ora espressamente attribuite alle ATS, tra cui: assistenza specialistica ambulatoriale, servizi per la prevenzione e la cura delle tossicodipendenze, servizi consultoriali, servizi per disabili, anziani, cronici e fragili, assistenza domiciliare integrata.
+Il settore aziendale rete territoriale eroga prestazioni specialistiche, di prevenzione sanitaria, diagnosi, cura e riabilitazione a media e bassa complessità, le cure intermedie e garantisce le funzioni e le prestazioni medico-legali. Il settore rete territoriale eroga, altresì, le prestazioni distrettuali fornite alle persone, che erano erogate dalle ASL ad eccezione di quelle ora espressamente attribuite alle ATS, tra cui: assistenza specialistica ambulatoriale, servizi per la prevenzione e la cura delle tossicodipendenze, servizi consultoriali, servizi per disabili, anziani, cronici e fragili, assistenza domiciliare integrata [@AziendaSocioSanitariaTerritoriale].
 
 ### Polo Ospedaliero
 Si riportano le strutture facenti parte del Polo Ospedaliero:
@@ -49,6 +49,7 @@ La missione dell’Azienda è quella di contribuire alla promozione, al mantenim
 
 L’Azienda intende strutturare un sistema “che si prenda cura” della persona e del suo benessere, collaborando attivamente con tutti gli attori del Sistema Socio-Sanitario, al fine di perseguire l’obiettivo di rafforzare nel cittadino la percezione di un’identità comune, garantendo così a tutti parità di accesso ai servizi.
 
+**descriverei brevemente  gli organi di vertice  (direttore generale, sanitario,a mministativo e sociosanitario)**
 ### Il presidio di Vimercate
 Nella \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
 
@@ -72,8 +73,9 @@ L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre 
 ## L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate
 
 ### Organizzazione e attivià della Struttura
-L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica partecipa alla cura della salute garantendo un uso sicuro, appropriato, efficiente ed economico delle apparecchiature elettromedicali in dotazione all’Azienda. L’U.O.C. Ingegneria Clinica si articola territorialmente con una sede centrale a Vimercate e un ufficio a Carate, è diretta da un Ingegnere Biomedico e si avvale delle seguenti risorse umane:
-* 2 collaboratori tecnici
+L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica, in staff alla Direzione Sanitaria Aziendale, partecipa alla cura della salute garantendo un uso sicuro, appropriato, efficiente ed economico delle apparecchiature elettromedicali in dotazione all’Azienda. L’U.O.C. Ingegneria Clinica si articola territorialmente con una sede centrale a Vimercate e un ufficio a Carate, è diretta da un Ingegnere Biomedico e si avvale delle seguenti risorse umane:
+
+* 3 collaboratori tecnici
 * 2 assistenti tecnici
 * 1 collaboratore amministrativo
 
@@ -93,5 +95,5 @@ Le principali attività svolte all’interno dell’U.O.C. Ingegneria Clinica co
 - **Gestione dei contratti**:
   le specifiche competenze sono relative all’esecuzione dei contratti di manutenzione, acquisizione in noleggio o proprietà di apparecchiature elettromedicali.
 
-## L'attività di manutenzione
-La gestione delle attività di manutenzione, come visto nel precedente paragrafo, rientra in una delle principali competenze del Servizio di Ingegneria Clinica (SIC), ovvero la gestione tecnica e operativa. In particolare, l'Azienda, come da Captiolato Speciale di Appalto delle Apparecchiature Elettromedicali, si avvale dal dicembre 2015 del servizio di manutenzione esternalizzata erogato da un'azienda di Global Service (Tecnologie Sanitarie S.p.A.), la quale si occupa delle attività di manutenzione (correttiva, preventiva, verifiche elettriche, controlli qualità) secondo quanto stabilito dal contratto di ingaggio.
+### L'attività di manutenzione
+La gestione delle attività di manutenzione, come visto nel precedente paragrafo, rientra in una delle attività core del Servizio di Ingegneria Clinica (SIC), ovvero la gestione tecnica e operativa. In particolare, l'Azienda ha adottato la scelta di esternalizzare il servizio di manutenzione delle apparecchiature elettromedicali. A seguito di procedura di gara per l’affidamento del servizio, dal 1 dicembre 2015 il servizio di manutenzione esternalizzata viene erogato dalla società  Tecnologie Sanitarie S.p.A. (comunemente e brevemente chiamata “Global Service”) che si occupa appunto delle attività di manutenzione (correttiva, preventiva, verifiche elettriche, controlli qualità) secondo quanto stabilito dal Capitolato di gara di appalto e nel contratto di affidamento.  

@@ -49,7 +49,19 @@ output:
 ```{r child='introduzione/introduzione.md'}
 ```
 \pagebreak
-```{r child='capitolo2/capitolo2.md'}
+```{r child='man_dm/man_dm.md'}
+```
+\pagebreak
+```{r child='digital/digital.md'}
+```
+\pagebreak
+```{r child='vim_pred/vim_pred.md'}
+```
+\pagebreak
+```{r child='insight/insight.md'}
+```
+\pagebreak
+```{r child='conclusioni/conclusioni.md'}
 ```
 \pagebreak
 
