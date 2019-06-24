@@ -49,7 +49,28 @@ La missione dell’Azienda è quella di contribuire alla promozione, al mantenim
 
 L’Azienda intende strutturare un sistema “che si prenda cura” della persona e del suo benessere, collaborando attivamente con tutti gli attori del Sistema Socio-Sanitario, al fine di perseguire l’obiettivo di rafforzare nel cittadino la percezione di un’identità comune, garantendo così a tutti parità di accesso ai servizi.
 
-**descriverei brevemente  gli organi di vertice  (direttore generale, sanitario,a mministativo e sociosanitario)**
+In figura \ref{org} viene riportato l'organigramma aziendale in cui sono evidenziati gli organi di vertice e le strutture (semplici e complesse) cui essi fanno capo.
+
+![Organigramma aziendale \label{org}](introduzione/img/organigramma.png)
+
+Costituiscono la Direzione Strategica dell'Azienda, unitamente al Direttore Generale, il Direttore Amministrativo, il Direttore Sanitario ed il Direttore Sociosanitario. Essi partecipano con il Direttore Generale alla direzione dell'Azienda, assumono diretta responsabilità delle funzioni attribuite alla loro competenza e concorrono, con proposte e pareri, alla formulazione delle decisioni della Direzione Strategica. Sono, quindi, soggetti attori, unitamente al Direttore Generale, di quella funzione di programmazione, di allocazione delle risorse, di committenza dei servizi e di valutazione dei risultati, propria della Direzione Strategica. Essi esercitano le loro funzioni attraverso il processo di budget, che li vede direttamente coinvolti e responsabili dal momento delle scelte aziendali di programmazione alla negoziazione dei budget con i Direttori dei Dipartimenti ed i Responsabili delle Funzioni di Staff, al monitoraggio e all'eventuale revisione degli obiettivi di budget fissati.
+
+In particolare, le funzioni proprie di ogni Direzione possono essere riassunte come segue:
+
+- **Direzione Generale**: Il Direttore Generale rappresenta legalmente l'Azienda ed esercita tutti i poteri di gestione complessiva, coadiuvato dai Direttori Amministrativo, Sanitario e Sociosanitario. Egli ha il compito di combinare i fattori produttivi per il perseguimento degli obiettivi sanitari posti dalla Regione, in condizioni di massima efficienza ed efficacia. Il Direttore Generale è quindi responsabile del governo clinico dell'azienda, con riferimento sia alla qualità, che all'efficacia e all'efficienza tecnica. Il governo clinico si realizza nell'esercizio della responsabilità del miglioramento continuo dei servizi erogati, nella salvaguardia di alti standard assistenziali da parte dei professionisti dell'organizzazione, ed è volto ad assicurare l'adozione di sistemi di garanzia e di qualità, compatibilmente con le risorse disponibili.
+
+- **Direzione Amministrativa**: Il Direttore Amministrativo dirige i servizi amministrativi della Azienda Socio Sanitaria Territoriale. In particolare:
+    - Svolge attività di direzione e coordinamento, nei confronti dei direttori delle strutture amministrative complesse.
+    - Svolge attività necessarie per il controllo di gestione dell’azienda ed il controllo di qualità dei servizi come la nomina dei responsabili delle strutture organizzative professionali e funzionali dell'area amministrativa.
+    - Persegue il buon andamento e l'imparzialità dell'azione amministrativa, con particolare riferimento agli aspetti giuridico-amministrativi ed economico-finanziari.
+
+- **Direzione Sanitaria**:  Il Direttore Sanitario dirige i servizi sanitari ai fini organizzativi ed igienico-sanitari. In particolare:
+    - Svolge attività di indirizzo, coordinamento, supporto, verifica nei confronti dei responsabili dei servizi sanitari e promuove l'integrazione dei servizi stessi.
+    - Esercita per tutte le strutture ed i Centri di responsabilità sanitari dell'azienda le funzioni di verifica e di controllo dei risultati conseguiti rispetto agli obiettivi assegnati.
+    - Coordina le strutture dell'azienda ospedaliera e garantisce l’integrazione tra le stesse, anche attraverso la predisposizione di appositi protocolli.
+
+- **Direzione Socio-Sanitaria**: Il Direttore Sociosanitario dirige il settore aziendale rete territoriale della Azienda Socio Sanitaria Territoriale.
+
 ### Il presidio di Vimercate
 Nella \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
 
@@ -73,7 +94,7 @@ L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre 
 ## L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate
 
 ### Organizzazione e attivià della Struttura
-L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica, in staff alla Direzione Sanitaria Aziendale, partecipa alla cura della salute garantendo un uso sicuro, appropriato, efficiente ed economico delle apparecchiature elettromedicali in dotazione all’Azienda. L’U.O.C. Ingegneria Clinica si articola territorialmente con una sede centrale a Vimercate e un ufficio a Carate, è diretta da un Ingegnere Biomedico e si avvale delle seguenti risorse umane:
+L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica, in staff alla Direzione Sanitaria Aziendale come da organigramma aziendale in figura \ref{org}, partecipa alla cura della salute garantendo un uso sicuro, appropriato, efficiente ed economico delle apparecchiature elettromedicali in dotazione all’Azienda. L’U.O.C. Ingegneria Clinica si articola territorialmente con una sede centrale a Vimercate e un ufficio a Carate, è diretta da un Ingegnere Biomedico e si avvale delle seguenti risorse umane:
 
 * 3 collaboratori tecnici
 * 2 assistenti tecnici
@@ -95,5 +116,5 @@ Le principali attività svolte all’interno dell’U.O.C. Ingegneria Clinica co
 - **Gestione dei contratti**:
   le specifiche competenze sono relative all’esecuzione dei contratti di manutenzione, acquisizione in noleggio o proprietà di apparecchiature elettromedicali.
 
-### L'attività di manutenzione
+### L'attività di manutenzione \label{cap1}
 La gestione delle attività di manutenzione, come visto nel precedente paragrafo, rientra in una delle attività core del Servizio di Ingegneria Clinica (SIC), ovvero la gestione tecnica e operativa. In particolare, l'Azienda ha adottato la scelta di esternalizzare il servizio di manutenzione delle apparecchiature elettromedicali. A seguito di procedura di gara per l’affidamento del servizio, dal 1 dicembre 2015 il servizio di manutenzione esternalizzata viene erogato dalla società  Tecnologie Sanitarie S.p.A. (comunemente e brevemente chiamata “Global Service”) che si occupa appunto delle attività di manutenzione (correttiva, preventiva, verifiche elettriche, controlli qualità) secondo quanto stabilito dal Capitolato di gara di appalto e nel contratto di affidamento.  
