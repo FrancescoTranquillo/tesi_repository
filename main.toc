@@ -15,12 +15,19 @@
 \contentsline {subsection}{\numberline {2.1}Definizioni}{11}{subsection.2.1}% 
 \contentsline {subsubsection}{\numberline {2.1.1}Dispositivo medico}{11}{subsubsection.2.1.1}% 
 \contentsline {subsubsection}{\numberline {2.1.2}Manutenzione correttiva e preventiva}{11}{subsubsection.2.1.2}% 
-\contentsline {subsection}{\numberline {2.2}La manutenzione delle apparecchiature nelle strutture sanitarie}{12}{subsection.2.2}% 
-\contentsline {section}{\numberline {3}Industria 4.0: tra manutenzione predittiva e tecnologie digitali}{14}{section.3}% 
-\contentsline {subsection}{\numberline {3.1}Industria 4.0 e tecnologie emergenti}{14}{subsection.3.1}% 
-\contentsline {subsection}{\numberline {3.2}Il contesto normativo}{15}{subsection.3.2}% 
-\contentsline {subsection}{\numberline {3.3}Metodi analitici di predizione}{16}{subsection.3.3}% 
-\contentsline {section}{\numberline {4}La manutenzione predittiva in Ospedale: l'esperienza di Vimercate}{17}{section.4}% 
-\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia}{18}{section.5}% 
-\contentsline {section}{\numberline {6}Conclusioni}{19}{section.6}% 
-\contentsline {section}{Bibliografia}{20}{section*.6}% 
+\contentsline {subsection}{\numberline {2.2}Modalit\IeC {\`a} organizzative di manutenzione nelle strutture sanitarie}{12}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.3}La manutenzione del parco tecnologico in ASST Vimercate}{14}{subsection.2.3}% 
+\contentsline {subsubsection}{\numberline {2.3.1}Manutenzioni programmate}{15}{subsubsection.2.3.1}% 
+\contentsline {subsubsection}{\numberline {2.3.2}Manutenzioni correttive}{16}{subsubsection.2.3.2}% 
+\contentsline {subsubsection}{\numberline {2.3.3}Verifiche di accettazione e collaudo}{17}{subsubsection.2.3.3}% 
+\contentsline {subsubsection}{\numberline {2.3.4}Piano di Manutenzione}{17}{subsubsection.2.3.4}% 
+\contentsline {subsection}{\numberline {2.4}Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva}{17}{subsection.2.4}% 
+\contentsline {subsection}{\numberline {2.5}Esempio di manutenzione programmata: Ecografo}{17}{subsection.2.5}% 
+\contentsline {section}{\numberline {3}Industria 4.0: tra manutenzione predittiva e tecnologie digitali}{21}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Industria 4.0 e tecnologie emergenti}{21}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Il contesto normativo}{22}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}Metodi analitici di predizione}{23}{subsection.3.3}% 
+\contentsline {section}{\numberline {4}La manutenzione predittiva in Ospedale: l'esperienza di Vimercate}{24}{section.4}% 
+\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia}{25}{section.5}% 
+\contentsline {section}{\numberline {6}Conclusioni}{26}{section.6}% 
+\contentsline {section}{Bibliografia}{27}{section*.6}% 

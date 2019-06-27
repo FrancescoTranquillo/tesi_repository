@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # Introduzione
 Questo capitolo introduttivo sarà dedicato all'organizzazione dell'ASST Vimercate, alla sua origine istituzionale e alla descrizione del ruolo e delle attività svolte dalla U.O.C. Ingegneria Clinica, con particolare riferimento al tema della gestione della manutenzione dagli aspetti più convenzionali a quelli più innovativi oggetto del presente elaborato di tesi.
 
@@ -109,6 +104,7 @@ La Struttura si occupa dell’aspetto gestionale e strategico delle tecnologie b
 La Struttura svolge la propria attività coordinandosi con altre strutture
 tecniche, amministrative, con il personale sanitario dirigente e del comparto per il perseguimento di obiettivi comuni e la realizzazione di attività e progetti di interesse aziendale.
 Le principali attività svolte all’interno dell’U.O.C. Ingegneria Clinica comprendono:
+
 - **Gestione strategica degli investimenti**:
   effettuata mediante azioni di ricognizione delle esigenze (in supporto alla Direzione Strategica), attività di programmazione delle acquisizioni di apparecchiature elettromedicali attraverso strategie di Health Technology Assessment, attività di supporto alla U.O.C. Approvigionamenti per la predisposizione di capitolati di fornitura tramite elaborazione di fabbisogni e dettagli tecnici necessari e infine attività di valutazione tecnica delle offerte pervenute e partecipazione alle commissioni giudicatrici.
 - **Gestione tecnica e operativa**:
@@ -116,5 +112,5 @@ Le principali attività svolte all’interno dell’U.O.C. Ingegneria Clinica co
 - **Gestione dei contratti**:
   le specifiche competenze sono relative all’esecuzione dei contratti di manutenzione, acquisizione in noleggio o proprietà di apparecchiature elettromedicali.
 
-### L'attività di manutenzione \label{cap1}
+### L'attività di manutenzione \label{1}
 La gestione delle attività di manutenzione, come visto nel precedente paragrafo, rientra in una delle attività core del Servizio di Ingegneria Clinica (SIC), ovvero la gestione tecnica e operativa. In particolare, l'Azienda ha adottato la scelta di esternalizzare il servizio di manutenzione delle apparecchiature elettromedicali. A seguito di procedura di gara per l’affidamento del servizio, dal 1 dicembre 2015 il servizio di manutenzione esternalizzata viene erogato dalla società  Tecnologie Sanitarie S.p.A. (comunemente e brevemente chiamata “Global Service”) che si occupa appunto delle attività di manutenzione (correttiva, preventiva, verifiche elettriche, controlli qualità) secondo quanto stabilito dal Capitolato di gara di appalto e nel contratto di affidamento.  

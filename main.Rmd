@@ -4,10 +4,6 @@ csl: style.csl
 fontsize: 10pt
 geometry: asymmetric
 header-includes:
-  # - \PassOptionsToPackage{hyphens}{url}
-  # - \usepackage{url}
-  # # - \def\UrlBreaks{\do\/\do-}
-  # - \def\UrlBreaks{\do\/\do-\do?\do.}
   - \usepackage[italian]{babel}
   - \usepackage{placeins}
   - \usepackage{setspace}
@@ -51,7 +47,9 @@ output:
 \pagebreak
 ```{r child='man_dm/man_dm.md'}
 ```
+\FloatBarrier
 \pagebreak
+
 ```{r child='digital/digital.md'}
 ```
 \pagebreak

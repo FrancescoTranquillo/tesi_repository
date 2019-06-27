@@ -33,14 +33,88 @@ della sicurezza, nell’accertamento che la manutenzione di primo livello sia st
 eseguita, nonché nell’esecuzione dei programmi di manutenzione prescritti dal costruttore."_
 
 
-## La manutenzione delle apparecchiature nelle strutture sanitarie
+## Modalità organizzative di manutenzione nelle strutture sanitarie
 
-Nelle diverse strutture sanitarie in cui è stato organizzato un Servizio di Ingegneria Clinica (SIC), è possibile individuare tre diversi modelli di organizzazioni “ideali”:
-- SIC interno: istituito internamente alla struttura sanitaria e con personale dipendente
-dalla struttura stessa.
-- SIC esterno: istituito mediante appalto di servizi ad una società di servizi esterna che
-operi in modo coordinato e continuativo con l’ente.
-- SIC misto: dove solo alcune attività sono affidate all’interno mentre altre sono affidate a
-una società di servizi esterna che si integra nella struttura sanitaria.
+La gestione e l'attuazione della manutenzione delle varie apparecchiature elettromedicali presenti in una struttura sanitaria, sono attività core del Servizio di Ingegneria Clinica, che possono essere riassunte con il termine "Techonology Management". Esso ha come obiettivo la soddisfazione di un bisogno primario comune a tutte le strutture sanitarie, ovvero l'ottimale gestione e l'utilizzo sicuro e appropriato di un parco macchine che, sviluppandosi di pari passo con lo sviluppo tecnologico, diventa sempre più diversificato e complesso.
 
-Quest'ultima modalità organizzativa, come preannunciato nel capitolo \ref{cap1}, è quella adottata dalla ASST Vimercate.
+In questo scenario di continua innovazione e crescente complessità tecnologica dei macchinari, si capisce la trasformazione che ha interessato negli ultimi anni l’attività manutentiva. Essa, concepita negli anni passati esclusivamente in funzione del ripristino di apparecchiature biomediche non funzionanti, sta progressivamente mutando verso una vera e propria funzione manageriale volta, in ultima analisi, al miglioramento della qualità dell’assistenza al paziente del cui iter diagnostico-terapeutico l’elemento tecnologico gioca un ruolo fondamentale. Questo miglioramento di qualità è ottenuto grazie alla risoluzione degli obiettivi cardine dell'attività manutentiva, volti alla riduzione dei rischi connessi all’uso dei dispositivi medici, a diminuire i tempi di inutilizzo, a prevenire i guasti, a garantire la qualità delle prestazioni erogate, ad ottimizzare quindi, la durata fisiologica del prodotto.
+
+Nelle diverse strutture sanitarie in cui è stato organizzato un Servizio di Ingegneria Clinica (SIC), è possibile individuare tre diversi modelli di organizzativi “ideali”:
+
+- **SIC interno**: istituito internamente alla struttura sanitaria e con personale dipendente
+dalla struttura stessa. La tipologia di un Servizio di Ingegneria Clinica totalmente interno all’Azienda Sanitaria prevede che tutte le funzioni proprie dell’ingegneria clinica siano svolte con personale interno dipendente. La gestione della tecnologia secondo quest’ottica si basa sul presupposto che il personale sia altamente qualificato, che conosca dettagliatamente la situazione dell’ente, che abbia solidi legami con l’organizzazione sanitaria, tecnica ed amministrativa.
+- **SIC esterno**: istituito mediante appalto di servizi ad una società di servizi esterna che operi in modo coordinato e continuativo con l’ente. Questa strategia consiste nell’affidamento del servizio globale di manutenzione ad un’azienda esterna o ad un consorzio di aziende, attraverso il quale la struttura sanitaria delega completamente la manutenzione (preventiva, correttiva, prove di sicurezza, controlli di qualità e tutte le attività tipiche di un ufficio tecnico) ad un’azienda esterna ad un prezzo complessivo stabilito solitamente attraverso il metodo della gara.
+- **SIC misto**: dove solo alcune attività sono affidate all’interno mentre altre sono affidate a una società di servizi esterna che si integra nella struttura sanitaria. Questa tipologia rappresenta una modalità intermedia di organizzazione che prevede l’affidamento ad una società di servizi di solo una parte delle funzioni di ingegneria clinica (nella maggior parte dei casi l’effettuazione delle verifiche periodiche di sicurezza elettrica e/o la manutenzione), mentre le restanti sono svolte da personale interno.
+
+## La manutenzione del parco tecnologico in ASST Vimercate
+L'ultima modalità organizzativa citata, come preannunciato nel capitolo precedente (\ref{1}), è quella adottata dalla ASST Vimercate. Il Servizio di gestione delle apparecchiature biomediche prevede in particolare:
+
+- l’effettuazione delle manutenzioni programmate e delle manutenzioni correttive
+- le verifiche di accettazione e collaudo
+- la predisposizione e l’aggiornamento del piano di manutenzione
+
+Prima di descrivere nel dettaglio le attività sopracitate, è necessario specificare le forme di presenza con le quali una tecnologia biomedica può essere presente in una struttura sanitaria, dalle quali dipende l'organizzazione della manutenzione per la tecnologia. Le forme di presenza sono così definite:
+
+
+_**DA RIVEDERE**_
+
+- Acquisto: l’apparecchiatura acquistata è di proprietà dell’azienda ospedaliera a seguito del pagamento corrisposto al fornitore.
+- Noleggio: l’apparecchiatura in noleggio non è di proprietà dell’azienda ospedaliera. L'azienda versa un canone di noleggio all’azienda fornitrice per il periodo di tempo in cui il dispositivo sarà effettivamente utilizzato.
+- Service: anche in questo caso l’apparecchiatura non è di proprietà dell’azienda ospedaliera. L’azienda fornitrice si impegna a mettere a disposizione all’azienda ospedaliera il dispositivo in questione a titolo gratuito per l’intero periodo di validità del contratto stipulato.
+- Comodato d’uso
+
+_**DA RIVEDERE**_
+
+
+Tutte queste forme di presenza sono caratterizzate da una gestione della manutenzione simile tra loro, direttamente collegata alla garanzia della macchina. Fino allo scadere della garanzia, infatti, l'azienda fornitrice del macchinario è tenuta a comunicare al servizio di ingegneria clinica un calendario (il piano di manutenzione) in cui vengono specificate le date di intervento che seguiranno il collaudo del macchinario stesso. Nello specifico, in questo calendario sono presenti:
+
+- gli interventi di manutenzione ordinaria che l'azienda fornitrice svolgerà (di numero e frequenza variabile a seconda della tecnologia),
+- eventuali interventi di manutenzione correttiva,
+- verifiche elettriche
+- controlli periodici di qualità (calibrazioni ecc.)
+
+Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service di effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingengeri biomedici e tecnici informatici ed elettronici).
+
+### Manutenzioni programmate
+Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista. ESEMPIO DI SCHEDA TECNICA E COME È STRUTTURATA
+
+### Manutenzioni correttive
+Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal guasto compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario guasto e procede, dove possibile, ad effettuare una prima riparazione. Se la natura del guasto lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico. FOTO DEL LABORATORIO?
+
+Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un eventuale guasto, esso si assume la responsabilità (finanziarie) di contattare il fornitore dell'apparecchio guasto e procede in una delle seguenti modalità:
+
+1. Il Global Service invia l'apparecchio in assistenza al fornitore e comunica al reparto un prospetto delle tempistiche necessarie per la risoluzione del guasto.
+2. Il Global Service richiede alla ditta produttrice del dispositivo l'intervento di un tecnico specializzato e stabilisce con essa una data di intervento utile a minimizzare i disagi che il fermo macchina può generare al reparto di interesse.
+
+Per completezza, viene riportato quanto scritto nella Procedura Operativa Aziendale dal titolo "Manutenzione correttiva" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni correttive di apparecchiature elettromedicali (indicate d'ora in avanti con la lettera "a") nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
+
+Sono responsabili della procedura di manutenzione correttiva per una (a) le seguenti figure:
+
+- Le Unità Operative (Coordinatrice e suo delegato) che in caso di mal funzionamento di una (a) deve attivare il Global Service (GS), tramite richiesta via informatica o telefonica, per l’assistenza tecnica del caso;
+- Il GS che durante la riparazione di una (a) osserva nel pieno rispetto le prescrizioni della normative vigenti in materia, anche in ordine agli obblighi verso il fabbricante per consentire, a quest’ultimo, la sorveglianza post-vendita e la rintracciabilità delle (a) in ogni momento;
+- Il costruttore che rimane a capo della piena responsabilità per eventuali vizi o difetti originati dalla (a) qualora gli utilizzatori dimostrano di avere assunto tutti i comportamenti atti a preservare lo stato, l’efficienza e il funzionamento della (a) senza alternarne la destinazione d’uso;
+- Il SIC che monitora l’avanzamento di un’ attività di riparazione sulla (a) attraverso l’utilizzo del software di gestione Coswin8i, verificando che la risoluzione in un guasto avvenga nel rispetto di quando descritto nel Capitolato Speciale d'Appalto.
+
+La manutenzione correttiva viene eseguita su tutte le (a) dal GS o dalla ditta esterna (EST), o sua emanatrice, su richiesta dell’Unità Operativa utilizzatrice che richiede l’assistenza, oppure ogniqualvolta che durante l’attività di manutenzione preventiva, il GS ravvisi la necessità di una riparazione.
+
+Il coinvolgimento delle diverse strutture operative nella manutenzione correttiva di una (a) è descritto nella figura \ref{ruoli}.
+
+![Ruoli dei diversi attori coinvolti nella manutenzione correttiva \label{ruoli}](man_dm/img/ruoli_correttiva.PNG)
+
+La procedura, nel dettaglio, viene riportata nella figura \ref{activity_correttiva_1}
+
+![Procedura per manutenzione correttiva (parte 1) \label{activity_correttiva_1}](man_dm/img/corr_1.PNG)
+
+e \ref{activity_correttiva_2}.
+
+![Procedura per manutenzione correttiva (parte 2) \label{activity_correttiva_2}](man_dm/img/corr_2.PNG)
+
+
+### Verifiche di accettazione e collaudo
+
+
+### Piano di Manutenzione
+
+## Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva
+
+## Esempio di manutenzione programmata: Ecografo
