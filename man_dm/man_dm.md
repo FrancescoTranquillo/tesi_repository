@@ -76,7 +76,41 @@ Tutte queste forme di presenza sono caratterizzate da una gestione della manuten
 Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service di effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingengeri biomedici e tecnici informatici ed elettronici).
 
 ### Manutenzioni programmate
-Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista. ESEMPIO DI SCHEDA TECNICA E COME È STRUTTURATA
+Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista. Un esempio di procedura utilizzata dal Global per condurre una manutenzione programmata viene riportata nel capitolo \ref{es_prog}
+
+Di seguito si riporta quanto presente nella Procedura Operativa Aziendale dal titolo "Manutenzione programmata" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni programmate di apparecchiature elettromedicali (indicate d'ora in avanti con la lettera "a") nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
+
+I ruoli delle figure coinvolte nella procedura di manutenzione programmata vengono riportati in figura \ref{ruoli_prog}. La relativa documentazione di riferimento è riportata in figura \ref{diz_prog}.
+
+![Ruoli dei diversi attori coinvolti nella manutenzione programmata \label{ruoli_prog}](man_dm/img/ruoli_prog.PNG)
+
+![Documenti di riferimento relativi alla procedura di manutenzione programmata \label{diz_prog}](man_dm/img/diz_prog.PNG)
+
+Sono responsabili della procedura operativa di manutenzione programmata di una (a) le seguenti figure:
+
+- Gli utilizzatori delle varie SS/SC che opportunamente informati dal fornitore della (a) al momento della
+consegna e del collaudo e, supportati poi dai tecnici del Global Service (GS) durante l’utilizzo, eseguono ordinariamente
+tutti gli interventi previsti di manutenzione/pulizia/controllo giornaliero per il corretto mantenimento
+della stessa;
+- Il GS che secondo i piani ed i calendari stabiliti dal Capitolato Speciale d'Appalto (CSA), esegue periodicamente e nel rispetto della
+normativa, le verifiche di sicurezza generale, le manutenzioni preventive, i controlli
+prestazionali/manutenzioni particolari, i controlli di qualità e le tarature su tutte le (a) in uso,
+supportando le ditte esterne (EST) per le apparecchiature non proprietarie, in garanzia e sotto contratto a cui è affidata
+nello specifico l’attività manutentiva;
+- Il SIC che, una volta approvati i piani di manutenzione delle (a) stesi dal GS in virtù del CSA, controlla il
+corretto svolgimento delle attività programmate
+
+Su specifiche classi di (a) la manutenzione programmata viene completata con l’attività di taratura. Per taratura si intende “ la verifica ed il controllo delle prestazioni metrologiche di una (a)”; scopo della taratura
+è accertarsi che il livello di sicurezza e delle prestazioni erogate da una (a) siano all’interno dei limiti definiti
+dalle norme e dalle tolleranze definite dal fabbricante. In caso di mancato rispetto, la taratura consente di
+allineare i valori misurati con quelli di riferimento.
+La taratura, per le (a) proprietarie dell’A.O., è affidata al GS che conserva la strumentazione di misura
+necessaria per lo svolgimento dell’attività presso il laboratorio tecnico. A taratura avvenuta il tecnico
+esecutore deve riportare sul DOC_ PM_ GS tutte le specifiche degli strumenti di misura utilizzati (tipologia,
+marca, modello, s/n ed identificativo). Su ciascuno strumento è applicata un’etichetta che riporta l’ultima
+taratura avvenuta e la data di scadenza. E’ responsabilità di GS inviare presso i centri di calibrazione
+autorizzati le strumentazioni di misura oggetto di taratura.
+La taratura sulle (a) proprietarie in A.O. viene eseguita secondo la periodicità stabilita dal CSA   [@asstvimercateProceduraManutenzioneProgrammata2013].
 
 ### Manutenzioni correttive
 Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal guasto compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario guasto e procede, dove possibile, ad effettuare una prima riparazione. Se la natura del guasto lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico. FOTO DEL LABORATORIO?
@@ -86,28 +120,23 @@ Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un ev
 1. Il Global Service invia l'apparecchio in assistenza al fornitore e comunica al reparto un prospetto delle tempistiche necessarie per la risoluzione del guasto.
 2. Il Global Service richiede alla ditta produttrice del dispositivo l'intervento di un tecnico specializzato e stabilisce con essa una data di intervento utile a minimizzare i disagi che il fermo macchina può generare al reparto di interesse.
 
-Per completezza, viene riportato quanto scritto nella Procedura Operativa Aziendale dal titolo "Manutenzione correttiva" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni correttive di apparecchiature elettromedicali (indicate d'ora in avanti con la lettera "a") nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
+Per completezza, viene riportato quanto scritto nella Procedura Operativa Aziendale dal titolo "Manutenzione correttiva" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni correttive di (a) nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
 
 Sono responsabili della procedura di manutenzione correttiva per una (a) le seguenti figure:
 
-- Le Unità Operative (Coordinatrice e suo delegato) che in caso di mal funzionamento di una (a) deve attivare il Global Service (GS), tramite richiesta via informatica o telefonica, per l’assistenza tecnica del caso;
+- Le Unità Operative (Coordinatrice e suo delegato) che in caso di mal funzionamento di una (a) deve attivare il GS, tramite richiesta via informatica o telefonica, per l’assistenza tecnica del caso;
 - Il GS che durante la riparazione di una (a) osserva nel pieno rispetto le prescrizioni della normative vigenti in materia, anche in ordine agli obblighi verso il fabbricante per consentire, a quest’ultimo, la sorveglianza post-vendita e la rintracciabilità delle (a) in ogni momento;
 - Il costruttore che rimane a capo della piena responsabilità per eventuali vizi o difetti originati dalla (a) qualora gli utilizzatori dimostrano di avere assunto tutti i comportamenti atti a preservare lo stato, l’efficienza e il funzionamento della (a) senza alternarne la destinazione d’uso;
-- Il SIC che monitora l’avanzamento di un’ attività di riparazione sulla (a) attraverso l’utilizzo del software di gestione Coswin8i, verificando che la risoluzione in un guasto avvenga nel rispetto di quando descritto nel Capitolato Speciale d'Appalto.
+- Il SIC che monitora l’avanzamento di un’ attività di riparazione sulla (a) attraverso l’utilizzo del software di gestione Coswin8i, verificando che la risoluzione in un guasto avvenga nel rispetto di quando descritto nel CSA.
 
-La manutenzione correttiva viene eseguita su tutte le (a) dal GS o dalla ditta esterna (EST), o sua emanatrice, su richiesta dell’Unità Operativa utilizzatrice che richiede l’assistenza, oppure ogniqualvolta che durante l’attività di manutenzione preventiva, il GS ravvisi la necessità di una riparazione.
+La manutenzione correttiva viene eseguita su tutte le (a) dal GS o dalla EST, o sua emanatrice, su richiesta dell’Unità Operativa utilizzatrice che richiede l’assistenza, oppure ogniqualvolta che durante l’attività di manutenzione preventiva, il GS ravvisi la necessità di una riparazione [@asstvimercateProceduraManutenzioneCorrettiva2013].
 
-Il coinvolgimento delle diverse strutture operative nella manutenzione correttiva di una (a) è descritto nella figura \ref{ruoli}.
+Il coinvolgimento delle diverse strutture operative nella manutenzione correttiva di una (a) è descritto nella figura \ref{ruoli}. La relativa documentazione di riferimento è riportata in figura \ref{diz_corr}.
 
 ![Ruoli dei diversi attori coinvolti nella manutenzione correttiva \label{ruoli}](man_dm/img/ruoli_correttiva.PNG)
 
-La procedura, nel dettaglio, viene riportata nella figura \ref{activity_correttiva_1}
+![documenti di riferimento \label{diz_corr}](man_dm/img/diz_correttiva.PNG)
 
-![Procedura per manutenzione correttiva (parte 1) \label{activity_correttiva_1}](man_dm/img/corr_1.PNG)
-
-e \ref{activity_correttiva_2}.
-
-![Procedura per manutenzione correttiva (parte 2) \label{activity_correttiva_2}](man_dm/img/corr_2.PNG)
 
 
 ### Verifiche di accettazione e collaudo
@@ -115,6 +144,6 @@ e \ref{activity_correttiva_2}.
 
 ### Piano di Manutenzione
 
-## Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva
+## Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva \label {es_corr}
 
-## Esempio di manutenzione programmata: Ecografo
+## Esempio di manutenzione programmata: Ecografo \label{es_prog}
