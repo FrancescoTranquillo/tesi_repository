@@ -53,7 +53,7 @@ L'ultima modalità organizzativa citata, come preannunciato nel capitolo precede
 - le verifiche di accettazione e collaudo
 - la predisposizione e l’aggiornamento del piano di manutenzione
 
-Prima di descrivere nel dettaglio le attività sopracitate, è necessario specificare le forme di presenza con le quali una tecnologia biomedica può essere presente in una struttura sanitaria, dalle quali dipende l'organizzazione della manutenzione per la tecnologia. Le forme di presenza sono così definite:
+Prima di descrivere nel dettaglio le attività di manutenzione (correttiva e programmata) sopracitate, è necessario specificare le forme di presenza con le quali una tecnologia biomedica può essere presente in una struttura sanitaria, dalle quali dipende l'organizzazione della manutenzione per la tecnologia. Le forme di presenza sono così definite:
 
 
 _**DA RIVEDERE**_
@@ -66,14 +66,14 @@ _**DA RIVEDERE**_
 _**DA RIVEDERE**_
 
 
-Tutte queste forme di presenza sono caratterizzate da una gestione della manutenzione simile tra loro, direttamente collegata alla garanzia della macchina. Fino allo scadere della garanzia, infatti, l'azienda fornitrice del macchinario è tenuta a comunicare al servizio di ingegneria clinica un calendario (il piano di manutenzione) in cui vengono specificate le date di intervento che seguiranno il collaudo del macchinario stesso. Nello specifico, in questo calendario sono presenti:
+Tutte queste forme di presenza sono caratterizzate da una gestione della manutenzione simile tra loro, direttamente collegata al periodo di garanzia della macchina. Fino allo scadere della garanzia, infatti, l'azienda fornitrice del macchinario è tenuta a comunicare al servizio di ingegneria clinica un calendario (il piano di manutenzione) in cui vengono specificate le date di intervento che seguiranno il collaudo del macchinario stesso. Nello specifico, in questo calendario sono presenti:
 
 - gli interventi di manutenzione ordinaria che l'azienda fornitrice svolgerà (di numero e frequenza variabile a seconda della tecnologia),
 - eventuali interventi di manutenzione correttiva,
 - verifiche elettriche
 - controlli periodici di qualità (calibrazioni ecc.)
 
-Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service di effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingengeri biomedici e tecnici informatici ed elettronici).
+Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingengeri biomedici e tecnici informatici ed elettronici).
 
 ### Manutenzioni programmate
 Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista. Un esempio di procedura utilizzata dal Global per condurre una manutenzione programmata viene riportata nel capitolo \ref{es_prog}
@@ -113,7 +113,7 @@ autorizzati le strumentazioni di misura oggetto di taratura.
 La taratura sulle (a) proprietarie in A.O. viene eseguita secondo la periodicità stabilita dal CSA   [@asstvimercateProceduraManutenzioneProgrammata2013].
 
 ### Manutenzioni correttive
-Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal guasto compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario guasto e procede, dove possibile, ad effettuare una prima riparazione. Se la natura del guasto lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico. FOTO DEL LABORATORIO?
+Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal guasto compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario guasto e procede, dove possibile, ad effettuare una prima riparazione. Se la natura del guasto lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico.
 
 Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un eventuale guasto, esso si assume la responsabilità (finanziarie) di contattare il fornitore dell'apparecchio guasto e procede in una delle seguenti modalità:
 
@@ -137,12 +137,6 @@ Il coinvolgimento delle diverse strutture operative nella manutenzione correttiv
 
 ![documenti di riferimento \label{diz_corr}](man_dm/img/diz_correttiva.PNG)
 
-
-
-### Verifiche di accettazione e collaudo
-
-
-### Piano di Manutenzione
 
 ## Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva \label {es_corr}
 
