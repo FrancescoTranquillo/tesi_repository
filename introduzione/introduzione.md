@@ -36,7 +36,7 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 - Distretto di Vimercate
 - Consultori familiari di Arcore, Carate Brianza, Concorezzo, Giussano, Lentate sul Seveso, Lissone, Meda, Seveso, Seregno, Vimercate
 - Centro riabilitativo diurno di Usmate
-- Nuchlei operativi alcologia di Seregno, Vimercate
+- Nuclei operativi alcologia di Seregno, Vimercate
 - Servizio dipendenze di Carate Brianza
 
 ### La Missione Aziendale

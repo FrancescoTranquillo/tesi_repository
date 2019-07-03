@@ -22,10 +22,10 @@ output:
     fig_width: 5
     number_sections: yes
 ---
-\pagenumbering{gobble}
+
 ```{r child='frontespizio.rmd'}
 ```
-
+\pagenumbering{gobble}
 ```{r child='dedica.rmd'}
 ```
 \newpage
@@ -45,9 +45,7 @@ output:
 \pagebreak
 ```{r child='man_dm/man_dm.md'}
 ```
-\FloatBarrier
 \pagebreak
-
 ```{r child='digital/digital.md'}
 ```
 \pagebreak

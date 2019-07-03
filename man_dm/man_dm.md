@@ -9,7 +9,11 @@ Un dispositivo medico, secondo quanto stabilito dal decreto legislativo 24/02/19
 _"qualsiasi strumento, apparecchio, impianto, sostanza o altro prodotto, utilizzato da solo o in combinazione, compreso il software informatico impiegato per il corretto funzionamento, e destinato dal fabbricante ad essere impiegato nell'uomo a scopo di diagnosi, prevenzione, controllo, terapia o attenuazione di una malattia; di diagnosi, controllo, terapia, attenuazione o compensazione di una ferita o di un handicap; di studio, sostituzione o modifica dell'anatomia o di un processo fisiologico; di intervento sul concepimento, il quale prodotto non eserciti l'azione principale, nel o sul corpo umano, cui è destinato, con mezzi farmacologici o immunologici né mediante processo metabolico ma la cui funzione possa essere coadiuvata da tali mezzi.[@GazzettaUfficiale]"_
 
 ### Manutenzione correttiva e preventiva
-La manutenzione correttiva viene definita come : _"manutenzione eseguita a seguito della rilevazione di una avaria e volta a riportare un’entità nello stato in cui essa possa eseguire una funzione richiesta."_(CEI 62-122). Questa strategia consiste quindi nel mantenere la macchina in esercizio fintanto
+La manutenzione correttiva viene definita come :
+
+ _"manutenzione eseguita a seguito della rilevazione di una avaria e volta a riportare un’entità nello stato in cui essa possa eseguire una funzione richiesta."_(CEI 62-122).
+
+Questa strategia consiste quindi nel mantenere la macchina in esercizio fintanto
 che il manifestarsi o il progredire di una anomalia costringe il gestore a fermare la macchina. La strategia, presenta sia aspetti positivi che negativi. Il fattore positivo è un costo di manutenzione e di fermo macchina pressoché nullo fin tanto che la macchina funziona come dovrebbe. I fattori negativi possono invece essere sintetizzati in:
 
 - elevata perdita di ricavi dovuti al fermo macchina per guasto
@@ -19,9 +23,13 @@ produttivo in corso
 componente può danneggiare altri dispositivi della macchina e può renderla inutilizzabile
 definitivamente.
 
-La manutenzione preventiva (generica) viene definita come: _"manutenzione eseguita ad intervalli regolari
+La manutenzione preventiva (generica) viene definita come:
+
+ _"manutenzione eseguita ad intervalli regolari
 predeterminati o in accordo a criteri prescritti e volta a ridurre la probabilità di guasto o la
-degradazione del funzionamento di un dispositivo medico."_(CEI 62-122 – UNI 9910). La programmabilità dell'intervento consente una maggiore organizzazione dei lavoro di manutenzione e garantisce la possibilità di gestire i fermo macchina nella maniera più conveniente. Vengono inoltre date le definizioni (CEI 62-122) di:
+degradazione del funzionamento di un dispositivo medico."_(CEI 62-122 – UNI 9910).
+
+La programmabilità dell'intervento consente una maggiore organizzazione dei lavoro di manutenzione e garantisce la possibilità di gestire i fermo macchina nella maniera più conveniente. Vengono inoltre date le definizioni (CEI 62-122) di:
 
 * **Manutenzione preventiva di primo livello**: _"controlli preventivi che dovrebbero
 essere effettuati dall’operatore consistenti nell’ispezione a vista e, se applicabili in semplici prove
@@ -113,9 +121,9 @@ autorizzati le strumentazioni di misura oggetto di taratura.
 La taratura sulle (a) proprietarie in A.O. viene eseguita secondo la periodicità stabilita dal CSA   [@asstvimercateProceduraManutenzioneProgrammata2013].
 
 ### Manutenzioni correttive
-Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal guasto compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario guasto e procede, dove possibile, ad effettuare una prima riparazione. Se la natura del guasto lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico.
+Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal problema compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario di interesse e procede, dove possibile, ad effettuare una prima riparazione. Se la problematicità lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico e meccanico.
 
-Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un eventuale guasto, esso si assume la responsabilità (finanziarie) di contattare il fornitore dell'apparecchio guasto e procede in una delle seguenti modalità:
+Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un eventuale guasto, esso si assume la responsabilità (finanziaria) di contattare il fornitore dell'apparecchio e procede in una delle seguenti modalità:
 
 1. Il Global Service invia l'apparecchio in assistenza al fornitore e comunica al reparto un prospetto delle tempistiche necessarie per la risoluzione del guasto.
 2. Il Global Service richiede alla ditta produttrice del dispositivo l'intervento di un tecnico specializzato e stabilisce con essa una data di intervento utile a minimizzare i disagi che il fermo macchina può generare al reparto di interesse.
@@ -137,7 +145,7 @@ Il coinvolgimento delle diverse strutture operative nella manutenzione correttiv
 
 ![documenti di riferimento \label{diz_corr}](man_dm/img/diz_correttiva.PNG)
 
-
+\FloatBarrier
 ## Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva \label {es_corr}
 
 ## Esempio di manutenzione programmata: Ecografo \label{es_prog}
