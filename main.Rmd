@@ -8,6 +8,8 @@ header-includes:
 - \usepackage{placeins}
 - \usepackage{setspace}
 - \usepackage{chngcntr}
+- \usepackage{amsmath}
+- \usepackage{textcomp}
 - \onehalfspacing
 - \counterwithin{figure}{section}
 - \counterwithin{table}{section}
@@ -22,7 +24,11 @@ output:
     fig_width: 5
     number_sections: yes
 ---
-
+<!-- <script type="text/x-mathjax-config"> -->
+<!-- MathJax.Hub.Config({ -->
+<!--   TeX: { equationNumbers: { autoNumber: "AMS" } } -->
+<!-- }); -->
+<!-- </script> -->
 ```{r child='frontespizio.rmd'}
 ```
 \pagenumbering{gobble}
