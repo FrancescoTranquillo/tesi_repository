@@ -54,9 +54,11 @@ I dati utilizzati per questa rappresentazione sono stati estratti dal portale di
 Riassumendo quindi: la trasformazione digitale che sta interessando tutti i settori umani (compreso quello sanitario), ovvero la possibilità di raccogliere e conservare diversi tipi di dati in tempo reale, permette di conoscere meglio i problemi di un macchinario e di evitarne i fermo macchina andando così a migliorare sia, in ambito sanitario, la qualità del servizio offerto dalla macchina in questione sia la gestione della stessa.
 
 ## Metodi analitici di predizione
-Nei paragrafi precedenti sono stati introdotti obiettivi e vantaggi della manutenzione predittiva. Nel senguente verranno invece descritti i metodi di machine learning sui quali essa si fonda.
+Nei paragrafi precedenti sono stati introdotti obiettivi e vantaggi della manutenzione predittiva. Nel seguente verranno invece descritti i metodi di machine learning sui quali essa si fonda.
 
-Definiamo "Machine Learning" come lo studio o lo sviluppo di modelli e algoritmi che permettono ad un sistema (o un programma) di imparare dall'esperienza per aumentare le proprie performance durante l'esecuzione. Un sistema "impara" dall'esperienza E in riferimento a qualche tipo di task T e ad una misura di performance P, se le sue performance nell'eseguire il task T, come misurate da P, aumentano grazie all'esperienza. La fase di addestramento di un modello viene indicata come fase di _training_. Sistemi di questo tipo vengono chiamati "Modelli Adattativi". Un modello è tipicamente una funzione _f_ che riceve uno o più input (chiamati anche _features_, _variabili indipendenti_, _osservazioni_ o _esempi_) e genera uno o più output (chiamati anche _classi_ o _variabili dipendenti_). La definizione di questa funzione viene determinata, nell'approccio proprio del Machine Learning, attraverso un approccio "bottom-up". In questo caso, il sistema osserva un insieme di esempi e costruisce un modello basato su questi dati.
+Definiamo "Machine Learning" come lo studio o lo sviluppo di modelli e algoritmi che permettono ad un sistema (o un programma) di imparare dall'esperienza per aumentare le proprie performance durante l'esecuzione. Un sistema "impara" dall'esperienza E in riferimento a qualche tipo di task T e ad una misura di performance P, se le sue performance nell'eseguire il task T, come misurate da P, aumentano grazie all'esperienza. La fase di addestramento di un modello viene indicata come fase di _training_. Sistemi di questo tipo vengono chiamati "Modelli Adattativi".
+
+Un modello è tipicamente una funzione "obiettivo" t~n~ (funzione "target") che riceve uno o più (_n_) input (chiamati anche _features_, _variabili indipendenti_, _osservazioni_ o _esempi_) e genera uno o più output (chiamati anche _classi_ o _variabili dipendenti_). La definizione di questa funzione viene determinata, nell'approccio proprio del Machine Learning, attraverso un approccio "bottom-up" nel quale il sistema osserva un insieme di esempi e costruisce un modello basato su questi.
 
 
 A seconda della tipologia di dati usati, si possono identificare tre paradigmi di training:
@@ -69,7 +71,7 @@ A seconda della tipologia di dati usati, si possono identificare tre paradigmi d
     - **Detezione di anomalie**: Il programma analizza i dati a disposizione e impara autonomamente ad identificare pattern anomali.
     - **Clustering**: Il programma identifica gruppi di esempi con caratteristiche simili
 
-3.**Addestramento rinforzato** < x~i~ >, {a~1~, a~2~, ...}, $r_{i} \in R$: Al modello viene richiesto di imparare a produrre azioni a~1~, a~2~ in modo tale da massimizzare le ricompense ricevute r~i~.
+3. **Addestramento rinforzato** < x~i~ >, {a~1~, a~2~, ...}, $r_{i} \in R$: Al modello viene richiesto di imparare a produrre azioni a~1~, a~2~ in modo tale da massimizzare le ricompense ricevute r~i~.
 
 Relativamente alla manutenzione predittiva, le applicazioni per cui essa viene applicata rientrano nelle categorie di problemi di Classificazione, di Regressione e di Detezione di anomalie. Nello specifico, a questi problemi può essere associata una domanda che esplicita l'obiettivo che si vuole ottenere tramite la manutenzione predittiva. Le tre domande (d'ora in avanti indicate con il nome di "Use Case") sono:
 
@@ -82,9 +84,152 @@ Nei successivi paragrafi si espliciterà ognuno dei seguenti problemi, fornendo 
 ### Classificazione: _"La macchina subirà un guasto?"_
 In questo tipo di problema, come già visto, l'obiettivo è quello di fornire una classificazione per un determinato oggetto. L'"oggetto" in questione si configura come l'eventualità o meno della macchina di subire un guasto, a fronte di una serie di informazioni relative allo stato operativo della macchina stessa. A titolo di esempio, si rimanda al lavoro svolto da Battifarano et al. dal titolo "Predicting Future Machine Failure from Machine State Using Logistic Regression" [@battifaranoPredictingFutureMachine2018] nel quale, a partire da informazioni riguardanti lo stato operativo della macchina in un dato istante temporale, si è addestrato un modello di regressione logistica per predire lo stato di funzionamento del macchinario con 24 ore di anticipo.
 
-La regressione logisitca è un metodo di classificazione comunemente utilizzato in applicazioni simili. Esso modellizza la probabilità di una variabile binaria target **Y** a partire da un vettore di features **X** trasportando una combinazione lineare delle features nell'intervallo (0,1) tramite una trasformazione non lineare data dalla \ref{eq:logreg}:
+La regressione logistica è un metodo di classificazione comunemente utilizzato in applicazioni simili. Esso modellizza la probabilità di una variabile binaria target **Y** (che nel caso sopracitato rappresenta lo stato di "salute" della macchina differenziandolo in "funzionante" e "non funzionante" ) a partire da un vettore di features **X** (le informazioni sullo stato operativo del macchinario) trasportando una combinazione lineare delle features nell'intervallo (0,1) tramite una trasformazione non lineare data dalla \ref{eq:logreg}:
 
 \begin{equation}
 P(Y = 1 \mid X = x) = \pi(x) = \frac{e^{\alpha + \beta^{T}x}}{1+e^{\alpha + \beta^{T}x}}
 \label{eq:logreg}
 \end{equation}
+
+L'addestramento del modello, in questo caso, consiste nell'identificazione del migliore set di parametri $\alpha$ e $\beta$, ovvero i valori che aumentano la precisione del modello. Più nel dettaglio, la stima dei coefficienti di regressione della \autoref{eq:logreg} si realizza tramite la risoluzione di un problema di massimizzazione di una specifica funzione, chiamata "verosomiglianza" _L_ (chiamata anche funzione di _likelyhood_ in inglese). Questa funzione esprime la probabilità condizionata che un insieme di esempi ($t_{1},...,t_{N}$), ovvero i dati utilizzati per l'addestramento del modello, vengano determinati da uno specifico set di parametri $\theta$ (in questo caso i parametri sono $\alpha$ e $\beta$ citati precedentemente).
+
+Prima di inoltrarci nella risoluzione matematica del problema, è importante sottolineare che questo approccio è chiamato frequentista, cioè che fa affidamento esclusivamente sull'esperienza. Una diversa strategia è data, come si vedrà, dall'approccio bayesiano nel quale, per la determinazione dei coefficienti del modello, si utilizza come informazione (mancante nell'approccio frequentista) anche una conoscenza a priori della possibile distribuzione dei parametri ricercati e l'esperienza viene utilizzata di volta in volta per correggere questa conoscenza a priori in modo da allinearsi con le evidenze generate dall'esperienza.
+
+Definiamo quindi il problema di massimizzazione della funzione di likelyhood (chiamato _MLE_ ovvero **Maximum Likelyhood Estimation**) relativamente ad un problema di classificazione. La funzione obiettivo $t_{n}$, nel caso di un problema di classificazione binaria, è una funzione tale che:
+<center>
+\begin{align}
+\begin{split}
+t_{n} \in \{0,1\} ,
+\\
+t_{n} \sim {\sf Be}(y_{n})
+\end{split}
+\end{align}
+
+dalla quale si deduce, per definizione di distribuzione di Bernoulli:
+
+\begin{equation}
+p(t_{n} \mid x) = y_{n}^{t_{n}}(1-y_{n})^{1-t_{n}}
+\end{equation}
+
+che, a sua volta, permette di definire la funzione di likelyhood:
+\begin{equation}
+\label{eq:L}
+L(\theta) = p(t_{1},...,t_{N} \mid \theta) = \prod_{n}p(t_{n}\mid\theta) = \prod_{n=1}^{N}y_{n}^{t_{n}}(1-y_{n})^{1-t_{n}}
+\end{equation}
+
+nella quale:
+
+- _N_ rappresenta il numero di osservazioni disponibili
+- $y_{n}$ è la funzione sigmoide relativa al'equazione \ref{eq:logreg}, che può essere riscritta, raccogliendo l'esponenziale al denominatore e sostituendo l'argomento dell'esponenziale, come:
+\begin{align}
+\begin{split}
+a_{n} = \alpha + \beta^{T}x,
+\\
+y_{n} = \frac{1}{1+e^{-a_{n}}}
+\end{split}
+\end{align}
+
+Di conseguenza, per risolvere il problema di MLE (un problema di massimizzazione) bisogna derivare la funzione di likelyhood \ref{eq:L} rispetto ai parametri e annullarne la derivata così trovata. In riferimento a ciò, si procede applicando prima il logaritmo alla \ref{eq:L} ottenendo:
+\begin{equation}
+\L(a_{n}) = \log(L(\theta)) = \sum_{n = 1}^{N}t_{n}\log(y_{n})+(1-t_{n})\log(1-y_{n})
+\end{equation}
+La forma così ottenuta è chiamata log likelyhood. Il problema di massimizzazione di quest'ultima corrisponde al suo duale, ovvero alla minimizzazione della log likelyhood negativa:
+
+\begin{align}
+\begin{split}
+\label{eq:crossentropy}
+{\sf argmax}_{a_{n}}\L(a_{n}) &= {\sf argmin}_{a_{n}}-\L(a_{n}) \\
+&={\sf argmin}_{a_{n}}-\left(\sum_{n = 1}^{N}t_{n}\log(y_{n})+(1-t_{n})\log(1-y_{n})\right)
+\end{split}
+\end{align}
+
+L'ultima espressione è chiamata **cross entropia** e la sua minimizzazione rappresenta la minimizzazione della divergenza di Kullback-Leibler tra la rete di output e la distribuzione target [@kullbackInformationSufficiency1951].
+
+La risoluzione della \ref{eq:crossentropy} risulta complicata dal punto di vista analitico. Si procede quindi attraverso l'utilizzo di metodi numerici come ad esempio il metodo chiamato "discesa del gradiente". Con questo metodo, si cerca di minimizzare una funzione di costo in modo iterativo a partire da una soluzione iniziale scelta in modo casuale. Man mano che si procede con le iterazioni _k~n~_, i parametri (indicati nelle prossime equazioni con _w_) ricercati vengono aggiornati secondo la seguente formula di aggiornamento:
+\begin{equation}
+\label{eq:update}
+w^{k+1}=w^{k}-\eta\left.\pdv{J}{w}\right|_ {k}
+\end{equation}
+
+dove il secondo termine rappresenta il prodotto tra $\eta$, chiamato _learning rate_, e la derivata di una funzione di costo _J_ rispetto ai parametri di interesse, che rappresenta il gradiente della funzione di costo. Nel caso di un problema di classificazione, la funzione di costo è la cross entropia dell'equazione \ref{eq:crossentropy}. Numericamente, il metodo della discesa del gradiente avviene in questi passaggi:
+
+1. Viene inizializzata una possibile soluzione $w^{0}$ in modo casuale
+2. Si calcola il gradiente della funzione di costo $\left.\pdv{J}{w}\right|_ {k}$
+3. Si aggiorna la soluzione tramite l'equazione di aggiornamento data dall'equazione \ref{eq:update}
+4. Si ripetono i passaggi 2 e 3 fino alla convergenza.
+
+Tuttavia, il metodo del gradiente presenta delle criticità date dalla forma della funzione di costo e per la risoluzione si rimanda a testi specialistici.
+
+Attualmente, questi metodi di ottimizzazione e di addestramento di modelli predittivi sono implementati in pacchetti e funzionalità di diversi linguaggi di programmazione (Python, R, Matlab) che spesso vengono utilizzati per la costruzione iniziale di questo tipo di applicazioni. Sta quindi all'utilizzatore selezionare il modello più appropriato per il caso in esame.
+
+### Regressione: _"Tra quanto tempo la macchina subirà un guasto?"_
+In un problema di regressione, gli output desiderati $t_{i}$ sono valori continui e l'obiettivo è di predire in modo accurato un nuovo output a partire da nuovi input. Diversamente da quanto accade in un problema di classificazione, quindi, in un problema di regressione si cerca di predire un valore numerico. Un esempio applicativo di manutenzione predittiva svolta tramite risoluzione di un problema di regressione è dato dal lavoro di Tian et al. [@tianArtificialNeuralNetwork2012] nel quale viene utilizzata una rete neurale di tipo feedforward per la stima della vita utile rimanente (in inglese _RUL_, Remaining Useful Life) di alcuni componenti di un macchinario rotante tramite l'analisi delle vibrazioni assorbite dai cuscinetti del macchinario. Le reti neurali sono una tipologia di modello non-lineare caratterizzate da:
+
+- numero di neuroni
+- tipologia della rete
+- funzione di attivazione
+- valori dei pesi sinaptici e dei _bias_
+
+Ritroviamo questi elementi nell'unità funzionale di una rete neurale, ovvero una rete neurale dotata di un singolo neurone, con diversi input e un unico output, chiamata perceptrone. In generale, un neurone artificiale è modellizzato come in figura \ref{an} e il suo output dipende dal valore assunto dalla funzione di attivazione, indicata da $g()$.
+
+![Modello di neurone artificiale.\label{an}](digital/img/an.png){ width=50% }
+
+Ispirandosi proprio al neurone biologico e alla sua proprietà di generare un potenziale d'azione secondo la logica del "tutto o nulla", un neurone artificiale è in grado di replicare l'effetto di sommazione temporale dei potenziali d'azione e l'effetto di "sparo" grazie la definizione di una soglia di attivazione o bias _b_. L'output di un perceptrone è quindi dato da:
+\begin{equation}
+y=g\left(\sum_{0}^{I}w_{i}x_{i}\right)
+\end{equation}
+a sua volta, la funzione di attivazione può essere di diversi tipi (gradino, segno, lineare, sigmoide, iperbolica).
+
+L'addestramento di un perceptrone è descritto dal seguente set di equazioni che prende il nome di **Apprendimento Hebbiano**, formulato nel 1949 dallo psicologo canadese Donald Olding Hebb che studiò il meccanismo di apprendimento delle cellule neuronali:
+\begin{align}
+\begin{split}
+\label{eq:hebb}
+{w}_{i}^{k+1} &= {w}_{i}^{k} + \Delta w_{i} \\
+\Delta w_{i} &= \eta t x_{i}
+\end{split}
+\end{align}
+
+dove:
+
+- $\eta$ è il learning rate simile a quello dell'equazione \ref{eq:update}
+- $x_{i}$ è l'i-esimo input del perceptrone
+- t è l'output desiderato
+
+I passaggi dell'apprendimento Hebbiano possono essere sintetizzati nel seguente modo:
+
+1. I pesi vengono inizializzati in modo casuale
+2. Si calcola l'output del perceptrone utilizzando i pesi così inizializzati
+    2. Se l'output è diverso dall'output desiderato, si applica la regola di aggiornamento data dalla \ref{eq:hebb} ottenendo un nuovo set di pesi.
+3. Si ripete il passaggio 2 fino ad ottenere il risultato corretto.
+
+Tramite questo semplice metodo, un perceptrone è capace di apprendere semplici operazioni logiche quali AND, NOT, OR. Tuttavia, il perceptrone non è in grado di risolvere tutte le operazioni logiche. Infatti mostra limitazioni nell'apprendimento dell'operazione logica XOR. Per ovviare a questo problema, si combinano più neuroni artificiali generando nuovi modelli chiamati Perceptroni Multistrato o, più comunemente, reti neurali feedforward.
+
+![Topologia di rete neurale feedforward.\label{ffnn}](digital/img/ffnn.png){ width=60% }
+
+Nelle reti neurali feedforward (figura \ref{ffnn}), inoltre, sono presenti 1 o più strati nascosti, cosa che non succede nel perceptrone multistrato.
+
+L'output di una rete neurale avente topologia simile a quella in figura \ref{ffnn} è:
+
+\begin{equation}
+y=g\left(\sum_{j=0}^{J}W_{j}h\left(\sum_{i=0}^{I}w_{ji}x_{i}\right)\right)
+\end{equation}
+
+Similmente a quanto espresso nel paragrafo precedente riguardante la classificazione, anche in un problema di regressione ci si pone l'obiettivo di minimizzare una funzione di costo (tramite il metodo della discesa del gradiente) che, nel caso di una rete neurale feedforward, è data dalla:
+
+\begin{equation}
+E = \sum_{n=0}{N}(t_{n}-y_{n})^2
+\end{equation}
+
+L'apprendimento in una rete neurale feedforward (chiamata così in quanto, per ottenere l'output della rete, l'informazione fluisce unidirezionalmente dallo strato di input a quello di output) avviene tramite un processo chiamato **Backpropagation** che, similmente con quanto visto nel paragrafo precedente, utilizza il metodo del gradiente per minimizzare iterativamente la funzione di errore della rete neurale.
+
+Il processo di backpropagation è costituito da due fasi:
+
+1. La prima fase, chiamata **passo in avanti** consiste nel calcolare, per ogni neurone, l'output dello stesso tramite una funzione non lineare che lega l'input ai pesi associati al neurone considerato.
+2. La seconda fase, chiamata **passo indietro** consiste nel ricalcolare tutti i pesi neurali partendo da quelli più vicini allo strato di output fino agli strati di input, utilizzando la regola di aggiornamento data dal metodo del gradiente.
+
+Altre topologie di reti neurali sono le reti neurali ricorrenti e gli autoencoder.
+
+### Detezione di anomalie: _"Il comportamento della macchina presenta delle anomalie?"_
+In questo Use Case si utilizzano dei metodi che sintetizzano i casi di classificazione e regressione visti in precedenza, al fine di costruire dei modelli in grado di monitorare il comportamento di una certa variabile di interesse e stabilire, con una certa precisione, se il comportamento osservato rientra in alcuni gradi di accettabilità definiti a priori.
+
+In estrema sintesi, la detezione di una anomalia può essere effettuata attraverso l'analisi di serie temporali relative ad una grandezza, effettuando delle previsioni sulla serie in esame e classificare quindi il risultato come "Anomalo" o "Normale". Un esempio di detezione di anomalia tramite analisi di serie temporali è dato dal lavoro svolto da Malhotra et al. [@malhotraLongShortTerm2015], nel quale è stata costruita una rete neurale ricorrente in grado di memorizzare delle sequenze numeriche al fine di individuare anomalie nell'andamento di un una certa variabile. Questo tipo di rete neurale viene chiamata Long Short Term Memory (LSTM) per la capacità di, appunto, ricordare sequenze numeriche, di lunghezza variabile, utili per la previsione di una serie temporale.
