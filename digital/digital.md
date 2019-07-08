@@ -143,7 +143,7 @@ La forma così ottenuta è chiamata log likelyhood. Il problema di massimizzazio
 \end{split}
 \end{align}
 
-L'ultima espressione è chiamata **cross entropia** e la sua minimizzazione rappresenta la minimizzazione della divergenza di Kullback-Leibler tra la rete di output e la distribuzione target [@kullbackInformationSufficiency1951].
+L'ultima espressione è chiamata **cross entropia**. In statistica, la minimizzazione della cross entropia corrisponde alla minimizzazione della divergenza di Kullback-Leibler tra la distribuzione ottenuta e quella target [@kullbackInformationSufficiency1951] che, in sintesi, rappresenta una misura di quanto due distribuzioni di probabilità siano simili.
 
 La risoluzione della \ref{eq:crossentropy} risulta complicata dal punto di vista analitico. Si procede quindi attraverso l'utilizzo di metodi numerici come ad esempio il metodo chiamato "discesa del gradiente". Con questo metodo, si cerca di minimizzare una funzione di costo in modo iterativo a partire da una soluzione iniziale scelta in modo casuale. Man mano che si procede con le iterazioni _k~n~_, i parametri (indicati nelle prossime equazioni con _w_) ricercati vengono aggiornati secondo la seguente formula di aggiornamento:
 \begin{equation}
@@ -172,7 +172,7 @@ In un problema di regressione, gli output desiderati $t_{i}$ sono valori continu
 
 Ritroviamo questi elementi nell'unità funzionale di una rete neurale, ovvero una rete neurale dotata di un singolo neurone, con diversi input e un unico output, chiamata perceptrone. In generale, un neurone artificiale è modellizzato come in figura \ref{an} e il suo output dipende dal valore assunto dalla funzione di attivazione, indicata da $g()$.
 
-![Modello di neurone artificiale.\label{an}](digital/img/an.png){ width=50% }
+![Modello di neurone artificiale.\label{an}](digital/img/an.pdf)
 
 Ispirandosi proprio al neurone biologico e alla sua proprietà di generare un potenziale d'azione secondo la logica del "tutto o nulla", un neurone artificiale è in grado di replicare l'effetto di sommazione temporale dei potenziali d'azione e l'effetto di "sparo" grazie la definizione di una soglia di attivazione o bias _b_. L'output di un perceptrone è quindi dato da:
 \begin{equation}
@@ -204,7 +204,7 @@ I passaggi dell'apprendimento Hebbiano possono essere sintetizzati nel seguente 
 
 Tramite questo semplice metodo, un perceptrone è capace di apprendere semplici operazioni logiche quali AND, NOT, OR. Tuttavia, il perceptrone non è in grado di risolvere tutte le operazioni logiche. Infatti mostra limitazioni nell'apprendimento dell'operazione logica XOR. Per ovviare a questo problema, si combinano più neuroni artificiali generando nuovi modelli chiamati Perceptroni Multistrato o, più comunemente, reti neurali feedforward.
 
-![Topologia di rete neurale feedforward.\label{ffnn}](digital/img/ffnn.png){ width=60% }
+![Topologia di rete neurale feedforward.\label{ffnn}](digital/img/ffnn.pdf)
 
 Nelle reti neurali feedforward (figura \ref{ffnn}), inoltre, sono presenti 1 o più strati nascosti, cosa che non succede nel perceptrone multistrato.
 
@@ -232,4 +232,17 @@ Altre topologie di reti neurali sono le reti neurali ricorrenti e gli autoencode
 ### Detezione di anomalie: _"Il comportamento della macchina presenta delle anomalie?"_
 In questo Use Case si utilizzano dei metodi che sintetizzano i casi di classificazione e regressione visti in precedenza, al fine di costruire dei modelli in grado di monitorare il comportamento di una certa variabile di interesse e stabilire, con una certa precisione, se il comportamento osservato rientra in alcuni gradi di accettabilità definiti a priori.
 
-In estrema sintesi, la detezione di una anomalia può essere effettuata attraverso l'analisi di serie temporali relative ad una grandezza, effettuando delle previsioni sulla serie in esame e classificare quindi il risultato come "Anomalo" o "Normale". Un esempio di detezione di anomalia tramite analisi di serie temporali è dato dal lavoro svolto da Malhotra et al. [@malhotraLongShortTerm2015], nel quale è stata costruita una rete neurale ricorrente in grado di memorizzare delle sequenze numeriche al fine di individuare anomalie nell'andamento di un una certa variabile. Questo tipo di rete neurale viene chiamata Long Short Term Memory (LSTM) per la capacità di, appunto, ricordare sequenze numeriche, di lunghezza variabile, utili per la previsione di una serie temporale.
+In estrema sintesi, la detezione di una anomalia può essere effettuata attraverso l'analisi di serie temporali relative ad una grandezza, effettuando delle previsioni sulla serie in esame e classificare quindi il risultato come "Anomalo" o "Normale". Un esempio di detezione di anomalia tramite analisi di serie temporali è dato dal lavoro svolto da Malhotra et al. [@malhotraLongShortTerm2015], nel quale è stata costruita una rete neurale ricorrente in grado di memorizzare delle sequenze numeriche al fine di individuare anomalie nell'andamento di un una certa variabile. Questo tipo di rete neurale viene chiamata Long Short Term Memory (LSTM) per la capacità di, appunto, ricordare sequenze numeriche di lunghezza variabile.
+
+Le reti neurali ricorrenti sono una particolare topologia di rete neurale in cui è inserita una sotto topologia chiamata _"rete di contesto"_ in cui vengono aggiunti nuovi neuroni negli strati nascosti. Gli output di questi neuroni sono connessi sia allo strato di output, sia a agli strati di input implementando un ritardo temporale così come avviene in un sistema retroazionato. L' apprendimento di queste reti neurali viene svolto attraverso un' estensione del processo standard di backpropagation, chiamato _"backpropagation nel tempo"_. La differenza sostanziale con l'algoritmo standard consiste in una fase preliminare ai passaggi della backpropagation, nella quale la rete ricorrente viene trasformata in una rete neurale feedforward attraverso un procedimento chiamato _"network unfolding"_ che procede a "dispiegare" la rete secondo tutti gli istanti temporali dati in input.
+
+![Topologia di una LSTM \label{lstmpdf}](digital/img/lstm.pdf)
+
+Una rete di tipo LSTM, come già detto, è una rete neurale ricorrente capace di apprendere sequenze anche molto lunghe. In generale, le LSTM sono composte da sequenze di reti neurali, ognuna di queste caratterizzate da una specifica funzione. La topologia generale di una LSTM viene riportata in figura \ref{lstmpdf}.
+
+Si differenziano i seguenti moduli:
+
+- **Forget Gate**: Il risultato di questa rete è 0 o 1. Nel primo caso, quindi, il valore in memoria $h^{t-1}$ viene cancellato. In caso contrario, il valore passa al prossimo modulo in modo inalterato.
+- **Input Gate**: Controlla il valore da riportare allo stato $h^{t}$.
+- **Constant Error Carousel (CEC)**: Rete neurale utilizzata per contrastare un problema tipico dell'apprendimento delle reti neurali ricorrenti chiamato "scomparsa del gradiente". Questo effetto è conseguente all'applicazione del metodo del gradiente durante la fase di network unfolding citata precedentemente. In sintesi, durante lo svolgimento dell'algoritmo dato dalle equazioni \ref{eq:update}, si ottiene una catena di moltiplicazioni tra termini tutti inferiori a 1. In questo modo, il gradiente risultante tende ad annullarsi all'aumentare delle fasi di "dispiegamento", annullando quindi la possibilità di identificare un mininimo della funzione di costo. Grazie al CEC, si previene la scomparsa del gradiente perchè si inserisce un elemento che mantiene un peso sinaptico costante e pari a 1.
+- **Output Gate**: Ultima rete che controlla il risultato finale della LSTM.
