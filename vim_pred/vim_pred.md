@@ -27,3 +27,17 @@ In questo contesto, è necessario fare riferimento alle variabili fisiche preced
 La ricerca si è quindi indirizzata, a fronte delle criticità incontrate, nell'analisi dei log macchina al fine di costruire dei modelli predittivi sullo stato di salute del dispositivo che li ha generati.
 
 In particolare, per l'attività si è fatto principalmente riferimento allo studio condotto da Sipos et al. [@siposLogbasedPredictiveMaintenance2014] nel quale ci si è avvalsi di diversi Terabytes di log macchina estratti da diverse migliaia di risonanze magnetiche prodotte da Siemens \textregistered. La quantità di dati a disposizione, come si vedrà, rappresenta una dei principali requisiti per la modellizzazione di algoritmi di machine learning perchè, dalla stessa, dipendono fortemente le capacità di apprendimento del modello che si vuole sviluppare.
+
+In questo studio, gli autori evidenziano tre principali problematiche relativo all'utilizzo dei log macchina per la predizione dei guasti. Esse possono essere così riassunte:
+
+1. I log macchina, essendo progettati per supportare personale tecnico nella risoluzione di problemi di tipo informatico (attività di _debugging_), raramente contengono informazioni esplicite per la predizione di un guasto del macchinario.
+2. I log contengono dati di tipo eterogeneo tra cui: sequenze simboliche, serie temporali numeriche, testi non strutturati e variabili categoriche. Questa particolarità aggiunge uno strato di complessità all'analisi di questo tipo di dati.
+3. I log contengono una grande quantità di dati, il che pone delle sfide dal punto di vista dell'efficienza computazionale.
+
+Elemento imprescindibile per poter effettuare delle analisi predittive è la disponibilità di dati relativi ad interventi di manutenzione passati effettuati sulla macchina in esame. Grazie a questi, infatti, è possibile correlare ogni guasto avvenuto (noto) con il corrispondente insieme di log macchina.
+
+Partendo da questi presupposti si è cercato, in un primo tentativo, di utilizzare i log macchina derivanti dalla Achieva estratti in concomitanza con l'intervento di manutenzione correttiva descritto nel capitolo (REF). Tuttavia, i dati a disposizione estratti facevano riferimento a pochi giorni di attività della macchina. Non sufficienti, quindi, ad essere utilizzati per condurre un'analisi che desse buoni risultati. Si è presentata quindi la necessità di reperire dalla macchina stessa altri log. Tuttavia sono state incontrate diverse difficoltà. Legate alla modalità di ottenimento di tali dati. Sinteticamente, per accedere ai log macchina è necessario, infatti, accedere dal terminale della risonanza magnetica tramite le credenziali di accesso in dotazione esclusiva ai tecnici e ai field engineers autorizzati (di Philips).
+
+A seguito di tali limitazioni, si è quindi spostata l'attenzione su un sistema più semplice rispetto ad una risonanza magnetica, ma che mantenesse la stessa modalità di generazione e salvataggio di log macchina utili ai fini predittivi.
+
+Su suggerimento di uno degli ingegneri dell'ingegneria clinica è stata individuata una famiglia di macchinari, appartenenti al reparto di endoscopia, che rispondevano ai requisiti di applicabilità sopracitati.
