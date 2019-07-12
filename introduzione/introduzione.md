@@ -69,7 +69,7 @@ In particolare, le funzioni proprie di ogni Direzione possono essere riassunte c
 ### Il presidio di Vimercate
 Nella \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
 
-![Ospedale di Vimercate, ingresso \label{os1}](img/ospedale.jpg)
+![Ospedale di Vimercate, ingresso \label{os1}](introduzione/img/ospedale.jpg)
 
 
 Il Presidio di Vimercate vanta una storia millenaria: nacque, grazie all'azione dei Monaci di Sant'Ambrogio, come ricovero per pellegrini nell'833 con il nome di “L’Hospitale di San Damiano”. Fu ribattezzato nel 1447 dapprima con il nome di "Hospitale di San Giuseppe" e quindi "Hospitale Pauperum", infine venne indicato con il nome di "Hospitale del Borgo di Vicomercato", a seguito di un'opera di riorganizzazione indotta dall'allora arcivescovo di Milano, Enrico Rampini.
@@ -82,7 +82,7 @@ Importante è sottolineare che dal 30 ottobre 2010 l'Ospedale di Vimercate ha in
 
 Il nuovo Ospedale, vero fiore all'occhiello dell'Azienda, progettato dall'arch. Mario Botta e costruito in soli tre anni, si sviluppa su tre piani fuori terra e due interrati, per una superficie totale di 113.000 mq (nella figura \ref{os2} si riporta una ricostruzione di una visualizzazione aerea tratta dai piani di costruzione del nuovo Ospedale [@pessinacostruzioniPessinaCostruzioni2009]).
 
-![Ospedale di Vimercate, vista aerea \label{os2}](img/ospedale-aereo.png)
+![Ospedale di Vimercate, vista aerea \label{os2}](introduzione/img/ospedale-aereo.png)
 
 L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre al centro dei percorsi logistici e diagnostico-terapeutici il paziente, con le sue patologie e il suo vissuto familiare e sociale; anche per questo motivo l'assistenza è organizzata secondo il modello per intensità di cura.
 
