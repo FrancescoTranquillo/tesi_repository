@@ -42,4 +42,39 @@ Partendo da questi presupposti si è cercato, in un primo tentativo, di utilizza
 
 ## Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered
 
-A seguito di tali limitazioni, si è quindi spostata l'attenzione su un sistema più semplice rispetto ad una risonanza magnetica, ma caratterizzata da una modalità di generazione e salvataggio di log macchina utili ai fini predittivi. Su suggerimento di uno degli ingegneri biomedici del SIC, è stata individuata una famiglia di dispositivi medici chiamate lavaendoscopi, su cui poi è stato sviluppato un software di monitoraggio comprensivo di un modulo di manutenzione predittiva. I macchinari in questione sono stati presi in considerazione per diversi motivi.
+A seguito di tali limitazioni, si è quindi spostata l'attenzione su un sistema più semplice rispetto ad una risonanza magnetica, ma caratterizzata da una modalità di generazione e salvataggio di log macchina utili ai fini predittivi. Su suggerimento di uno degli ingegneri biomedici del SIC, è stata individuata una famiglia di dispositivi medici chiamate lavaendoscopi, su cui poi è stato sviluppato un software di monitoraggio comprensivo di un modulo di manutenzione predittiva. In figura \ref{isa} è riportata una fotografia del dispositivo in questione.
+
+![Lava-Sterilizzatrice MEDIVATORS\textregistered ISA\textregistered \label{isa}](vim_pred/img/isa.jpg){width="50%"}
+
+Nello specifico, la Lava-Sterilizzatrice MEDIVATORS® ISA® è un dispositivo medico progettato per il lavaggio e la sterilizzazione chimica a freddo degli endoscopi rigidi e flessibili e degli accessori endoscopici.
+
+In sintesi, il processo di utilizzo della macchina consiste in diverse fasi:
+
+1. Accensione della macchina
+2. Carico endoscopi nella vasca
+3. Chiusura della vasca e selezione del ciclo di riprocessazione desiderato
+4. Prelievo dell'endoscopio dalla vasca
+
+In concomitanza con la fine di un ciclo di lavaggio, il dispositivo registra nel proprio hard disk tutte le informazioni relative a tutti ai cicli eseguiti creando un archivio elettronico consultabile in qualsiasi momento. Inoltre, è dotato di una stampante integrata che, al termine di ogni ciclo, stampa in automatico un report del ciclo. Il report è un documento essenziale per la convalida del ciclo e deve essere sempre conservato.
+
+L'attenzione è stata posta proprio su questi report di stampa chiamati per brevità "scontrini". In figura \ref{scontrino} viene riportato un esempio di scontrino in formato digitale.
+
+![Report stampato dalla lava-sterilizzatrice MEDIVATORS \textregistered ISA \textregistered \label{scontrino}](vim_pred/img/scont.png){height="70%"}
+
+Sempre in riferimento alla figura \ref{scontrino}, i parametri inseriti in stampa sono:
+
+- Data ed ora di inizio ciclo
+- Dati strumento (categoria-s/n)
+- Medico (opzionale)
+- Paziente (opzionale)
+- Tipo di ciclo eseguito
+- Numero progressivo del ciclo
+- Fasi del ciclo con relativi tempi di contatto e temperatura
+- Esito del ciclo
+
+Gli scontrini, quindi, rappresentano una buona fonte di dati per quanto riguarda lo stato di funzionamentio della macchina in quanto, come visto, essi riportano sia gli attori coinvolti nello specifico ciclo di lavaggio, sia gli eventuali allarmi registrati durante il lavaggio. Essi riportano inoltre variabili numeriche quali temperatura e tempi delle varie fasi del ciclo selezionato.
+
+Con questi dati a disposizione si è indagata quindi la possibilità di prevedere, con un anticipo di 7 giorni, l'insorgenza di guasti tali da indurre il personale del reparto a richiedere un intervento di manutenzione correttiva al Global Service. L'attività svolta si è articolata nelle seguenti fasi:
+
+1. **Raccolta dati**: Grazie alla responsabile del reparto di endoscopia e ad uno dei collaboratori tecnici del SIC, è stato possibile estrarre da una MEDIVATORS\textregistered ISA\textregistered, l'intero storico dei report di lavaggio conservati nell'hard disk della macchina per un totale di 5441 scontrini (pari a 3 anni di attività);
+2. **Conversione dei file di testo in formato tabulare**: Gli scontrini estratti dalla memoria della macchina sono stati

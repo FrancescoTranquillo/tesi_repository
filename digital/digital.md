@@ -53,7 +53,7 @@ I dati utilizzati per questa rappresentazione sono stati estratti dal portale di
 
 Riassumendo quindi: la trasformazione digitale che sta interessando tutti i settori umani (compreso quello sanitario), ovvero la possibilità di raccogliere e conservare diversi tipi di dati in tempo reale, permette di conoscere meglio i problemi di un macchinario e di evitarne i fermo macchina andando così a migliorare sia, in ambito sanitario, la qualità del servizio offerto dalla macchina in questione sia la gestione della stessa.
 
-## Metodi analitici di predizione
+## Metodi analitici di predizione \label{digital}
 Nei paragrafi precedenti sono stati introdotti obiettivi e vantaggi della manutenzione predittiva. Nel seguente verranno invece descritti i metodi di machine learning sui quali essa si fonda.
 
 Definiamo "Machine Learning" come lo studio o lo sviluppo di modelli e algoritmi che permettono ad un sistema (o un programma) di imparare dall'esperienza per aumentare le proprie performance durante l'esecuzione. Un sistema "impara" dall'esperienza E in riferimento a qualche tipo di task T e ad una misura di performance P, se le sue performance nell'eseguire il task T, come misurate da P, aumentano grazie all'esperienza. La fase di addestramento di un modello viene indicata come fase di _training_. Sistemi di questo tipo vengono chiamati "Modelli Adattativi".

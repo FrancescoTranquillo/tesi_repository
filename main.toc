@@ -28,4 +28,10 @@
 \contentsline {subsubsection}{\numberline {3.4.1}Classificazione: \emph {``La macchina subir\IeC {\`a} un guasto?''}}{29}{subsubsection.3.4.1}% 
 \contentsline {subsubsection}{\numberline {3.4.2}Regressione: \emph {``Tra quanto tempo la macchina subir\IeC {\`a} un guasto?''}}{32}{subsubsection.3.4.2}% 
 \contentsline {subsubsection}{\numberline {3.4.3}Detezione di anomalie: \emph {``Il comportamento della macchina presenta delle anomalie?''}}{36}{subsubsection.3.4.3}% 
-\contentsline {section}{Bibliografia}{39}{section*.6}% 
+\contentsline {section}{\numberline {4}La manutenzione predittiva in Ospedale: l'esperienza di Vimercate}{39}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}Indagine preliminare}{39}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}L'analisi dei log macchina}{41}{subsection.4.2}% 
+\contentsline {subsection}{\numberline {4.3}Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered }{43}{subsection.4.3}% 
+\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{46}{section.5}% 
+\contentsline {section}{\numberline {6}Conclusioni}{47}{section.6}% 
+\contentsline {section}{Bibliografia}{48}{section*.6}% 
