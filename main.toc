@@ -2,14 +2,14 @@
 \babel@toc {italian}{}
 \contentsline {section}{Sommario}{V}{section*.4}% 
 \contentsline {section}{Abstract}{VI}{section*.5}% 
-\contentsline {section}{\numberline {1}Introduzione}{1}{section.1}% 
+\contentsline {section}{\numberline {1}Introduzione e contesto}{1}{section.1}% 
 \contentsline {subsection}{\numberline {1.1}Organizzazione della ASST Vimercate}{1}{subsection.1.1}% 
 \contentsline {subsubsection}{\numberline {1.1.1}Polo Ospedaliero}{2}{subsubsection.1.1.1}% 
 \contentsline {subsubsection}{\numberline {1.1.2}Rete Territoriale}{2}{subsubsection.1.1.2}% 
 \contentsline {subsubsection}{\numberline {1.1.3}La Missione Aziendale}{3}{subsubsection.1.1.3}% 
 \contentsline {subsubsection}{\numberline {1.1.4}Il presidio di Vimercate}{6}{subsubsection.1.1.4}% 
-\contentsline {subsection}{\numberline {1.2}L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate}{7}{subsection.1.2}% 
-\contentsline {subsubsection}{\numberline {1.2.1}Organizzazione e attivi\IeC {\`a} della Struttura}{7}{subsubsection.1.2.1}% 
+\contentsline {subsection}{\numberline {1.2}L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate}{9}{subsection.1.2}% 
+\contentsline {subsubsection}{\numberline {1.2.1}Organizzazione e attivi\IeC {\`a} della Struttura}{9}{subsubsection.1.2.1}% 
 \contentsline {subsubsection}{\numberline {1.2.2}L'attivit\IeC {\`a} di manutenzione }{10}{subsubsection.1.2.2}% 
 \contentsline {section}{\numberline {2}La manutenzione dei dispositivi medici}{11}{section.2}% 
 \contentsline {subsection}{\numberline {2.1}Definizioni}{11}{subsection.2.1}% 
@@ -24,7 +24,7 @@
 \contentsline {subsection}{\numberline {3.1}Industria 4.0 e tecnologie emergenti}{22}{subsection.3.1}% 
 \contentsline {subsection}{\numberline {3.2}Manutenzione predittiva: il contesto normativo}{23}{subsection.3.2}% 
 \contentsline {subsection}{\numberline {3.3}Vantaggi della manutenzione predittiva}{24}{subsection.3.3}% 
-\contentsline {subsection}{\numberline {3.4}Metodi analitici di predizione}{27}{subsection.3.4}% 
+\contentsline {subsection}{\numberline {3.4}Metodi analitici di predizione }{27}{subsection.3.4}% 
 \contentsline {subsubsection}{\numberline {3.4.1}Classificazione: \emph {``La macchina subir\IeC {\`a} un guasto?''}}{29}{subsubsection.3.4.1}% 
 \contentsline {subsubsection}{\numberline {3.4.2}Regressione: \emph {``Tra quanto tempo la macchina subir\IeC {\`a} un guasto?''}}{32}{subsubsection.3.4.2}% 
 \contentsline {subsubsection}{\numberline {3.4.3}Detezione di anomalie: \emph {``Il comportamento della macchina presenta delle anomalie?''}}{36}{subsubsection.3.4.3}% 
@@ -32,6 +32,6 @@
 \contentsline {subsection}{\numberline {4.1}Indagine preliminare}{39}{subsection.4.1}% 
 \contentsline {subsection}{\numberline {4.2}L'analisi dei log macchina}{41}{subsection.4.2}% 
 \contentsline {subsection}{\numberline {4.3}Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered }{43}{subsection.4.3}% 
-\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{46}{section.5}% 
-\contentsline {section}{\numberline {6}Conclusioni}{47}{section.6}% 
-\contentsline {section}{Bibliografia}{48}{section*.6}% 
+\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{47}{section.5}% 
+\contentsline {section}{\numberline {6}Conclusioni}{48}{section.6}% 
+\contentsline {section}{Bibliografia}{49}{section*.6}% 

@@ -81,7 +81,7 @@ Relativamente alla manutenzione predittiva, le applicazioni per cui essa viene a
 
 Nei successivi paragrafi si espliciterà ognuno dei seguenti problemi, fornendo alcuni esempi di algoritmi utilizzabili in ognuno dei sopracitati casi.
 
-### Classificazione: _"La macchina subirà un guasto?"_
+### Classificazione
 In questo tipo di problema, come già visto, l'obiettivo è quello di fornire una classificazione per un determinato oggetto. L'"oggetto" in questione si configura come l'eventualità o meno della macchina di subire un guasto, a fronte di una serie di informazioni relative allo stato operativo della macchina stessa. A titolo di esempio, si rimanda al lavoro svolto da Battifarano et al. dal titolo "Predicting Future Machine Failure from Machine State Using Logistic Regression" [@battifaranoPredictingFutureMachine2018] nel quale, a partire da informazioni riguardanti lo stato operativo della macchina in un dato istante temporale, si è addestrato un modello di regressione logistica per predire lo stato di funzionamento del macchinario con 24 ore di anticipo.
 
 La regressione logistica è un metodo di classificazione comunemente utilizzato in applicazioni simili. Esso modellizza la probabilità di una variabile binaria target **Y** (che nel caso sopracitato rappresenta lo stato di "salute" della macchina differenziandolo in "funzionante" e "non funzionante" ) a partire da un vettore di features **X** (le informazioni sullo stato operativo del macchinario) trasportando una combinazione lineare delle features nell'intervallo (0,1) tramite una trasformazione non lineare data dalla \ref{eq:logreg}:
@@ -162,7 +162,7 @@ Tuttavia, il metodo del gradiente presenta delle criticità date dalla forma del
 
 Attualmente, questi metodi di ottimizzazione e di addestramento di modelli predittivi sono implementati in pacchetti e funzionalità di diversi linguaggi di programmazione (Python, R, Matlab) che spesso vengono utilizzati per la costruzione iniziale di questo tipo di applicazioni. Sta quindi all'utilizzatore selezionare il modello più appropriato per il caso in esame.
 
-### Regressione: _"Tra quanto tempo la macchina subirà un guasto?"_
+### Regressione
 In un problema di regressione, gli output desiderati $t_{i}$ sono valori continui e l'obiettivo è di predire in modo accurato un nuovo output a partire da nuovi input. Diversamente da quanto accade in un problema di classificazione, quindi, in un problema di regressione si cerca di predire un valore numerico. Un esempio applicativo di manutenzione predittiva svolta tramite risoluzione di un problema di regressione è dato dal lavoro di Tian et al. [@tianArtificialNeuralNetwork2012] nel quale viene utilizzata una rete neurale di tipo feedforward per la stima della vita utile rimanente (in inglese _RUL_, Remaining Useful Life) di alcuni componenti di un macchinario rotante tramite l'analisi delle vibrazioni assorbite dai cuscinetti del macchinario. Le reti neurali sono una tipologia di modello non-lineare caratterizzate da:
 
 - numero di neuroni
@@ -229,7 +229,7 @@ Il processo di backpropagation è costituito da due fasi:
 
 Altre topologie di reti neurali sono le reti neurali ricorrenti e gli autoencoder.
 
-### Detezione di anomalie: _"Il comportamento della macchina presenta delle anomalie?"_
+### Detezione di anomalie
 In questo Use Case si utilizzano dei metodi che sintetizzano i casi di classificazione e regressione visti in precedenza, al fine di costruire dei modelli in grado di monitorare il comportamento di una certa variabile di interesse e stabilire, con una certa precisione, se il comportamento osservato rientra in alcuni gradi di accettabilità definiti a priori.
 
 In estrema sintesi, la detezione di una anomalia può essere effettuata attraverso l'analisi di serie temporali relative ad una grandezza, effettuando delle previsioni sulla serie in esame e classificare quindi il risultato come "Anomalo" o "Normale". Un esempio di detezione di anomalia tramite analisi di serie temporali è dato dal lavoro svolto da Malhotra et al. [@malhotraLongShortTerm2015], nel quale è stata costruita una rete neurale ricorrente in grado di memorizzare delle sequenze numeriche al fine di individuare anomalie nell'andamento di un una certa variabile. Questo tipo di rete neurale viene chiamata Long Short Term Memory (LSTM) per la capacità di, appunto, ricordare sequenze numeriche di lunghezza variabile.

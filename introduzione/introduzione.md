@@ -1,4 +1,4 @@
-# Introduzione
+# Introduzione e contesto
 Questo capitolo introduttivo sarà dedicato all'organizzazione dell'ASST Vimercate, alla sua origine istituzionale e alla descrizione del ruolo e delle attività svolte dalla U.O.C. Ingegneria Clinica, con particolare riferimento al tema della gestione della manutenzione dagli aspetti più convenzionali a quelli più innovativi oggetto del presente elaborato di tesi.
 
 ## Organizzazione della ASST Vimercate
@@ -42,7 +42,7 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 ### La Missione Aziendale
 La missione dell’Azienda è quella di contribuire alla promozione, al mantenimento e al recupero delle condizioni di salute della popolazione, erogando prestazioni sia sanitarie sia sociosanitarie, secondo standard di eccellenza, di media e elevata complessità, nel rispetto della dignità della persona, del bisogno di salute, dell’equità dell’accesso all’assistenza, della qualità delle cure e della loro appropriatezza, dell’economicità nell’impiego delle risorse ed in coerenza con i principi e gli obiettivi definiti dal Piano Sanitario Nazionale e dal Piano Sanitario Regionale.
 
-L’Azienda intende strutturare un sistema “che si prenda cura” della persona e del suo benessere, collaborando attivamente con tutti gli attori del Sistema Socio-Sanitario, al fine di perseguire l’obiettivo di rafforzare nel cittadino la percezione di un’identità comune, garantendo così a tutti parità di accesso ai servizi.
+L’Azienda, conformemente alle indicazioni Regionali, ha strutturato un sistema “che si prenda cura” della persona e del suo benessere, collaborando attivamente con tutti gli attori del Sistema Socio-Sanitario, al fine di perseguire l’obiettivo di rafforzare nel cittadino la percezione di un’identità comune, garantendo così a tutti parità di accesso ai servizi.
 
 In figura \ref{org} viene riportato l'organigramma aziendale in cui sono evidenziati gli organi di vertice e le strutture (semplici e complesse) cui essi fanno capo.
 
@@ -67,7 +67,8 @@ In particolare, le funzioni proprie di ogni Direzione possono essere riassunte c
 - **Direzione Socio-Sanitaria**: Il Direttore Sociosanitario dirige il settore aziendale rete territoriale della Azienda Socio Sanitaria Territoriale.
 
 ### Il presidio di Vimercate
-Nella \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
+\FloatBarrier
+Nella figura \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
 
 ![Ospedale di Vimercate, ingresso \label{os1}](introduzione/img/ospedale.jpg)
 
@@ -85,6 +86,8 @@ Il nuovo Ospedale, vero fiore all'occhiello dell'Azienda, progettato dall'arch. 
 ![Ospedale di Vimercate, vista aerea \label{os2}](introduzione/img/ospedale-aereo.png)
 
 L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre al centro dei percorsi logistici e diagnostico-terapeutici il paziente, con le sue patologie e il suo vissuto familiare e sociale; anche per questo motivo l'assistenza è organizzata secondo il modello per intensità di cura.
+
+\FloatBarrier
 
 ## L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate
 

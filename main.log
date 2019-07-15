@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050) (preloaded format=pdflatex 2019.5.29)  12 JUL 2019 15:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050) (preloaded format=pdflatex 2019.5.29)  15 JUL 2019 09:33
 entering extended mode
 **./main.tex
 (main.tex
@@ -1358,49 +1358,49 @@ l.313
 File: introduzione/img/organigramma.png Graphic file (type png)
 <use introduzione/img/organigramma.png>
 Package pdftex.def Info: introduzione/img/organigramma.png  used on input line 
-326.
+327.
 (pdftex.def)             Requested size: 298.99687pt x 556.46642pt.
 
-LaTeX Warning: Float too large for page by 23.93428pt on input line 328.
+LaTeX Warning: Float too large for page by 23.93428pt on input line 329.
 
 [3] [4 <./introduzione/img/organigramma.png>] [5]
 <introduzione/img/ospedale.jpg, id=285, 602.25pt x 347.2975pt>
 File: introduzione/img/ospedale.jpg Graphic file (type jpg)
 <use introduzione/img/ospedale.jpg>
-Package pdftex.def Info: introduzione/img/ospedale.jpg  used on input line 416.
+Package pdftex.def Info: introduzione/img/ospedale.jpg  used on input line 418.
 
 (pdftex.def)             Requested size: 430.01735pt x 247.97667pt.
-[6 <./introduzione/img/ospedale.jpg>]
+[6]
 <introduzione/img/ospedale-aereo.png, id=292, 874.76813pt x 624.83438pt>
 File: introduzione/img/ospedale-aereo.png Graphic file (type png)
 <use introduzione/img/ospedale-aereo.png>
 Package pdftex.def Info: introduzione/img/ospedale-aereo.png  used on input lin
-e 457.
+e 459.
 (pdftex.def)             Requested size: 430.00162pt x 307.14401pt.
-[7] [8 <./introduzione/img/ospedale-aereo.png>] [9] [10] [11] [12] [13] [14] [1
-5]
+[7 <./introduzione/img/ospedale.jpg>] [8 <./introduzione/img/ospedale-aereo.png
+>] [9] [10] [11] [12] [13] [14] [15]
 <man_dm/img/ruoli_prog.PNG, id=339, 813.79031pt x 638.385pt>
 File: man_dm/img/ruoli_prog.PNG Graphic file (type png)
 <use man_dm/img/ruoli_prog.PNG>
-Package pdftex.def Info: man_dm/img/ruoli_prog.PNG  used on input line 817.
+Package pdftex.def Info: man_dm/img/ruoli_prog.PNG  used on input line 821.
 (pdftex.def)             Requested size: 430.00299pt x 337.31963pt.
 <man_dm/img/diz_prog.PNG, id=340, 792.71156pt x 207.02344pt>
 File: man_dm/img/diz_prog.PNG Graphic file (type png)
 <use man_dm/img/diz_prog.PNG>
-Package pdftex.def Info: man_dm/img/diz_prog.PNG  used on input line 824.
+Package pdftex.def Info: man_dm/img/diz_prog.PNG  used on input line 828.
 (pdftex.def)             Requested size: 430.0053pt x 112.29956pt.
 [16] [17 <./man_dm/img/ruoli_prog.PNG> <./man_dm/img/diz_prog.PNG>] [18]
 <man_dm/img/ruoli_correttiva.PNG, id=361, 800.9925pt x 430.60875pt>
 File: man_dm/img/ruoli_correttiva.PNG Graphic file (type png)
 <use man_dm/img/ruoli_correttiva.PNG>
-Package pdftex.def Info: man_dm/img/ruoli_correttiva.PNG  used on input line 95
-9.
+Package pdftex.def Info: man_dm/img/ruoli_correttiva.PNG  used on input line 96
+3.
 (pdftex.def)             Requested size: 430.01175pt x 231.17172pt.
 [19]
 <man_dm/img/diz_correttiva.PNG, id=368, 805.50937pt x 227.34938pt>
 File: man_dm/img/diz_correttiva.PNG Graphic file (type png)
 <use man_dm/img/diz_correttiva.PNG>
-Package pdftex.def Info: man_dm/img/diz_correttiva.PNG  used on input line 966.
+Package pdftex.def Info: man_dm/img/diz_correttiva.PNG  used on input line 970.
 
 (pdftex.def)             Requested size: 430.00299pt x 121.36533pt.
 [20 <./man_dm/img/ruoli_correttiva.PNG>] [21 <./man_dm/img/diz_correttiva.PNG>]
@@ -1408,18 +1408,18 @@ Package pdftex.def Info: man_dm/img/diz_correttiva.PNG  used on input line 966.
 <digital/img/mole_lavoro.png, id=393, 1130.2225pt x 467.7475pt>
 File: digital/img/mole_lavoro.png Graphic file (type png)
 <use digital/img/mole_lavoro.png>
-Package pdftex.def Info: digital/img/mole_lavoro.png  used on input line 1115.
+Package pdftex.def Info: digital/img/mole_lavoro.png  used on input line 1119.
 (pdftex.def)             Requested size: 429.98915pt x 177.95287pt.
 [24] [25 <./digital/img/mole_lavoro.png>] [26] [27] [28]
-Overfull \hbox (1.13463pt too wide) in paragraph at lines 1352--1364
+Overfull \hbox (1.13463pt too wide) in paragraph at lines 1356--1368
 \T1/lmr/m/n/12 (-20) ``verosomiglianza'' \T1/lmr/m/it/12 (-20) L \T1/lmr/m/n/12
  (-20) (chiamata anche funzione di \T1/lmr/m/it/12 (-20) likelyhood \T1/lmr/m/n
 /12 (-20) in inglese). Questa funzione
  []
 
 [29]
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 138
-8.
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 139
+2.
 
 ("C:\Users\frtranquillo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmss.
 fd"
@@ -1431,25 +1431,25 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 [30]
 
-LaTeX Warning: Command \L invalid in math mode on input line 1430.
+LaTeX Warning: Command \L invalid in math mode on input line 1434.
 
 
-LaTeX Warning: Command \L invalid in math mode on input line 1443.
+LaTeX Warning: Command \L invalid in math mode on input line 1447.
 
 
-LaTeX Warning: Command \L invalid in math mode on input line 1443.
+LaTeX Warning: Command \L invalid in math mode on input line 1447.
 
 
-LaTeX Warning: Command \L invalid in math mode on input line 1443.
+LaTeX Warning: Command \L invalid in math mode on input line 1447.
 
 
-LaTeX Warning: Command \L invalid in math mode on input line 1443.
+LaTeX Warning: Command \L invalid in math mode on input line 1447.
 
 [31] [32]
 <digital/img/an.pdf, id=494, 312.20638pt x 106.4778pt>
 File: digital/img/an.pdf Graphic file (type pdf)
 <use digital/img/an.pdf>
-Package pdftex.def Info: digital/img/an.pdf  used on input line 1540.
+Package pdftex.def Info: digital/img/an.pdf  used on input line 1544.
 (pdftex.def)             Requested size: 312.2056pt x 106.47752pt.
 [33 <./digital/img/an.pdf
 
@@ -1459,7 +1459,7 @@ d other resource which is no dict (key 'ProcSets', type <array>); ignored.
 <digital/img/ffnn.pdf, id=548, 322.32419pt x 150.5625pt>
 File: digital/img/ffnn.pdf Graphic file (type pdf)
 <use digital/img/ffnn.pdf>
-Package pdftex.def Info: digital/img/ffnn.pdf  used on input line 1619.
+Package pdftex.def Info: digital/img/ffnn.pdf  used on input line 1623.
 (pdftex.def)             Requested size: 322.33322pt x 150.56671pt.
 [34] [35 <./digital/img/ffnn.pdf
 
@@ -1469,48 +1469,48 @@ lid other resource which is no dict (key 'ProcSets', type <array>); ignored.
 <digital/img/lstm.pdf, id=613, 498.36188pt x 227.34938pt>
 File: digital/img/lstm.pdf Graphic file (type pdf)
 <use digital/img/lstm.pdf>
-Package pdftex.def Info: digital/img/lstm.pdf  used on input line 1713.
+Package pdftex.def Info: digital/img/lstm.pdf  used on input line 1717.
 (pdftex.def)             Requested size: 430.01248pt x 196.16882pt.
 [37 <./digital/img/lstm.pdf>] [38] [39] [40] [41] [42]
 <vim_pred/img/isa.jpg, id=653, 1204.5pt x 2045.6425pt>
 File: vim_pred/img/isa.jpg Graphic file (type jpg)
 <use vim_pred/img/isa.jpg>
-Package pdftex.def Info: vim_pred/img/isa.jpg  used on input line 1954.
+Package pdftex.def Info: vim_pred/img/isa.jpg  used on input line 1958.
 (pdftex.def)             Requested size: 214.99948pt x 365.1408pt.
 [43 <./vim_pred/img/isa.jpg>]
 <vim_pred/img/scont.png, id=661, 202.50656pt x 427.5975pt>
 File: vim_pred/img/scont.png Graphic file (type png)
 <use vim_pred/img/scont.png>
-Package pdftex.def Info: vim_pred/img/scont.png  used on input line 1995.
+Package pdftex.def Info: vim_pred/img/scont.png  used on input line 1999.
 (pdftex.def)             Requested size: 142.55083pt x 300.99956pt.
-[44] [45 <./vim_pred/img/scont.png>] [46] [47]
-Underfull \hbox (badness 3375) in paragraph at lines 2076--2079
+[44] [45 <./vim_pred/img/scont.png>] [46] [47] [48]
+Underfull \hbox (badness 3375) in paragraph at lines 2122--2125
 \T1/lmr/m/it/12 (+20) Cer-ti-fi-co Srl\T1/lmr/m/n/12 (+20) . https://www.certif
 ico.com/normazione/173-documenti-riservati-
  []
 
 
-Overfull \hbox (155.06657pt too wide) in paragraph at lines 2097--2100
+Overfull \hbox (155.06657pt too wide) in paragraph at lines 2143--2146
 \T1/lmr/m/n/12 (-20) performance-modeling-using-neural-networks%3A-A-Refenes-Za
 pranis/17ec85347dd8950d2895b6b6ed6fee3acf664b1d. 
  []
 
-[48] [49]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2146.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2146.
+[49] [50]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2192.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2192.
 (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2146.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2146.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2192.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2192.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FE74AC42FB2BDA76B95E4D2059CE0EB0;8371.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2146.
+(rerunfilecheck)             Checksum: 62D341027AED3A5780621BD21B50BF0D;8440.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2192.
  ) 
 Here is how much of TeX's memory you used:
- 33752 strings out of 492895
- 618178 string characters out of 3120466
- 674230 words of memory out of 3000000
- 36905 multiletter control sequences out of 15000+200000
+ 33756 strings out of 492895
+ 618219 string characters out of 3120466
+ 674396 words of memory out of 3000000
+ 36906 multiletter control sequences out of 15000+200000
  606271 words of font info for 134 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,65p,969b,483s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1538,9 +1538,9 @@ ype1/public/lm/lmri8.pfb><C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2
 .9/fonts/type1/public/lm/lmss12.pfb><C:/Users/frtranquillo/AppData/Local/Progra
 ms/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/frtranquillo/AppData/L
 ocal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy8.pfb>
-Output written on main.pdf (58 pages, 3513443 bytes).
+Output written on main.pdf (59 pages, 3515385 bytes).
 PDF statistics:
- 791 PDF objects out of 1000 (max. 8388607)
- 169 named destinations out of 1000 (max. 500000)
+ 797 PDF objects out of 1000 (max. 8388607)
+ 172 named destinations out of 1000 (max. 500000)
  18795 words of extra memory for PDF output out of 20736 (max. 10000000)
 
