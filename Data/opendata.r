@@ -69,8 +69,8 @@ leaflet() %>%
   addTiles() %>%
   addProviderTiles(.,providers$Stamen.Terrain) %>%
   # addPolygons(data = osp) %>%
-  # addPolygons(data =brianza, opacity = 0.2, label= "ATS BRIANZA") %>%
-  addPolygons(data =asst, opacity = 0.7,col="green",label= "ASST VIMERCATE") %>%
+  addPolygons(data =brianza, opacity = 0.1, label= "ATS BRIANZA") %>%
+  addPolygons(data =asst, opacity = 0.7,col="red",label= "ASST VIMERCATE") %>%
   addMarkers(data = asst_ss,lng = asst_ss@coords[,1],lat = asst_ss@coords[,2], label  = asst_ss$DENOM_STRU,
              labelOptions = labelOptions(noHide = T,))
 
@@ -85,3 +85,37 @@ m
 df <- read.csv("../Geo_strutture.csv")
 
 df
+
+library(rayshader)
+loadzip = tempfile() 
+download.file("https://tylermw.com/data/dem_01.tif.zip", loadzip)
+localtif = raster::raster(file.choose())
+unlink(loadzip)
+
+#And convert it to a matrix:
+elmat = matrix(raster::extract(localtif, raster::extent(localtif), buffer = 1000),
+               nrow = ncol(localtif), ncol = nrow(localtif))
+
+zscale <- 1
+#We use another one of rayshader's built-in textures:
+elmat %>%
+  sphere_shade(texture = "imhof1") %>%
+  add_shadow(ray_shade(elmat, maxsearch = 300), 0.5) %>%
+  
+  add_water(detect_water(elmat), color = "desert") %>%
+  # add_shadow(ambmat, 0.5) %>%
+  plot_3d(elmat, solid = T,zscale = zscale, windowsize = c(1000, 800),
+          theta = 15, phi = 60, zoom = 0.65, fov = 30,  water = TRUE)
+render_snapshot()
+render_depth(focus = 0.6, focallength = 200, clear = TRUE)
+
+montshadow = ray_shade(montereybay, zscale = 50, lambert = FALSE)
+montamb = ambient_shade(montereybay, zscale = 50)
+montereybay %>% 
+  sphere_shade(zscale = 10, texture = "imhof1") %>% 
+  add_shadow(montshadow, 0.5) %>%
+  add_shadow(montamb) %>%
+  plot_3d(montereybay, zscale = 50, fov = 0, theta = -45, phi = 45, windowsize = c(1000, 800), zoom = 0.75,
+          water = TRUE, waterdepth = 0, wateralpha = 0.5, watercolor = "lightblue",
+          waterlinecolor = "white", waterlinealpha = 0.5)
+render_snapshot(clear = TRUE)
