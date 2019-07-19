@@ -40,10 +40,7 @@ library(tidyverse)
 library(maps)
 library(maptools)
 library(raster)
-s <- shapefile("../Strutture_sanitarie.shx")
-shape <- shapefile("../Strutture_sanitarie.shp")
 
-library("rgdal")
 ss <- readOGR(dsn = "../shp",layer = "Strutture_sanitarie")
 ss <- spTransform(ss, CRS( '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))
 
@@ -58,25 +55,28 @@ distretti <- distretti[distretti$CODICE_ATS=="030405",]
 
 asst <- distretti[distretti$DISTRETTO%in%c("VIMERCATE","CARATE","SEREGNO"),]
 brianza <- distretti[!distretti$DISTRETTO%in%c("VIMERCATE","CARATE","SEREGNO"),]
-asst_ss <- ss[ss$DENOM_ENTE== "ASST DI VIMERCATE",]
+asst_ss <- ss[ss$DENOM_ENTE== "ASST DI VIMERCATE",] %>% 
+  .[!.$DENOM_STRU=="ASST DI VIMERCATE",]
 ats <- readOGR(dsn = "../shp",layer = "ATS")
 ats <- spTransform(ats, CRS( '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'))
 
 seregno <- asst[asst$DISTRETTO%in%"SEREGNO",]
 
 library("leaflet")
-leaflet() %>%
+m <- leaflet() %>%
   addTiles() %>%
   addProviderTiles(.,providers$Stamen.Terrain) %>%
   # addPolygons(data = osp) %>%
-  addPolygons(data =brianza, opacity = 0.1, label= "ATS BRIANZA") %>%
-  addPolygons(data =asst, opacity = 0.7,col="red",label= "ASST VIMERCATE") %>%
-  addMarkers(data = asst_ss,lng = asst_ss@coords[,1],lat = asst_ss@coords[,2], label  = asst_ss$DENOM_STRU,
-             labelOptions = labelOptions(noHide = T,))
+  addPolygons(data =brianza, opacity = 0.1) %>%
+  addPolygons(data =asst, opacity = 0.3,col="red") %>%
+  addMarkers(data = asst_ss,lng = asst_ss@coords[,1],lat = asst_ss@coords[,2])
 
   # addMarkers(lng=as.numeric(df$COORDINATA.GEOGRAFICA.Y), lat=as.numeric(df$COORDINATA.GEOGRAFICA.X), popup=df$DESCRIZIONE.STRUTTURA.DI.RICOVERO)
+m
 
+library(mapview)
 
+mapshot(m,file = "ASST.pdf")
 #
 # lat: 45.70186352230473   lon: 9.475879669189453
 # lat: 45.597224374966075   lon: 9.737491607666016
