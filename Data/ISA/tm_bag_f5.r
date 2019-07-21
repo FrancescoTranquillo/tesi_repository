@@ -18,12 +18,12 @@ rm(list=ls())
 # aggiungendo le colonne chiamata e chiamata-x dove x sono i giorni precedenti
 # all'effettiva chiamata
 
-#importa tabella degli scontrini
+#importa tabella degli scontrinia
 
 df <-
   read.csv2(file = "tabella_scontrini_allarmi.csv",
             header = T,
-            stringsAsFactors = F)
+            stringsAsFactors = F,encoding = "UTF-8")
 
 #conversione date e factors
 
@@ -91,6 +91,7 @@ clean_corpus <- function(corpus) {
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, content_transformer(tolower))
   corpus <- tm_map(corpus, removeNumbers)
+  
   # corpus <- tm_map(corpus, stemDocument)
 }
 
@@ -100,22 +101,19 @@ meta <- function(bag) {
     clean_corpus(.)
   bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
     bag_corpus,
-    control = list(
-      dictionary = testo_dict,
-      weighting = function(x)
-        weightTfIdf(x, normalize = FALSE)
-    )
+    control = list(dictionary = testo_dict,
+                   weighting = function(x) weightTfIdf(x, normalize = FALSE))
   )))
   tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
   cbind("TARGET" = bag$BAG_FLAG, tfidf)
   
 }
-df$testo <- iconv(enc2utf8(df$testo),sub="byte")
+df$testo <- iconv(df$testo,"UTF-8", "UTF-8",sub='')
 testo_corpus <- VCorpus(VectorSource(df$testo))
 testo_corpus_clean<-clean_corpus(testo_corpus)
 testo_dtm<- DocumentTermMatrix(testo_corpus_clean)
-testo_dict <- findFreqTerms(testo_dtm, lowfreq = 5)
-
+testo_dict <- findFreqTerms(testo_dtm, lowfreq = 1000)
+write.table(testo_dict, file="dizionario_scontrini.txt",row.names = F)
 trainIndex <- createDataPartition(df$flag, p = .95,
                                   list = FALSE,
                                   times = 1)
@@ -211,20 +209,6 @@ levels(tm_testing$TARGET) <- c("neg", "pos")
 
 table(tm_training$TARGET)
 table(df_meta_test$TARGET)
-fitControl <- trainControl(method = "repeatedcv", 
-                           number = 10,
-                           repeats = 2,
-                           verboseIter=T,
-                           classProbs = TRUE,
-                           allowParallel = T,
-                           sampling = "down"
-                           # summaryFunction = twoClassSummary
-)
-
-model_weights <- ifelse(tm_training$TARGET == "pos",
-                        (1/table(tm_training$TARGET)[1]) * 0.5,
-                        (1/table(tm_training$TARGET)[2]) * 0.5)
-
 
 
 set.seed(1045)
@@ -240,19 +224,44 @@ fitControl <- trainControl(method = "repeatedcv",
                            sampling = "down"
                            # summaryFunction = twoClassSummary
 )
-nn <-
-  train(TARGET~., 
-        data=tm_training,
-        method = 'pcaNNet',
-        trControl = fitControl,
-        tuneLength=4,
-        # maxit=200,
-        preProcess=c("range", "nzv")
-        # metric="Kappa"
-       # weights = model_weights
-  )
 
-# stopCluster(cl)
+model_maker <- function(nome_modello, nome_algoritmo, nome_file){
+  
+  model_object<-
+    train(TARGET~., 
+          data=tm_training,
+          method = nome_algoritmo,
+          trControl = fitControl,
+          tuneLength=5,
+          # ntree = 5,
+          # maxit=200,
+          preProcess=c("range", "nzv")
+          # metric="Kappa"
+          # weights = model_weights
+    )
+  nome_modello <- model_object
+  filename <- paste0(nome_file,"_",nome_algoritmo, ".rds")
+  saveRDS(model_object, here(filename))
+  return(nome_modello)
+  }
+
+modelli <- mapply(model_maker,
+                  c("Neural Network","Bayesian Generalized Linear Model", "Naive Bayes", "Logistic Regression", "Support Vector Machine Linear" ), 
+                  c("nnet","bayesglm","naive_bayes","glm","svmLinear3"),
+                  c("mm", "mm", "mm", "mm", "mm"),
+                  SIMPLIFY=FALSE)
+
+results <- resamples(modelli)
+summary(results)
+# boxplots of results
+bwplot(results)
+# dot plots of results
+dotplot(results)
+parallelplot(results)
+splom(results)
+densityplot(results,pch = "|",auto.key = list(columns = 2),metrics=c("Sens", "Spec"))
+
+
 predictions <- predict(nn,newdata =df_meta_test)
 confusionMatrix(predictions,df_meta_test$TARGET, positive = "pos",mode = "everything") 
 
@@ -270,11 +279,19 @@ mcc(preds = predictions, df_meta_test$TARGET)
 # saveRDS(nn, here("linux_tm_bag_prediction7_glm.rds"))
 # saveRDS(nn, here("linux_tm_bag_prediction7_bayesglm.rds"))
 # saveRDS(nn, here("linux_tm_bag_prediction7_pcannet.rds"))
-plotnet(nn)
+
+#18 words dictionary
+# saveRDS(nn, here("18_neuralnet.rds"))
+# saveRDS(nn, here("18_naivebayes.rds"))
+# saveRDS(nn, here("18_glm.rds"))
+# saveRDS(nn, here("18_bayesglm.rds"))
+# saveRDS(nn, here("18_pcannet.rds"))
+# saveRDS(nn, here("18_svmlinear3.rds"))
+plot(nn)
 
 #linux
 # modelli <- lapply(as.list(list.files(here(),"linux")),read_rds)
-modelli <- lapply(as.list(list.files(here(),"*7_*")),read_rds)
+modelli <- lapply(as.list(list.files(here(),"mm_*")),read_rds)
 l_predictions <- lapply(modelli, function(modello) predict(modello, df_meta_test))
 
 round(mcc(l_predictions[[1]],df_meta_test$TARGET),2)
@@ -305,7 +322,7 @@ performance <- lapply(l_predictions,
 
 tabella_performance <- cbind(nomi_modelli,performance)
 tabella_performance
-write.csv(tabella_performance, here("tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
+write.csv(tabella_performance, here("reduced_tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
 
 #linux
 # write.csv(tabella_performance, here("linux_tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)

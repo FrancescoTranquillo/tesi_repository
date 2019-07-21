@@ -1,9 +1,4 @@
 
-testo_dict <-
-  read.table("dizionario_scontrini.txt") %>%
-  .$V1 %>%
-  as.character.factor() %>%
-  .[-1]
 
 clean_corpus <- function(corpus) {
   corpus <- tm_map(corpus, stripWhitespace)
@@ -210,12 +205,23 @@ morpher <- function(scontrino) {
     data.frame()
 }
 meta <- function(df){
+  
+  dizionario <-
+    read.table("dizionario_scontrini.txt") %>%
+    .$V1 %>%
+    as.character.factor() %>%
+    .[-1]
+  
+  df$testo <- iconv(df$testo,"UTF-8", "UTF-8",sub='')
+  dizionario <- iconv(dizionario,"UTF-8", "UTF-8",sub='')
   bag_text <- df$testo
+  
   bag_corpus <- VCorpus(VectorSource(bag_text)) %>% 
     clean_corpus(.)
   bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(bag_corpus,
-                                                        control=list(dictionary=testo_dict,
-                                                                     weighting = function(x) weightTfIdf(x, normalize = FALSE)))))
+                                                        control = list(dictionary = dizionario,
+                                                                       weighting = function(x) weightTfIdf(x, normalize = FALSE)))))
+  rm(dizionario)
   tfidf <- summarise_all(bag_dtm,sum,na.rm=T)
   
 }

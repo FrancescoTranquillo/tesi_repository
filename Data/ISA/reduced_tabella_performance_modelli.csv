@@ -1,0 +1,6 @@
+"Model.name","Accuracy","Sensitivity","Specificity","Precision","Recall"
+"Neural Network",0.71,0.6,0.71,0.07,0.6
+"Bayesian Generalized Linear Model",0.58,0.52,0.58,0.04,0.52
+"Naive Bayes",0.76,0.56,0.77,0.08,0.56
+"Generalized Linear Model",0.55,0.56,0.55,0.04,0.56
+"L2 Regularized Support Vector Machine (dual) with Linear Kernel",0.72,0.52,0.73,0.06,0.52

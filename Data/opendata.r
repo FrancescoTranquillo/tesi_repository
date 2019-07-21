@@ -85,29 +85,35 @@ m
 df <- read.csv("../Geo_strutture.csv")
 
 df
-
+library(magrittr)
 library(rayshader)
-loadzip = tempfile() 
-download.file("https://tylermw.com/data/dem_01.tif.zip", loadzip)
+library(av)
 localtif = raster::raster(file.choose())
-unlink(loadzip)
 
 #And convert it to a matrix:
 elmat = matrix(raster::extract(localtif, raster::extent(localtif), buffer = 1000),
                nrow = ncol(localtif), ncol = nrow(localtif))
-
-zscale <- 1
+library(png)
+foto <- png::readPNG(file.choose())
+# define label
+zscale <- 0.5
 #We use another one of rayshader's built-in textures:
 elmat %>%
   sphere_shade(texture = "imhof1") %>%
-  add_shadow(ray_shade(elmat, maxsearch = 300), 0.5) %>%
-  
-  add_water(detect_water(elmat), color = "desert") %>%
-  # add_shadow(ambmat, 0.5) %>%
+  add_overlay(foto,alphacolor = "white",alphalayer = 0.9) %>% 
+  add_shadow(ray_shade(elmat,lambert=FALSE)) %>%
+  # add_water(detect_water(elmat)) %>%
+  add_shadow(lamb_shade(elmat)) %>%
+  add_shadow(ambient_shade(elmat)) %>%
   plot_3d(elmat, solid = T,zscale = zscale, windowsize = c(1000, 800),
-          theta = 15, phi = 60, zoom = 0.65, fov = 30,  water = TRUE)
+          theta = -16, phi = 40, zoom = 0.7, fov = 10
+  
+render_label(elmat, x = 250, y = 290, z = 350, 
+             zscale = zscale, text = "Lago di Como", textsize = 3, linewidth = 5,color = "blue",
+             textcolor = "blue")
+render_movie("test",type = "orbit",fps = 60)
 render_snapshot()
-render_depth(focus = 0.6, focallength = 200, clear = TRUE)
+render_depth(focus = 0.4, focallength = 40)
 
 montshadow = ray_shade(montereybay, zscale = 50, lambert = FALSE)
 montamb = ambient_shade(montereybay, zscale = 50)
