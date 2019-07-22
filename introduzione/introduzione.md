@@ -39,6 +39,12 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 - Nuclei operativi alcologia di Seregno, Vimercate
 - Servizio dipendenze di Carate Brianza
 
+Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, l'intero territorio della ATS Brianza e, in rosso, la rete territoriale della  ASST Vimercate. Le puntine indicano i presidi ospedalieri dei rispettivi distretti territoriali.
+
+![Rete territoriale ATS Brianza \label{mappaasst}](introduzione/img/ASST.pdf)
+
+\FloatBarrier
+
 ### La Missione Aziendale
 La missione dell’Azienda è quella di contribuire alla promozione, al mantenimento e al recupero delle condizioni di salute della popolazione, erogando prestazioni sia sanitarie sia sociosanitarie, secondo standard di eccellenza, di media e elevata complessità, nel rispetto della dignità della persona, del bisogno di salute, dell’equità dell’accesso all’assistenza, della qualità delle cure e della loro appropriatezza, dell’economicità nell’impiego delle risorse ed in coerenza con i principi e gli obiettivi definiti dal Piano Sanitario Nazionale e dal Piano Sanitario Regionale.
 
