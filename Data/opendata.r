@@ -1,11 +1,4 @@
 # script per open data sanità lombardia
-
-
-
- #ciao rosti
-
-
- 
 library(here)
 library(tidyverse)
 library(ggplot2)
@@ -63,18 +56,20 @@ ats <- spTransform(ats, CRS( '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')
 seregno <- asst[asst$DISTRETTO%in%"SEREGNO",]
 
 library("leaflet")
+
+library(mapview)
+library(here)
 m <- leaflet() %>%
+  setView(lat=45.7140697, lng=9.2622897,zoom=10.5) %>% 
   addTiles() %>%
-  addProviderTiles(.,providers$Stamen.Terrain) %>%
+  addProviderTiles(.,providers$Hydda) %>%
   # addPolygons(data = osp) %>%
   addPolygons(data =brianza, opacity = 0.1) %>%
-  addPolygons(data =asst, opacity = 0.3,col="red") %>%
+  addPolygons(data =asst, opacity = 0.6,col="red") %>%
   addMarkers(data = asst_ss,lng = asst_ss@coords[,1],lat = asst_ss@coords[,2])
 
   # addMarkers(lng=as.numeric(df$COORDINATA.GEOGRAFICA.Y), lat=as.numeric(df$COORDINATA.GEOGRAFICA.X), popup=df$DESCRIZIONE.STRUTTURA.DI.RICOVERO)
 m
-
-library(mapview)
 
 mapshot(m,file = "ASST.pdf")
 #
