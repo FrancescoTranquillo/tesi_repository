@@ -74,7 +74,15 @@ Sempre in riferimento alla figura \ref{scontrino}, i parametri inseriti in stamp
 
 Gli scontrini, quindi, rappresentano una buona fonte di dati per quanto riguarda lo stato di funzionamentio della macchina in quanto, come visto, essi riportano sia gli attori coinvolti nello specifico ciclo di lavaggio, sia gli eventuali allarmi registrati durante il lavaggio. Essi riportano inoltre variabili numeriche quali temperatura e tempi delle varie fasi del ciclo selezionato.
 
-Con questi dati a disposizione si è indagata quindi la possibilità di prevedere, con un anticipo di 7 giorni, l'insorgenza di guasti tali da indurre il personale del reparto a richiedere un intervento di manutenzione correttiva al Global Service. L'attività svolta si è articolata nelle seguenti fasi:
+Con questi dati a disposizione si è indagata quindi la possibilità di prevedere, con un anticipo di 7 giorni, l'insorgenza di guasti tali da indurre il personale del reparto a richiedere un intervento di manutenzione correttiva al Global Service.
+
+L'attività svolta si è articolata in diverse fasi, descritte nel dettaglio nei successivi capitoli.
+
 
 1. **Raccolta dati**: Grazie alla responsabile del reparto di endoscopia e ad uno dei collaboratori tecnici del SIC, è stato possibile estrarre da una MEDIVATORS\textregistered ISA\textregistered, l'intero storico dei report di lavaggio conservati nell'hard disk della macchina per un totale di 5441 scontrini (pari a 3 anni di attività);
-2. **Conversione dei file di testo in formato tabulare**: Gli scontrini estratti dalla memoria della macchina sono stati
+2. **Conversione dei file di testo in formato tabulare**: Per utilizzare le informazioni contenute negli scontrini estratti dalla memoria della macchina, sono stati scritti ed utilizzati diversi script utilizzando il linguaggio di programmazione R. Il primo tra questi ad essere progettato è stato quello responsabile della trasformazione dei 5441 file di testo in un unico file tabulare attraverso diverse funzioni scritte ad hoc. Questo script, chiamato "Analyzer.R" individua gli scontrini e riorganizza le informazioni estraibli da questi in un formato a righe e colonne. In particolare, ogni riga corrisponde ad uno scontrino e ogni colonna rappresenta una "feature" identificabile nello scontrino. Questa struttura tabulare è necessaria al fine di disporre di una struttura dati ben organizzata e coerente, indispensabile per le successive fasi di modellizzazione.
+3. **Creazione di training e test set secondo la metodologia "Multiple Instance Learning"**
+4. **Modellizzazione tramite il pacchetto CARET**
+5. **Scelta del modello ottimale**
+
+Nei capitoli successivi verranno descritti gli algoritmi utilizzati nelle fasi di

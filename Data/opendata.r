@@ -120,3 +120,21 @@ montereybay %>%
           water = TRUE, waterdepth = 0, wateralpha = 0.5, watercolor = "lightblue",
           waterlinecolor = "white", waterlinealpha = 0.5)
 render_snapshot(clear = TRUE)
+
+
+
+
+
+
+
+
+
+draw <- function(character,lun){
+  
+  shaft <- c(rep(" ",nchar(character)),character, character,"\n")
+  balls <- c(character,rep(character,2),character)
+  message(
+    rep(shaft, lun),balls
+    )
+}
+
