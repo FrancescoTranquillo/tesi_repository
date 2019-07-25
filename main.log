@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050) (preloaded format=pdflatex 2019.5.29)  22 JUL 2019 12:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050) (preloaded format=pdflatex 2019.5.29)  25 JUL 2019 16:00
 entering extended mode
 **./main.tex
 (main.tex
@@ -1263,7 +1263,7 @@ G,.JBIG2,.JB2,.eps]
 LaTeX Info: Redefining \it@ocap on input line 101.
 LaTeX Info: Redefining \it@ccap on input line 101.
 ABD: EveryShipout initializing macros
-<img/polimi.png, id=146, 301.125pt x 301.125pt>
+<img/polimi.png, id=158, 301.125pt x 301.125pt>
 File: img/polimi.png Graphic file (type png)
 <use img/polimi.png>
 Package pdftex.def Info: img/polimi.png  used on input line 114.
@@ -1354,13 +1354,13 @@ e.2}) has been already used, duplicate ignored
                    \relax 
 l.306 
        [2]
-<introduzione/img/ASST.pdf, id=270, 995.72pt x 746.79pt>
+<introduzione/img/ASST.pdf, id=289, 995.72pt x 746.79pt>
 File: introduzione/img/ASST.pdf Graphic file (type pdf)
 <use introduzione/img/ASST.pdf>
 Package pdftex.def Info: introduzione/img/ASST.pdf  used on input line 309.
 (pdftex.def)             Requested size: 430.00485pt x 322.50363pt.
 [3 <./introduzione/img/ASST.pdf>]
-<introduzione/img/organigramma.png, id=377, 903.375pt x 1681.28125pt>
+<introduzione/img/organigramma.png, id=396, 903.375pt x 1681.28125pt>
 File: introduzione/img/organigramma.png Graphic file (type png)
 <use introduzione/img/organigramma.png>
 Package pdftex.def Info: introduzione/img/organigramma.png  used on input line 
@@ -1370,14 +1370,14 @@ Package pdftex.def Info: introduzione/img/organigramma.png  used on input line
 LaTeX Warning: Float too large for page by 23.93428pt on input line 342.
 
 [4] [5 <./introduzione/img/organigramma.png>]
-<introduzione/img/ospedale.jpg, id=389, 602.25pt x 347.2975pt>
+<introduzione/img/ospedale.jpg, id=408, 602.25pt x 347.2975pt>
 File: introduzione/img/ospedale.jpg Graphic file (type jpg)
 <use introduzione/img/ospedale.jpg>
 Package pdftex.def Info: introduzione/img/ospedale.jpg  used on input line 431.
 
 (pdftex.def)             Requested size: 430.01735pt x 247.97667pt.
 [6] [7 <./introduzione/img/ospedale.jpg>]
-<introduzione/img/ospedale-aereo.png, id=400, 874.76813pt x 624.83438pt>
+<introduzione/img/ospedale-aereo.png, id=419, 874.76813pt x 624.83438pt>
 File: introduzione/img/ospedale-aereo.png Graphic file (type png)
 <use introduzione/img/ospedale-aereo.png>
 Package pdftex.def Info: introduzione/img/ospedale-aereo.png  used on input lin
@@ -1385,25 +1385,25 @@ e 472.
 (pdftex.def)             Requested size: 430.00162pt x 307.14401pt.
 [8] [9 <./introduzione/img/ospedale-aereo.png>] [10] [11] [12] [13] [14] [15] [
 16]
-<man_dm/img/ruoli_prog.PNG, id=448, 813.79031pt x 638.385pt>
+<man_dm/img/ruoli_prog.PNG, id=467, 813.79031pt x 638.385pt>
 File: man_dm/img/ruoli_prog.PNG Graphic file (type png)
 <use man_dm/img/ruoli_prog.PNG>
 Package pdftex.def Info: man_dm/img/ruoli_prog.PNG  used on input line 834.
 (pdftex.def)             Requested size: 430.00299pt x 337.31963pt.
-<man_dm/img/diz_prog.PNG, id=449, 792.71156pt x 207.02344pt>
+<man_dm/img/diz_prog.PNG, id=468, 792.71156pt x 207.02344pt>
 File: man_dm/img/diz_prog.PNG Graphic file (type png)
 <use man_dm/img/diz_prog.PNG>
 Package pdftex.def Info: man_dm/img/diz_prog.PNG  used on input line 841.
 (pdftex.def)             Requested size: 430.0053pt x 112.29956pt.
 [17] [18 <./man_dm/img/ruoli_prog.PNG> <./man_dm/img/diz_prog.PNG>] [19]
-<man_dm/img/ruoli_correttiva.PNG, id=469, 800.9925pt x 430.60875pt>
+<man_dm/img/ruoli_correttiva.PNG, id=488, 800.9925pt x 430.60875pt>
 File: man_dm/img/ruoli_correttiva.PNG Graphic file (type png)
 <use man_dm/img/ruoli_correttiva.PNG>
 Package pdftex.def Info: man_dm/img/ruoli_correttiva.PNG  used on input line 97
 6.
 (pdftex.def)             Requested size: 430.01175pt x 231.17172pt.
 [20]
-<man_dm/img/diz_correttiva.PNG, id=476, 805.50937pt x 227.34938pt>
+<man_dm/img/diz_correttiva.PNG, id=495, 805.50937pt x 227.34938pt>
 File: man_dm/img/diz_correttiva.PNG Graphic file (type png)
 <use man_dm/img/diz_correttiva.PNG>
 Package pdftex.def Info: man_dm/img/diz_correttiva.PNG  used on input line 983.
@@ -1411,7 +1411,7 @@ Package pdftex.def Info: man_dm/img/diz_correttiva.PNG  used on input line 983.
 (pdftex.def)             Requested size: 430.00299pt x 121.36533pt.
 [21 <./man_dm/img/ruoli_correttiva.PNG>] [22 <./man_dm/img/diz_correttiva.PNG>]
 [23] [24]
-<digital/img/mole_lavoro.png, id=501, 1130.2225pt x 467.7475pt>
+<digital/img/mole_lavoro.png, id=520, 1130.2225pt x 467.7475pt>
 File: digital/img/mole_lavoro.png Graphic file (type png)
 <use digital/img/mole_lavoro.png>
 Package pdftex.def Info: digital/img/mole_lavoro.png  used on input line 1132.
@@ -1452,7 +1452,7 @@ LaTeX Warning: Command \L invalid in math mode on input line 1458.
 LaTeX Warning: Command \L invalid in math mode on input line 1458.
 
 [32] [33]
-<digital/img/an.pdf, id=602, 312.20638pt x 106.4778pt>
+<digital/img/an.pdf, id=621, 312.20638pt x 106.4778pt>
 File: digital/img/an.pdf Graphic file (type pdf)
 <use digital/img/an.pdf>
 Package pdftex.def Info: digital/img/an.pdf  used on input line 1553.
@@ -1462,7 +1462,7 @@ Package pdftex.def Info: digital/img/an.pdf  used on input line 1553.
 pdfTeX warning: pdflatex.exe (file ./digital/img/an.pdf): PDF inclusion: invali
 d other resource which is no dict (key 'ProcSets', type <array>); ignored.
 >]
-<digital/img/ffnn.pdf, id=657, 322.32419pt x 150.5625pt>
+<digital/img/ffnn.pdf, id=676, 322.32419pt x 150.5625pt>
 File: digital/img/ffnn.pdf Graphic file (type pdf)
 <use digital/img/ffnn.pdf>
 Package pdftex.def Info: digital/img/ffnn.pdf  used on input line 1632.
@@ -1472,57 +1472,86 @@ Package pdftex.def Info: digital/img/ffnn.pdf  used on input line 1632.
 pdfTeX warning: pdflatex.exe (file ./digital/img/ffnn.pdf): PDF inclusion: inva
 lid other resource which is no dict (key 'ProcSets', type <array>); ignored.
 >]
-<digital/img/lstm.pdf, id=715, 498.36188pt x 227.34938pt>
+<digital/img/lstm.pdf, id=734, 498.36188pt x 227.34938pt>
 File: digital/img/lstm.pdf Graphic file (type pdf)
 <use digital/img/lstm.pdf>
 Package pdftex.def Info: digital/img/lstm.pdf  used on input line 1724.
 (pdftex.def)             Requested size: 430.01248pt x 196.16882pt.
 [37] [38 <./digital/img/lstm.pdf>] [39] [40] [41] [42] [43]
-<vim_pred/img/isa.jpg, id=761, 1204.5pt x 2045.6425pt>
+<vim_pred/img/isa.jpg, id=780, 1204.5pt x 2045.6425pt>
 File: vim_pred/img/isa.jpg Graphic file (type jpg)
 <use vim_pred/img/isa.jpg>
-Package pdftex.def Info: vim_pred/img/isa.jpg  used on input line 1965.
+Package pdftex.def Info: vim_pred/img/isa.jpg  used on input line 1967.
 (pdftex.def)             Requested size: 214.99948pt x 365.1408pt.
 [44 <./vim_pred/img/isa.jpg>]
-<vim_pred/img/scont.png, id=769, 202.50656pt x 427.5975pt>
+<vim_pred/img/scont.png, id=788, 202.50656pt x 427.5975pt>
 File: vim_pred/img/scont.png Graphic file (type png)
 <use vim_pred/img/scont.png>
-Package pdftex.def Info: vim_pred/img/scont.png  used on input line 2006.
+Package pdftex.def Info: vim_pred/img/scont.png  used on input line 2008.
 (pdftex.def)             Requested size: 142.55083pt x 300.99956pt.
-[45] [46 <./vim_pred/img/scont.png>] [47] [48] [49]
-Underfull \hbox (badness 3375) in paragraph at lines 2129--2132
+[45] [46 <./vim_pred/img/scont.png>]
+<vim_pred/img/schema.pdf, id=805, 521.0667pt x 45.2892pt>
+File: vim_pred/img/schema.pdf Graphic file (type pdf)
+<use vim_pred/img/schema.pdf>
+Package pdftex.def Info: vim_pred/img/schema.pdf  used on input line 2054.
+(pdftex.def)             Requested size: 430.00458pt x 37.3744pt.
+[47 <./vim_pred/img/schema.pdf
+
+pdfTeX warning: pdflatex.exe (file ./vim_pred/img/schema.pdf): PDF inclusion: i
+nvalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+
+>]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 2112
+.
+
+("C:\Users\frtranquillo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmtt.f
+d"
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [48]
+<vim_pred/img/header.pdf, id=829, 423.50218pt x 340.3917pt>
+File: vim_pred/img/header.pdf Graphic file (type pdf)
+<use vim_pred/img/header.pdf>
+Package pdftex.def Info: vim_pred/img/header.pdf  used on input line 2147.
+(pdftex.def)             Requested size: 423.50113pt x 340.39085pt.
+[49 <./vim_pred/img/header.pdf
+
+pdfTeX warning: pdflatex.exe (file ./vim_pred/img/header.pdf): PDF inclusion: i
+nvalid other resource which is no dict (key 'ProcSets', type <array>); ignored.
+
+>] [50] [51] [52]
+Underfull \hbox (badness 3375) in paragraph at lines 2244--2247
 \T1/lmr/m/it/12 (+20) Cer-ti-fi-co Srl\T1/lmr/m/n/12 (+20) . https://www.certif
 ico.com/normazione/173-documenti-riservati-
  []
 
 
-Overfull \hbox (155.06657pt too wide) in paragraph at lines 2150--2153
+Overfull \hbox (155.06657pt too wide) in paragraph at lines 2265--2268
 \T1/lmr/m/n/12 (-20) performance-modeling-using-neural-networks%3A-A-Refenes-Za
 pranis/17ec85347dd8950d2895b6b6ed6fee3acf664b1d. 
  []
 
-[50] [51]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2199.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2199.
+[53] [54]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2314.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2314.
 (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2199.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2199.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2314.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2314.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 92F2321825994515EC2F3C96B10E6FC2;7689.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2199.
+(rerunfilecheck)             Checksum: A53A3E92191010EF08524E820B2EE778;8171.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2314.
  ) 
 Here is how much of TeX's memory you used:
- 33759 strings out of 492895
- 618202 string characters out of 3120466
- 673607 words of memory out of 3000000
- 36909 multiletter control sequences out of 15000+200000
- 601871 words of font info for 132 fonts, out of 3000000 for 9000
+ 33826 strings out of 492895
+ 619415 string characters out of 3120466
+ 673891 words of memory out of 3000000
+ 36962 multiletter control sequences out of 15000+200000
+ 602189 words of font info for 133 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,65p,969b,483s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
-m-ts1.enc}{C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dv
-ips/lm/lm-ec.enc}{C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2.9/fonts
+m-ec.enc}{C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvi
+ps/lm/lm-ts1.enc}{C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2.9/fonts
 /enc/dvips/lm/lm-mathex.enc}{C:/Users/frtranquillo/AppData/Local/Programs/MiKTe
 X 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/frtranquillo/AppData/Local/Pro
 grams/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/frtranquillo/AppData/Lo
@@ -1543,10 +1572,11 @@ pfb><C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
 ype1/public/lm/lmri8.pfb><C:/Users/frtranquillo/AppData/Local/Programs/MiKTeX 2
 .9/fonts/type1/public/lm/lmss12.pfb><C:/Users/frtranquillo/AppData/Local/Progra
 ms/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Users/frtranquillo/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy8.pfb>
-Output written on main.pdf (60 pages, 4745129 bytes).
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy8.pfb><C:/Users/frtranquillo
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmtt12.pfb>
+Output written on main.pdf (63 pages, 4963121 bytes).
 PDF statistics:
- 905 PDF objects out of 1000 (max. 8388607)
- 174 named destinations out of 1000 (max. 500000)
- 18800 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 972 PDF objects out of 1000 (max. 8388607)
+ 183 named destinations out of 1000 (max. 500000)
+ 18834 words of extra memory for PDF output out of 20736 (max. 10000000)
 
