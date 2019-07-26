@@ -118,6 +118,7 @@ Per costruire tale modello è stata quindi indagato l'approccio di apprendimento
 
 Successivamente al raggruppamento degli scontrini in borse, si è cercato di risolvere questo problema di classificazione riducendo la complessità generale passando da un approccio MIL a quello più standard di apprendimento supervisionato. Questo è stato reso possibile grazie alla trasformazione di tutti gli scontrini presenti in una singola borsa in un unico "metascontrino" (il cui nome specifico è quello di "metaesempio"), ovvero una osservazione unica generata tramite la sintetizzazione delle informazioni presenti in tutti gli scontrini della stessa borsa. Così facendo, quindi, non si hanno più degli insiemi di scontrini contenenti diverse osservazioni, ma, allineandosi quindi al più tradizionale approccio di apprendimento supervisionato, una serie di osservazioni (i metascontrini) caratterizzate da una etichetta. Quest'ultima struttura risultante (associabile ad un dataframe di righe e colonne) risulta quindi più facile da gestire per quanto riguarda la modellizzazione di un algoritmo di predizione.
 
+Per creare questi "metascontrini" sono state utilizzate diverse tecniche di text mining sfruttando le capacità della libreria R chiamata "tm".
 
 ## Scelta del modello ottimale
 
