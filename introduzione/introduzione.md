@@ -58,9 +58,9 @@ Costituiscono la Direzione Strategica dell'Azienda, unitamente al Direttore Gene
 
 In particolare, le funzioni proprie di ogni Direzione possono essere riassunte come segue:
 
-- **Direzione Generale**: Il Direttore Generale rappresenta legalmente l'Azienda ed esercita tutti i poteri di gestione complessiva, coadiuvato dai Direttori Amministrativo, Sanitario e Sociosanitario. Egli ha il compito di combinare i fattori produttivi per il perseguimento degli obiettivi sanitari posti dalla Regione, in condizioni di massima efficienza ed efficacia. Il Direttore Generale è quindi responsabile del governo clinico dell'azienda, con riferimento sia alla qualità, che all'efficacia e all'efficienza tecnica. Il governo clinico si realizza nell'esercizio della responsabilità del miglioramento continuo dei servizi erogati, nella salvaguardia di alti standard assistenziali da parte dei professionisti dell'organizzazione, ed è volto ad assicurare l'adozione di sistemi di garanzia e di qualità, compatibilmente con le risorse disponibili.
+- **Direzione Generale**: il Direttore Generale rappresenta legalmente l'Azienda ed esercita tutti i poteri di gestione complessiva, coadiuvato dai Direttori Amministrativo, Sanitario e Sociosanitario. Egli ha il compito di combinare i fattori produttivi per il perseguimento degli obiettivi sanitari posti dalla Regione, in condizioni di massima efficienza ed efficacia. Il Direttore Generale è quindi responsabile del governo clinico dell'azienda, con riferimento sia alla qualità, che all'efficacia e all'efficienza tecnica. Il governo clinico si realizza nell'esercizio della responsabilità del miglioramento continuo dei servizi erogati, nella salvaguardia di alti standard assistenziali da parte dei professionisti dell'organizzazione, ed è volto ad assicurare l'adozione di sistemi di garanzia e di qualità, compatibilmente con le risorse disponibili.
 
-- **Direzione Amministrativa**: Il Direttore Amministrativo dirige i servizi amministrativi della Azienda Socio Sanitaria Territoriale. In particolare:
+- **Direzione Amministrativa**: il Direttore Amministrativo dirige i servizi amministrativi della Azienda Socio Sanitaria Territoriale. In particolare:
     - Svolge attività di direzione e coordinamento, nei confronti dei direttori delle strutture amministrative complesse.
     - Svolge attività necessarie per il controllo di gestione dell’azienda ed il controllo di qualità dei servizi come la nomina dei responsabili delle strutture organizzative professionali e funzionali dell'area amministrativa.
     - Persegue il buon andamento e l'imparzialità dell'azione amministrativa, con particolare riferimento agli aspetti giuridico-amministrativi ed economico-finanziari.
@@ -70,7 +70,7 @@ In particolare, le funzioni proprie di ogni Direzione possono essere riassunte c
     - Esercita per tutte le strutture ed i Centri di responsabilità sanitari dell'azienda le funzioni di verifica e di controllo dei risultati conseguiti rispetto agli obiettivi assegnati.
     - Coordina le strutture dell'azienda ospedaliera e garantisce l’integrazione tra le stesse, anche attraverso la predisposizione di appositi protocolli.
 
-- **Direzione Socio-Sanitaria**: Il Direttore Sociosanitario dirige il settore aziendale rete territoriale della Azienda Socio Sanitaria Territoriale.
+- **Direzione Socio-Sanitaria**: il Direttore Sociosanitario dirige il settore aziendale rete territoriale della Azienda Socio Sanitaria Territoriale.
 
 ### Il presidio di Vimercate
 \FloatBarrier

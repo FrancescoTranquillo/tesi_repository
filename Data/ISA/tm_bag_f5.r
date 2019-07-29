@@ -102,7 +102,7 @@ meta <- function(bag) {
   bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
     bag_corpus,
     control = list(dictionary = testo_dict,
-                   weighting = function(x) weightTfIdf(x, normalize = FALSE))
+                   weighting = function(x) weightBin(x))
   )))
   tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
   cbind("TARGET" = bag$BAG_FLAG, tfidf)
