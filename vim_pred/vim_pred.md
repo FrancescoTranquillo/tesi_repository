@@ -87,7 +87,7 @@ L'attività svolta si è articolata in diverse fasi, descritte nel dettaglio nei
 ## Raccolta Dati
 La prima fase operativa è stata quella di raccolta ed estrapolazione degli scontrini dalle macchine in questione. Grazie alla responsabile del reparto di endoscopia e ad uno dei collaboratori tecnici del SIC, è stato possibile estrarre da una MEDIVATORS\textregistered ISA\textregistered, l'intero storico dei report di lavaggio conservati nell'hard disk della macchina per un totale di 5441 scontrini (pari a 3 anni di attività). I dati estratti sono stati salvati su una chiavetta USB e l'estrazione ha impiegato circa 20 minuti.
 
-## Conversione dei file di backup
+## Conversione dei file di backup \label{preprocessing}
 Per utilizzare le informazioni contenute negli scontrini estratti dalla memoria della macchina, sono stati scritti ed utilizzati diversi script utilizzando il linguaggio di programmazione R. Il primo tra questi ad essere progettato è stato quello responsabile della trasformazione dei 5441 file di testo in un unico file tabulare attraverso diverse funzioni scritte ad hoc. Questo script, chiamato "Analyzer.R" individua gli scontrini e riorganizza le informazioni estraibli da questi in un formato a righe e colonne (questo tipo di dato viene chiamato "dataframe" in R). In particolare, ogni riga corrisponde ad uno scontrino e ogni colonna rappresenta una "feature" identificabile nello scontrino stesso. Questo passaggio è stato necessario al fine di disporre di una struttura dati ben organizzata e coerente, indispensabile per le successive fasi di modellizzazione. La vera e propria conversione del dato avviene per mezzo di particolari pattern di ricerca chiamate "espressioni regolari" o "Regex" (Regular expression). Si è scelto di usare questo tipo di espressioni in quanto, sebbene tutti e i 5441 scontrini fossero file di testo diversi l'uno dall'altro, si basano sul concetto di sfruttare delle regolarità presenti in un dato testo ed estrapolarne informazioni di interesse. In sintesi, per la conversione degli scontrini si è organizzata la struttura degli stessi in 3 parti, per le quali sono state scritte funzioni di estrazione utilizzando le Regex citate precedentemente. La struttura degli scontrini è stata così separata:
 
 1. **Intro**: parte introduttiva dello scontrino che reca il nome della macchina (Medivators ISA), il nome della ASST e il reparto di ubicazione della macchina. Queste righe, comuni a tutti gli scontrini, non apportano contenuto informativo utile ai fini predittivi e sono quindi stati scartati.
@@ -103,10 +103,18 @@ In figura \ref{header} sono riportati due scontrini ed evidenziate le tre parti 
 ![Divisione degli scontrini nelle parti di Intro, Header e Footer \label{header}](vim_pred/img/header.pdf)
 
 \FloatBarrier
-Con operazioni simili a quelle descritte, ovvero analizzando il testo degli scontrini per trovare e sfruttare le regolarità presenti nel testo, si è costruita una funzione che ottenesse come input un file di testo, rappresentante lo scontrino, e che restituisse in uscita un dataframe composto da una sola riga. La funzione è stata poi fatta ciclare su tutto l'insieme di scontrini a disposizione ottenendo un'unica tabella da 5441 righe e 12 colonne (feature). È importante sottolineare il fatto che, tra le feature selezionate, ne è stata creata una che contenesse il testo dello scontrino "pulito" dai caratteri di punteggiatura e caratteri non alfanumerici. Il motivo di questa scelta sta nella decisione di sfruttare la natura "testuale" di questi log macchina utilizzando tecniche di text mining per costruire dei modelli predittivi basandosi esclusivamente sulle parole contenute nei diversi file testuali, andando a sfruttare quindi la struttura originaria del log macchina.
+Con operazioni simili a quelle descritte, ovvero analizzando il testo degli scontrini per trovare e sfruttare le regolarità presenti nel testo, si è costruita una funzione che ricevesse come input un file in formato .txt, rappresentante lo scontrino, e che restituisse in uscita un dataframe composto da una sola riga. La funzione è stata poi fatta ciclare su tutto l'insieme di scontrini a disposizione ottenendo un'unica tabella da 5441 righe e 12 colonne (features). Un esempio del dataframe generabile dalla funzione descritta è riportato in figura \ref{tab.fun}.
+
+![Tabella ottenuta dalla conversione dei file testuali degli scontrini. \label{tab.fun}](vim_pred/img/tab.png)
+
+\FloatBarrier
+
+È importante sottolineare il fatto che, tra le feature selezionate, ne è stata creata una che contenesse il testo dello scontrino "pulito" dai caratteri di punteggiatura e caratteri non alfanumerici. Il motivo di questa scelta sta nella decisione di sfruttare la natura "testuale" di questi log macchina utilizzando tecniche di text mining per costruire dei modelli predittivi basandosi esclusivamente sulle parole contenute nei diversi file testuali, andando a sfruttare quindi la struttura originaria del log macchina.
 
 ## Modellizzazione
 La fase di modellizzazione è stata sicuramente quella in cui sono state incontrate più difficoltà, principalmente dovute, come si vedrà, ad un non sufficiente numero di dati a disposizione. Innanzitutto, è stato necessario estrarre dal software di manutenzione "Coswin8" utilizzato in ospedale, lo storico delle manutenzioni effettuate sulla macchina da cui sono stati estratti gli scontrini. Avendo a disposizione questi ultimi dati, si sono potuti incrociare le date presenti sugli scontrini con quelle riportate dal servizio di manutenzione, così quindi di avere la possibilità di studiare gli scontrini corrispondenti a 7 giorni precedenti all'effettiva chiamata al Global Service (d'ora in avanti chiamati per brevità "giorni predittivi"). Si è cercato quindi, nel seguente lavoro, di correlare i guasti della lavaendoscopi alle informazioni contenute negli scontrini dei giorni predittivi, al fine di ottenere un modello di predizione che calcolasse la probabilità di guasto della lavaendoscopi sulla base dello storico dato dai 3 anni di informazioni a disposizione.
+
+### Apprendimento ad istanza multipla
 
 Per costruire tale modello è stata quindi indagato l'approccio di apprendimento migliore, sulla base di quanto descritto nel capitolo \ref{digital}, ed è stato scelto, sulla base di un precedente lavoro trovato in letteratura  , una tipologia di apprendimento supervisionato chiamato "Apprendimento ad istanza multipla" (Multiple instance learning, MIL). In questa metodologia, il classificatore non riceve una serie di esempi indipendenti $x_{i}$ caratterizzati da una etichetta (l'output desiderato $t_{i}$) come avviene nel classico apprendimento supervisionato, ma riceve un insieme di "borse" o "contenitori" a cui viene associata un'etichetta che rappresenta l'output che dovrà imparare a produrre. Ogni borsa può contenere più istanze (che in questo caso sono gli scontrini di un giorno di attività) e, nello specifico, una borsa viene etichettata come "positiva" se contiene al suo interno scontrini appartenenti ad un "giorno predittivo", mentre invece viene etichettata come "negativa" altrimenti. Di conseguenza, il classificatore desiderato è stato progettato per classificare una borsa di scontrini come positiva o negativa, a seconda delle informazioni contenute negli scontrini di un singolo giorno. Uno schema riassuntivo dell'approccio descritto è apprezzabile in figura \ref{mil}.
 
@@ -118,7 +126,59 @@ Per costruire tale modello è stata quindi indagato l'approccio di apprendimento
 
 Successivamente al raggruppamento degli scontrini in borse, si è cercato di risolvere questo problema di classificazione riducendo la complessità generale passando da un approccio MIL a quello più standard di apprendimento supervisionato. Questo è stato reso possibile grazie alla trasformazione di tutti gli scontrini presenti in una singola borsa in un unico "metascontrino" (il cui nome specifico è quello di "metaesempio"), ovvero una osservazione unica generata tramite la sintetizzazione delle informazioni presenti in tutti gli scontrini della stessa borsa. Così facendo, quindi, non si hanno più degli insiemi di scontrini contenenti diverse osservazioni, ma, allineandosi quindi al più tradizionale approccio di apprendimento supervisionato, una serie di osservazioni (i metascontrini) caratterizzate da una etichetta. Quest'ultima struttura risultante (associabile ad un dataframe di righe e colonne) risulta quindi più facile da gestire per quanto riguarda la modellizzazione di un algoritmo di predizione.
 
-Per creare questi "metascontrini" sono state utilizzate diverse tecniche di text mining sfruttando le capacità della libreria R chiamata "tm".
+### Text mining: creazione del Corpus
+
+Per creare questi "metascontrini" sono state utilizzate diverse tecniche di text mining sfruttando le capacità della libreria R chiamata "tm", diminutivo di "text mining". A partire dalla feature chiamata "testo", creata dalla funzione descritta nel paragrafo \ref{preprocessing}, è stato infatti creato un "corpus" ovvero una collezione di documenti. In particolare, convertendo tutti gli scontrini presenti, il corpus ottenuto è un oggetto composto da 5441 documenti, ognuno dei quali composto da diversi caratteri. Esplorando i primi 5 documenti del corpus, per esempio, si ottiene:
+
+```
+<<VCorpus>>
+Metadata:  corpus specific: 0, document level (indexed): 0
+Content:  documents: 5
+
+[[1]]
+<<PlainTextDocument>>
+Metadata:  7
+Content:  chars: 115
+
+[[2]]
+<<PlainTextDocument>>
+Metadata:  7
+Content:  chars: 90
+
+[[3]]
+<<PlainTextDocument>>
+Metadata:  7
+Content:  chars: 55
+
+[[4]]
+<<PlainTextDocument>>
+Metadata:  7
+Content:  chars: 290
+
+[[5]]
+<<PlainTextDocument>>
+Metadata:  7
+Content:  chars: 115
+```
+
+Nell'output precedente è intuibile la struttura del corpus. Ogni elemento dello stesso viene identificato come un "PlainTextDocument" il cui contenuto è dato da un variabile numero di caratteri testuali. Esplorando ad esempio il primo documento è possibile leggere il testo del relativo scontrino, pulito precedentemente da eventuali caratteri speciali, punteggiatura e numeri:
+
+```
+<<PlainTextDocument>>
+Metadata:  7
+Content:  chars: 115
+
+tipo ciclo complete disinfection test di tenuta allarme pressione minima test di tenuta fine ciclo ciclo irregolare
+```
+
+### Text mining: Document Term Matrix
+
+Il passo successivo è stato quello di convertire il corpus creato in una struttura a matrice tipicamente utilizzata in applicazioni di text mining chiamata "Document Term Matrix". Questo tipo di matrice è composta da un numero di righe pari al numero di documenti presenti nel corpus e da tante colonne quanti sono i termini presenti in tutto il corpus, presi una sola volta. Il valore all'incrocio di una riga e di una colonna determina la tipologia di "peso" che viene assegnato ad ogni termine rispetto ad ogni documento. Tra le "pesature" possibili, si riportano quelle più comunemente utilizzate:
+
+1. Term Frequency (tf):
+2. Term Frequency - Inverse Document Frequency (tf-idf):
+
+Tra le due, è stata scelta l'ultima in quanto, essendo gli scontrini dei documenti molto simili tra loro, i termini che portano il più alto carico informativo sono quelli che compaiono più raramente, come ad esempio il termine "allarme" che nel corpus in esame compare solo 511 volte, ovvero che compare in meno del 10% di tutti gli scontrini a disposizione.
 
 ## Scelta del modello ottimale
 

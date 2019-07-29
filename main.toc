@@ -33,9 +33,9 @@
 \contentsline {subsection}{\numberline {4.2}L'analisi dei log macchina}{42}{subsection.4.2}% 
 \contentsline {subsection}{\numberline {4.3}Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered }{44}{subsection.4.3}% 
 \contentsline {subsection}{\numberline {4.4}Raccolta Dati}{47}{subsection.4.4}% 
-\contentsline {subsection}{\numberline {4.5}Conversione dei file di backup}{47}{subsection.4.5}% 
+\contentsline {subsection}{\numberline {4.5}Conversione dei file di backup }{47}{subsection.4.5}% 
 \contentsline {subsection}{\numberline {4.6}Modellizzazione}{50}{subsection.4.6}% 
-\contentsline {subsection}{\numberline {4.7}Scelta del modello ottimale}{52}{subsection.4.7}% 
-\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{53}{section.5}% 
-\contentsline {section}{\numberline {6}Conclusioni}{54}{section.6}% 
-\contentsline {section}{Bibliografia}{55}{section*.6}% 
+\contentsline {subsection}{\numberline {4.7}Scelta del modello ottimale}{53}{subsection.4.7}% 
+\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{54}{section.5}% 
+\contentsline {section}{\numberline {6}Conclusioni}{55}{section.6}% 
+\contentsline {section}{Bibliografia}{56}{section*.6}% 
