@@ -1,18 +1,53 @@
----
-title: "R Notebook"
-output: html_notebook
----
+```{r, ref.label="grafico",message="F"}
+library("ggplot2",verbose = F,quietly = T)
+library("viridis",verbose = F,quietly = T)
+eq = function(x){3*log(50/x)}
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+df = data.frame(x=c(4,40), y=eq(c(4,40)), name=c("t[1]", "t[2]"))
+ggplot(data.frame(x=c(1, 50)), aes(x=x)) + 
+  stat_function(fun=eq, 
+                geom="line",
+                size=1) +
+  labs(x=expression("n"[t]), y="TF-IDF")+
+  geom_point(data=df,aes(x=x, y=y) ,col=c("red","blue"),size=3)+
+  geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35,parse=T, hjust=-.13)+
+  theme_minimal()
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
-```{r}
-plot(cars)
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+```{r}
+df2 <- read.csv2("tabella_scontrini_text.csv",stringsAsFactors = F)
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+df2$testo <- iconv(df2$testo,"UTF-8", "UTF-8",sub='')
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+clean_corpus <- function(corpus) {
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeNumbers)
+  
+  # corpus <- tm_map(corpus, stemDocument)
+}
+
+
+corpus <- VCorpus(VectorSource(df2$testo)) %>%
+    clean_corpus(.)
+  bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
+    corpus,
+    control = list(weighting = function(x) weightTfIdf(x))
+  )))
+  tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
+
+  tdm <- TermDocumentMatrix(corpus)
+  
+  wordFreq=data.frame(apply(tdm,1,sum))
+names(wordFreq)="Frequency"
+wordFreq$Terms=row.names(wordFreq)
+row.names(wordFreq)=NULL
+wordFreq=wordFreq[,c(2,1)]
+a=ggplot(wordFreq,aes(Terms,Frequency, fill=Terms))
+a+geom_bar(stat = "identity")+coord_flip()+ggtitle("Frequency Comparison")+guides(fill=FALSE)
+```
+
+

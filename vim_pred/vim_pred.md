@@ -176,23 +176,50 @@ pressione minima test di tenuta fine ciclo ciclo irregolare
 
 Il passo successivo è stato quello di convertire il corpus creato in una struttura a matrice tipicamente utilizzata in applicazioni di text mining chiamata "Document Term Matrix". Questo tipo di matrice è composta da un numero di righe pari al numero di documenti presenti nel corpus e da tante colonne quanti sono i termini presenti in tutto il corpus, presi una sola volta. Il valore all'incrocio di una riga e di una colonna determina la tipologia di "peso" che viene assegnato ad ogni termine rispetto ad ogni documento. Tra le "pesature" possibili, si riportano quelle più comunemente utilizzate:
 
-1. Term Frequency (tf): indicata con $tf(t,d)$ rappresenta il conteggio delle volte in cui è presente un termine $t$ in un documento $d$.
+1. Term Frequency (tf): indicata con $tf(t,d) = f_{t,d}$ rappresenta il conteggio delle volte in cui è presente un termine $t$ in un documento $d$.
 2. Term Frequency - Inverse Document Frequency (tf-idf): definita come il prodotto tra la Term Frequency ed la Inverse Document Frequency. Quest'ultima è una misura del quantitativo informativo che una parola apporta rispetto alla sua frequenza in un set di documenti. Matematicamente è definita come:
 
 \begin{equation}
-idf(t,D) = \log(\frac{N}{n_{t}})
+\sf idf(t,D) = \log(\frac{N}{n_{t}})
 \label{eq:idf}
 \end{equation}
+
+dove:
+
+  - $N$ rappresenta il numero di documenti nel corpus
+  - $n_{t}$ è il numero di documenti in cui compare il termine t
 
 Di conseguenza, la tf-idf è definita come:
 
 \begin{equation}
-tfidf(t,d,D) = tf(t,d)\cdot idf(t,D) = f_{t,d}\cdot\log(\frac{N}{n_{t}})
+\sf tfidf(t,d,D) = \sf tf(t,d)\cdot \sf idf(t,D) = \sf f_{t,d}\cdot\log(\frac{N}{n_{t}})
 \label{eq:tfidf}
 \end{equation}
 
+In figura \ref{tfidf_plot} viene riportato un esempio di tf-idf per due termini presenti in uno stesso documento con la stessa frequenza. Si osserva che a pari frequenza corrisponde un punteggio che è maggiore per i termini che compaiono meno frequentemente nel corpus.
 
-Tra le due, è stata scelta l'ultima in quanto, essendo gli scontrini dei documenti molto simili tra loro, i termini che portano il più alto carico informativo circa gli eventi di guasto sono quelli che compaiono più raramente, come ad esempio il termine "allarme" che nel corpus in esame compare solo 511 volte, ovvero che compare in meno del 10% di tutti gli scontrini a disposizione.
+\FloatBarrier
+
+```{r,echo=FALSE,  fig.align='center',fig.cap="\\label{tfidf_plot}Per costruire questo grafico è stata ipotizzata, per entrambi i termini $t_{1}$ e $t_{2}$, la stessa frequenza ($f_{d,t_{1,2}}=3$) all'interno di un generico documento $d$. $t_{1}$ compare in meno documenti del corpus ($n_{t_{1}}=4$), di conseguenza il suo peso risulta maggiore"}
+
+library("ggplot2",verbose = F,quietly = T)
+library("viridis",verbose = F,quietly = T)
+eq = function(x){3*log(50/x)}
+
+df = data.frame(x=c(4,40), y=eq(c(4,40)), name=c("t[1]", "t[2]"))
+ggplot(data.frame(x=c(1, 50)), aes(x=x)) +
+  stat_function(fun=eq,
+                geom="line",
+                size=1) +
+  labs(x=expression("n"[t]), y="tf-idf")+
+  geom_point(data=df,aes(x=x, y=y) ,col="tomato",size=3)+
+  geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35, hjust=-.13,parse=T)+
+  theme_minimal()
+```
+
+In questo lavoro è stato scelto di utilizzare la tf-idf in quanto, essendo gli scontrini dei documenti molto simili tra loro, i termini che portano il più alto carico informativo circa gli eventi di guasto sono quelli che compaiono più raramente, come ad esempio il termine "allarme" che nel corpus in esame compare solo 511 volte, ovvero che compare in meno del 10% di tutti gli scontrini a disposizione.
+
+\FloatBarrier
 
 ## Scelta del modello ottimale
 

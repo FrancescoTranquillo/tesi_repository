@@ -102,7 +102,7 @@ meta <- function(bag) {
   bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
     bag_corpus,
     control = list(dictionary = testo_dict,
-                   weighting = function(x) weightBin(x))
+                   weighting = function(x) weightTf(x))
   )))
   tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
   cbind("TARGET" = bag$BAG_FLAG, tfidf)
@@ -112,7 +112,7 @@ df$testo <- iconv(df$testo,"UTF-8", "UTF-8",sub='')
 testo_corpus <- VCorpus(VectorSource(df$testo))
 testo_corpus_clean<-clean_corpus(testo_corpus)
 testo_dtm<- DocumentTermMatrix(testo_corpus_clean)
-testo_dict <- findFreqTerms(testo_dtm, lowfreq = 1000)
+testo_dict <- findFreqTerms(testo_dtm, lowfreq = 100)
 write.table(testo_dict, file="dizionario_scontrini.txt",row.names = F)
 trainIndex <- createDataPartition(df$flag, p = .95,
                                   list = FALSE,
@@ -235,7 +235,7 @@ model_maker <- function(nome_modello, nome_algoritmo, nome_file){
           tuneLength=5,
           # ntree = 5,
           # maxit=200,
-          preProcess=c("range", "nzv")
+          preProcess=c("range")
           # metric="Kappa"
           # weights = model_weights
     )
@@ -322,7 +322,7 @@ performance <- lapply(l_predictions,
 
 tabella_performance <- cbind(nomi_modelli,performance)
 tabella_performance
-write.csv(tabella_performance, here("reduced_tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
+# write.csv(tabella_performance, here("reduced_tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
 
 #linux
 # write.csv(tabella_performance, here("linux_tabella_performance_modelli.csv"),fileEncoding = "UTF8",row.names = F)
