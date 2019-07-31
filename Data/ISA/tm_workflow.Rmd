@@ -18,9 +18,16 @@ ggplot(data.frame(x=c(1, 50)), aes(x=x)) +
 
 ```
 
+
+
+
+
 ```{r}
 library(magrittr)
 library(viridis)
+library(ggthemes)
+library(hrbrthemes)
+library(cowplot)
 df2 <- read.csv2("tabella_scontrini_text.csv",stringsAsFactors = F)
 
 df2$testo <- iconv(df2$testo,"UTF-8", "UTF-8",sub='')
@@ -53,25 +60,35 @@ wordFreq$Terms=row.names(wordFreq)
 row.names(wordFreq)=NULL
 wordFreq=wordFreq[,c(2,1)]
 
-wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato"),yes = 1,no = 0)))
+wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato"),yes = 1,no = 0))) %>% 
+  mutate(tick.color=ifelse(irregolare==1, "red4","black"))
 
 subset <- subset(wordFreq, irregolare==1)
 
-ggplot(wordFreq %>%
-         top_n(n = 40,wt = Frequency), 
-       aes(x = reorder(Terms, Frequency), Frequency,fill=irregolare)) +
-  geom_bar(stat = "identity",color="black") +
-  scale_fill_manual(values = c("0" = "lightblue", "1" = "red4"))+
-  labs(x = "Terms", y = "Frequency") +
-  geom_text(data=subset, aes(x = reorder(Terms, Frequency), Frequency,fill=irregolare,label=Frequency), inherit.aes=F, vjust = 0.28, hjust = -0.19, size = 2.5) +   theme_minimal()+
-  coord_flip()+guides(fill=F)
-  
-# 
-ggplot(wordFreq,aes(x=Terms,fill=Terms))+
-  geom_bar(stat="identity",aes(y=Frequency),colour="black" )+
-  coord_flip()+
-  scale_fill_viridis_d(option="magma",direction = -1)+
-  ggtitle("Frequency Comparison")+guides(fill=F)
+wordFreq <- top_n(n=40, wt=Frequency,x=wordFreq)
+wordFreq$Terms <- factor(wordFreq$Terms)
+colors <- wordFreq$tick.color[order(wordFreq$Frequency)]
+ggplot(wordFreq,
+       aes(x = reorder(Terms, Frequency), Frequency, fill = irregolare)) +
+       geom_bar(stat = "identity", color = "black",alpha=1) +
+       scale_fill_manual(values = c("0" = "lightblue", "1" = "red4")) +
+       labs(x = "Parole", y = "Frequenza nel corpus") +
+       geom_text(
+       data = subset,
+       aes(
+       x = reorder(Terms, Frequency),
+       y = Frequency,
+       label = Frequency
+       
+       ),
+       inherit.aes = F,
+       vjust = 0.28,
+       hjust = -0.19,
+       size =3 ,
+       color="red4"
+       ) +  theme_clean()+
+       coord_flip() + guides(fill = F) +
+       theme(axis.text.y = element_text(color = colors,size=10))
 ```
 
 
