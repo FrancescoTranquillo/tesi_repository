@@ -216,7 +216,84 @@ ggplot(data.frame(x=c(1, 50)), aes(x=x)) +
   geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35, hjust=-.13,parse=T)+
   theme_minimal()
 ```
-Tra le due metodologie di pesatura è stata scelta la seconda. Questo perchè la natura degli scontrini può essere meglio caratterizzata dai termini relativi a guasti e allarmi, che sono infatti meno frequenti rispetto a quelli che indicano un comportamento nominale dell'apparecchiatura. Basti pensare al numero di interventi di manutenzione correttiva che hanno interessato la lavaendoscopi da cui sono stati estratti gli scontrini. Dal software di gestione della manutenzione, infatti, è stato riscontrato che la macchina in questione è stata interessata da 47 interventi di manutenzione correttiva. Su circa 800 giorni di attività della macchina, quindi, i guasti sono da considerarsi come eventi estremamente rari, interessando infatti poco più del 5% dei giorni di attività totali. 
+Tra le due metodologie di pesatura è stata scelta la seconda. Questo perchè la natura degli scontrini può essere meglio caratterizzata dai termini relativi a guasti e allarmi, che sono infatti meno frequenti rispetto a quelli che indicano un comportamento nominale dell'apparecchiatura. La frequenza dei termini "tipici" di uno scontrino indicante un comportamento anomalo è evidenziata nel grafico a barre in figura \label{barplotfig}.
+
+```{r, echo=FALSE, message=F, fig.align='center',fig.cap="\\label{barplotfig}Frequenza dei 40 termini più comuni nel corpus degli scontrini."}
+library("ggplot2",verbose = F,quietly = T)
+library("viridis",verbose = F,quietly = T)
+library(tidyverse,verbose = F,quietly = T)
+library(tm,verbose = F,quietly = T)
+library(magrittr,verbose = F,quietly = T)
+library(viridis,verbose = F,quietly = T)
+library(ggthemes,verbose = F,quietly = T)
+library(hrbrthemes,verbose = F,quietly = T)
+library(cowplot,verbose = F,quietly = T)
+library(here,verbose = F,quietly = T)
+library(tm,verbose = F,quietly = T)
+df2 <- read.csv2(here::here("Data/ISA/tabella_scontrini_text.csv"),stringsAsFactors = F)
+
+df2$testo <- iconv(df2$testo,"UTF-8", "UTF-8",sub='')
+
+clean_corpus <- function(corpus) {
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeNumbers)
+
+  # corpus <- tm_map(corpus, stemDocument)
+}
+
+
+corpus <- VCorpus(VectorSource(df2$testo)) %>%
+    clean_corpus(.)
+  bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
+    corpus,
+    control = list(weighting = function(x) weightTfIdf(x))
+  )))
+  tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
+
+  tdm <- TermDocumentMatrix(corpus)
+
+wordFreq=data.frame(apply(tdm,1,sum))
+names(wordFreq)="Frequency"
+wordFreq$Terms=row.names(wordFreq)
+
+
+row.names(wordFreq)=NULL
+wordFreq=wordFreq[,c(2,1)]
+
+wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato"),yes = 1,no = 0))) %>%
+  mutate(tick.color=ifelse(irregolare==1, "red4","black"))
+
+subset <- subset(wordFreq, irregolare==1)
+
+wordFreq <- top_n(n=40, wt=Frequency,x=wordFreq)
+wordFreq$Terms <- factor(wordFreq$Terms)
+colors <- wordFreq$tick.color[order(wordFreq$Frequency)]
+ggplot(wordFreq,
+       aes(x = reorder(Terms, Frequency), Frequency, fill = irregolare)) +
+       geom_bar(stat = "identity", color = "black",alpha=1) +
+       scale_fill_manual(values = c("0" = "lightblue", "1" = "red4")) +
+       labs(x = "Parole", y = "Frequenza nel corpus") +
+       geom_text(
+       data = subset,
+       aes(
+       x = reorder(Terms, Frequency),
+       y = Frequency,
+       label = Frequency
+
+       ),
+       inherit.aes = F,
+       vjust = 0.28,
+       hjust = -0.19,
+       size =3 ,
+       color="red4"
+       ) +  theme_clean()+
+       coord_flip() + guides(fill = F) +
+       theme(axis.text.y = element_text(color = colors,size=10))
+```
+
+Basti pensare al numero di interventi di manutenzione correttiva che hanno interessato la lavaendoscopi da cui sono stati estratti gli scontrini. Dal software di gestione della manutenzione, infatti, è stato riscontrato che la macchina in questione è stata interessata da 47 interventi di manutenzione correttiva. Su circa 800 giorni di attività della macchina, quindi, i guasti sono da considerarsi come eventi estremamente rari, interessando infatti poco più del 5% dei giorni di attività totali.
 
 È parso ragionevole, quindi, al fine di discriminare in modo ottimale un comportamento anomalo da uno nominale, assegnare un peso maggiore ai termini con una frequenza relativa minore.
 

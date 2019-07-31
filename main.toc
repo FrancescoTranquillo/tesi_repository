@@ -38,7 +38,7 @@
 \contentsline {subsubsection}{\numberline {4.6.1}Apprendimento ad istanza multipla}{51}{subsubsection.4.6.1}% 
 \contentsline {subsubsection}{\numberline {4.6.2}Text mining: creazione del Corpus}{52}{subsubsection.4.6.2}% 
 \contentsline {subsubsection}{\numberline {4.6.3}Text mining: Document Term Matrix}{54}{subsubsection.4.6.3}% 
-\contentsline {subsection}{\numberline {4.7}Scelta del modello ottimale}{56}{subsection.4.7}% 
-\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{57}{section.5}% 
-\contentsline {section}{\numberline {6}Conclusioni}{58}{section.6}% 
-\contentsline {section}{Bibliografia}{59}{section*.6}% 
+\contentsline {subsection}{\numberline {4.7}Scelta del modello ottimale}{58}{subsection.4.7}% 
+\contentsline {section}{\numberline {5}INSIGHT: IoT al servizio del reparto di endoscopia }{59}{section.5}% 
+\contentsline {section}{\numberline {6}Conclusioni}{60}{section.6}% 
+\contentsline {section}{Bibliografia}{61}{section*.6}% 
