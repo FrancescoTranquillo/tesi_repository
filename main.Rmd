@@ -7,6 +7,7 @@ header-includes:
 - \usepackage[italian]{babel}
 - \usepackage{placeins}
 - \usepackage{setspace}
+- \usepackage{float}
 - \usepackage{chngcntr}
 - \usepackage{amsmath}
 - \usepackage{physics}
@@ -18,6 +19,10 @@ header-includes:
 - \counterwithin{table}{section}
 - \evensidemargin=0in
 - \oddsidemargin=0.5in
+- \usepackage{fancyhdr}
+- \usepackage{listings}
+- \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true, aboveskip=\medskipamount}
+- \floatplacement{figure}{H}
 linestretch: 1.5
 link-citations: yes
 output:
@@ -49,6 +54,11 @@ output:
 ```
 \newpage
 \pagenumbering{arabic}
+\pagestyle{fancy}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RO]{}
+\fancyhead[RE]{\rightmark}
+\fancyhead[LE]{}
 ```{r child='introduzione/introduzione.md'}
 ```
 \pagebreak

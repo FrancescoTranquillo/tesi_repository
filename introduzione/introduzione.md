@@ -1,3 +1,4 @@
+
 # Introduzione e contesto
 Questo capitolo introduttivo sarà dedicato all'organizzazione dell'ASST Vimercate, alla sua origine istituzionale e alla descrizione del ruolo e delle attività svolte dalla U.O.C. Ingegneria Clinica, con particolare riferimento al tema della gestione della manutenzione dagli aspetti più convenzionali a quelli più innovativi oggetto del presente elaborato di tesi.
 

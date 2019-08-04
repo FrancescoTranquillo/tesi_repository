@@ -81,7 +81,7 @@ Relativamente alla manutenzione predittiva, le applicazioni per cui essa viene a
 
 Nei successivi paragrafi si espliciterà ognuno dei seguenti problemi, fornendo alcuni esempi di algoritmi utilizzabili in ognuno dei sopracitati casi.
 
-### Classificazione
+### Classificazione \label{logregcap}
 In questo tipo di problema, come già visto, l'obiettivo è quello di fornire una classificazione per un determinato oggetto. L'"oggetto" in questione si configura come l'eventualità o meno della macchina di subire un guasto, a fronte di una serie di informazioni relative allo stato operativo della macchina stessa. A titolo di esempio, si rimanda al lavoro svolto da Battifarano et al. dal titolo "Predicting Future Machine Failure from Machine State Using Logistic Regression" [@battifaranoPredictingFutureMachine2018] nel quale, a partire da informazioni riguardanti lo stato operativo della macchina in un dato istante temporale, si è addestrato un modello di regressione logistica per predire lo stato di funzionamento del macchinario con 24 ore di anticipo.
 
 La regressione logistica è un metodo di classificazione comunemente utilizzato in applicazioni simili. Esso modellizza la probabilità di una variabile binaria target **Y** (che nel caso sopracitato rappresenta lo stato di "salute" della macchina differenziandolo in "funzionante" e "non funzionante" ) a partire da un vettore di features **X** (le informazioni sullo stato operativo del macchinario) trasportando una combinazione lineare delle features nell'intervallo (0,1) tramite una trasformazione non lineare data dalla \ref{eq:logreg}:

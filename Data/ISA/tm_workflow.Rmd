@@ -3,17 +3,22 @@ library("ggplot2",verbose = F,quietly = T)
 library("viridis",verbose = F,quietly = T)
 library(tidyverse)
 library(tm)
+library(hrbrthemes)
 eq = function(x){3*log(50/x)}
 
+
+col <- "#A50104"
 df = data.frame(x=c(4,40), y=eq(c(4,40)), name=c("t[1]", "t[2]"))
 ggplot(data.frame(x=c(1, 50)), aes(x=x)) + 
   stat_function(fun=eq, 
                 geom="line",
-                size=1) +
+                size=0.7,
+                colour="black") +
   labs(x=expression("n"[t]), y="TF-IDF")+
-  geom_point(data=df,aes(x=x, y=y) ,col=c("red","blue"),size=3)+
-  geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35,parse=T, hjust=-.13)+
-  theme_minimal()
+  geom_point(data=df,aes(x=x, y=y) ,fill=col,size=2.5, shape=21,stroke=0.8,colour="black")+
+  geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35,parse=T, hjust=-.13, colour="black")+
+  theme_economist_white()+
+  theme(panel.grid.major = element_blank(),panel.background = element_blank(),plot.background = element_blank())
 
 
 ```
@@ -27,7 +32,7 @@ library(magrittr)
 library(viridis)
 library(ggthemes)
 library(hrbrthemes)
-library(cowplot)
+library(tm)
 df2 <- read.csv2("tabella_scontrini_text.csv",stringsAsFactors = F)
 
 df2$testo <- iconv(df2$testo,"UTF-8", "UTF-8",sub='')
@@ -56,23 +61,24 @@ wordFreq=data.frame(apply(tdm,1,sum))
 names(wordFreq)="Frequency"
 wordFreq$Terms=row.names(wordFreq)
 
+col_termini <- "#A50104"
 
 row.names(wordFreq)=NULL
 wordFreq=wordFreq[,c(2,1)]
 
 wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato"),yes = 1,no = 0))) %>% 
-  mutate(tick.color=ifelse(irregolare==1, "red4","black"))
+  mutate(tick.color=ifelse(irregolare==1, col_termini,"grey30"))
 
 subset <- subset(wordFreq, irregolare==1)
 
 wordFreq <- top_n(n=40, wt=Frequency,x=wordFreq)
 wordFreq$Terms <- factor(wordFreq$Terms)
 colors <- wordFreq$tick.color[order(wordFreq$Frequency)]
-ggplot(wordFreq,
+a <- ggplot(wordFreq,
        aes(x = reorder(Terms, Frequency), Frequency, fill = irregolare)) +
-       geom_bar(stat = "identity", color = "black",alpha=1) +
-       scale_fill_manual(values = c("0" = "lightblue", "1" = "red4")) +
-       labs(x = "Parole", y = "Frequenza nel corpus") +
+       geom_bar(stat = "identity", color = "black",alpha=1,size=0.3) +
+       scale_fill_manual(values = c("0" = "#A2AEBB", "1" = col_termini)) +
+       labs(x = "Termini nel corpus", y = "Frequenza nel corpus") +
        geom_text(
        data = subset,
        aes(
@@ -85,10 +91,103 @@ ggplot(wordFreq,
        vjust = 0.28,
        hjust = -0.19,
        size =3 ,
-       color="red4"
-       ) +  theme_clean()+
-       coord_flip() + guides(fill = F) +
-       theme(axis.text.y = element_text(color = colors,size=10))
+       color=col_termini
+       ) +  theme_ipsum(base_family = "Roboto")+
+        coord_flip() + guides(fill = F) +
+       theme(axis.text.y = element_text(color = colors,size=10,family = "Roboto+Regular"),
+             axis.title.x = element_text(family = "Roboto"),
+             axis.title.y = element_text(family = "Roboto"),
+             panel.grid.major = element_blank()
+              )
+
+
+a
 ```
 
+
+```{r, fig.height=6,echo=FALSE, message=F}
+
+library("ggplot2",verbose = F,quietly = T)
+library("viridis",verbose = F,quietly = T)
+library(tidyverse,verbose = F,quietly = T)
+library(tm,verbose = F,quietly = T)
+library(magrittr,verbose = F,quietly = T)
+library(viridis,verbose = F,quietly = T)
+library(ggthemes,verbose = F,quietly = T)
+library(hrbrthemes,verbose = F,quietly = T)
+library(here,verbose = F,quietly = T)
+
+DF_test <- read.csv2(here( "DF_test.csv"),stringsAsFactors = F,header = T)
+DF_test$TARGET <-  factor(DF_test$TARGET)
+levels(DF_test$TARGET) <- c("neg", "pos")
+modelli <- lapply(
+  as.list(list.files(path = here::here(),pattern = "mm_*"),read_rds))
+
+
+l_predictions <- lapply(modelli, function(modello) predict(modello, DF_test))
+
+
+matrici <- lapply(l_predictions, function(predizioni) confusionMatrix(predizioni, DF_test$TARGET, "pos", mode = "everything"))
+
+nomi_modelli <- lapply(modelli,
+                       function(modello) data.frame("Model name"=modello[["modelInfo"]][["label"]])) %>%
+
+  do.call("rbind", .)
+
+performance <- lapply(l_predictions,
+                      function(predizioni) {
+                        cm <- confusionMatrix(predizioni,
+                                              DF_test$TARGET,
+                                              "pos",
+                                              mode = "everything")
+                        performance <-
+                          tibble(
+                            "Accuracy" = round(cm[["overall"]][["Accuracy"]], 2),
+                            "Sensitivity" = round(cm$byClass[1], 2),
+                            "Specificity" = round(cm$byClass[2], 2),
+                            "Precision" = round(cm$byClass[5], 2),
+                            "MCC" = round(mcc(preds = predizioni,DF_test$TARGET),2)
+                          )
+
+                        return(performance)
+                      }) %>%
+  do.call("rbind", .)
+
+
+tabella_performance <- cbind(nomi_modelli,performance)
+tabella_performance
+library(kableExtra)
+kable(tabella_performance, "latex", align = "c", booktabs = T, caption = "Performance dei modelli ottenuti")%>%
+kable_styling(latex_options = "HOLD_position")
+
+
+
+```
+
+```{r}
+collapse_rows_dt <- data.frame(C1 = c(rep("a", 10), rep("b", 5)),
+C2 = c(rep("c", 7), rep("d", 3), rep("c", 2), rep("d", 3)),
+C3 = 1:15,
+C4 = sample(c(0,1), 15, replace = TRUE))
+kable(collapse_rows_dt, "html", booktabs = T, align = "c") %>%
+column_spec(1, bold=T) %>%
+collapse_rows(columns = 1:2, latex_hline = "major", valign = "middle")
+```
+
+```{r}
+library(knitr)
+library(kableExtra)
+df <- data.frame("Previsione"=c("Previsione","Previsione"),
+                 "Oss"=c("Negativi", "Positivi"),
+                 "Negativi"=c("True Negative\n98","True Negative\n9"),
+                 "Positivi"=c("True Negative\n27","True Negative\n8"))
+
+kable(df, col.names=c(" "," ", "Negativi", "Positivi"),escape = F, caption = "Matrice di confusione",booktabs=T, format="html",align = "c") %>%
+  kable_styling(latex_options = "HOLD_position")%>%
+  add_header_above(c(" "," ","Riferimento" = 2),line = F) %>%
+  column_spec(1:2, bold = T) %>%
+  collapse_rows(1:2,) %>% 
+  footno
+
+```
 

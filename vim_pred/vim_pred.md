@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 # La manutenzione predittiva in Ospedale: l'esperienza di Vimercate
 
 In questo capitolo si parlerà dell'applicabilità di una strategia di manutenzione predittiva nell'ambito dell'Ospedale di Vimercate. In questi termini, verrà indicata innanzitutto la modalità di ricerca intrapresa al fine di identificare la classe di dispositivi di maggiore interesse e quella più adatta per essere analizzata con l'obiettivo di progettare e applicare un programma di manutenzione predittiva.
@@ -114,13 +119,13 @@ Con operazioni simili a quelle descritte, ovvero analizzando il testo degli scon
 ## Modellizzazione
 La fase di modellizzazione è stata sicuramente quella in cui sono state incontrate più difficoltà, principalmente dovute, come si vedrà, ad un non sufficiente numero di dati a disposizione. Innanzitutto, è stato necessario estrarre dal software di manutenzione "Coswin8" utilizzato in ospedale, lo storico delle manutenzioni effettuate sulla macchina da cui sono stati estratti gli scontrini. Avendo a disposizione questi ultimi dati, si sono potuti incrociare le date presenti sugli scontrini con quelle riportate dal servizio di manutenzione, così quindi di avere la possibilità di studiare gli scontrini corrispondenti a 7 giorni precedenti all'effettiva chiamata al Global Service (d'ora in avanti chiamati per brevità "giorni predittivi"). Si è cercato quindi, nel seguente lavoro, di correlare i guasti della lavaendoscopi alle informazioni contenute negli scontrini dei giorni predittivi, al fine di ottenere un modello di predizione che calcolasse la probabilità di guasto della lavaendoscopi sulla base dello storico dato dai 3 anni di informazioni a disposizione.
 
-### Apprendimento ad istanza multipla
+### Apprendimento ad istanza multipla \label{mil}
 
-Per costruire tale modello è stata quindi indagato l'approccio di apprendimento migliore, sulla base di quanto descritto nel capitolo \ref{digital}, ed è stato scelto, sulla base di un precedente lavoro trovato in letteratura  , una tipologia di apprendimento supervisionato chiamato "Apprendimento ad istanza multipla" (Multiple instance learning, MIL). In questa metodologia, il classificatore non riceve una serie di esempi indipendenti $x_{i}$ caratterizzati da una etichetta (l'output desiderato $t_{i}$) come avviene nel classico apprendimento supervisionato, ma riceve un insieme di "borse" o "contenitori" a cui viene associata un'etichetta che rappresenta l'output che dovrà imparare a produrre. Ogni borsa può contenere più istanze (che in questo caso sono gli scontrini di un giorno di attività) e, nello specifico, una borsa viene etichettata come "positiva" se contiene al suo interno scontrini appartenenti ad un "giorno predittivo", mentre invece viene etichettata come "negativa" altrimenti. Di conseguenza, il classificatore desiderato è stato progettato per classificare una borsa di scontrini come positiva o negativa, a seconda delle informazioni contenute negli scontrini di un singolo giorno. Uno schema riassuntivo dell'approccio descritto è apprezzabile in figura \ref{mil}.
+Per costruire tale modello è stata quindi indagato l'approccio di apprendimento migliore, sulla base di quanto descritto nel capitolo \ref{digital}, ed è stato scelto, sulla base di un precedente lavoro trovato in letteratura  , una tipologia di apprendimento supervisionato chiamato "Apprendimento ad istanza multipla" (Multiple instance learning, MIL). In questa metodologia, il classificatore non riceve una serie di esempi indipendenti $x_{i}$ caratterizzati da una etichetta (l'output desiderato $t_{i}$) come avviene nel classico apprendimento supervisionato, ma riceve un insieme di "borse" o "contenitori" a cui viene associata un'etichetta che rappresenta l'output che dovrà imparare a produrre. Ogni borsa può contenere più istanze (che in questo caso sono gli scontrini di un giorno di attività) e, nello specifico, una borsa viene etichettata come "positiva" se contiene al suo interno scontrini appartenenti ad un "giorno predittivo", mentre invece viene etichettata come "negativa" altrimenti. Di conseguenza, il classificatore desiderato è stato progettato per classificare una borsa di scontrini come positiva o negativa, a seconda delle informazioni contenute negli scontrini di un singolo giorno. Uno schema riassuntivo dell'approccio descritto è apprezzabile in figura \ref{mil-schema}.
 
 \FloatBarrier
 
-![Apprendimento ad istanza multipla. La prima borsa è associata ad una etichetta "negativa" in quanto al di fuori dell'intervallo di predizione dei 7 giorni. \label{mil}](vim_pred/img/mil.pdf)
+![Apprendimento ad istanza multipla. La prima borsa è associata ad una etichetta "negativa" in quanto al di fuori dell'intervallo di predizione dei 7 giorni. \label{mil-schema}](vim_pred/img/mil.pdf)
 
 \FloatBarrier
 
@@ -130,7 +135,7 @@ Successivamente al raggruppamento degli scontrini in borse, si è cercato di ris
 
 Per creare questi "metascontrini" sono state utilizzate diverse tecniche di text mining sfruttando le capacità della libreria R chiamata "tm", diminutivo di "text mining". A partire dalla feature chiamata "testo", creata dalla funzione descritta nel paragrafo \ref{preprocessing}, è stato infatti creato un "corpus" ovvero una collezione di documenti. In particolare, convertendo tutti gli scontrini presenti, il corpus ottenuto è un oggetto composto da 5441 documenti, ognuno dei quali composto da diversi caratteri. Esplorando i primi 5 documenti del corpus, per esempio, si ottiene:
 
-```
+\begin{lstlisting}[frame=single]
 <<VCorpus>>
 Metadata:  corpus specific: 0, document level (indexed): 0
 Content:  documents: 5
@@ -159,18 +164,18 @@ Content:  chars: 290
 <<PlainTextDocument>>
 Metadata:  7
 Content:  chars: 115
-```
 
+\end{lstlisting}
+\newpage
 Nell'output precedente è intuibile la struttura del corpus. Ogni elemento dello stesso viene identificato come un "PlainTextDocument" il cui contenuto è dato da un variabile numero di caratteri testuali. Esplorando ad esempio il primo documento è possibile leggere il testo del relativo scontrino, pulito precedentemente da eventuali caratteri speciali, punteggiatura e numeri:
 
-```
+\begin{lstlisting}[frame=single]
 <<PlainTextDocument>>
 Metadata:  7
 Content:  chars: 115
 
-tipo ciclo complete disinfection test di tenuta allarme
-pressione minima test di tenuta fine ciclo ciclo irregolare
-```
+tipo ciclo complete disinfection test di tenuta allarme pressione minima test di tenuta fine ciclo ciclo irregolare
+\end{lstlisting}
 
 ### Text mining: Document Term Matrix
 
@@ -198,27 +203,37 @@ Di conseguenza, la tf-idf è definita come:
 
 In figura \ref{tfidf_plot} viene riportato un esempio di come la pesatura tramite tf-idf tende a configurarsi come un "filtro" per i termini più comuni, prendendo come esempio due termini presenti in uno stesso documento con la stessa frequenza. Si osserva, infatti, che a pari frequenza corrisponde un punteggio che è maggiore per i termini che compaiono meno frequentemente nel corpus.
 
-\FloatBarrier
 
-```{r,echo=FALSE,  fig.align='center',fig.cap="\\label{tfidf_plot}Per costruire questo grafico è stata ipotizzata, per entrambi i termini $t_{1}$ e $t_{2}$, la stessa frequenza ($f_{d,t_{1,2}}=3$) all'interno di un generico documento $d$. $t_{1}$ compare in meno documenti del corpus ($n_{t_{1}}=4$), di conseguenza il suo peso risulta maggiore"}
+```{r,echo=FALSE,warning=FALSE ,message=FALSE,fig.align='center',fig.cap="\\label{tfidf_plot}Valore dato dalla tf-idf per due termini generici $t_{1}$ e $t_{2}$, ipotizzando la stessa frequenza ($f_{d,t_{1,2}}=3$) all'interno di un generico documento $d$. $t_{1}$ compare in meno documenti del corpus ($n_{t_{1}}=4$), di conseguenza il suo peso risulta maggiore."}
 
 library("ggplot2",verbose = F,quietly = T)
 library("viridis",verbose = F,quietly = T)
+library("hrbrthemes",verbose = F,quietly = T)
+library("tidyverse",verbose = F,quietly = T)
+library("ggthemes",verbose = F,quietly = T)
+
+
 eq = function(x){3*log(50/x)}
 
+
+col <- "#A50104"
 df = data.frame(x=c(4,40), y=eq(c(4,40)), name=c("t[1]", "t[2]"))
 ggplot(data.frame(x=c(1, 50)), aes(x=x)) +
   stat_function(fun=eq,
                 geom="line",
-                size=1) +
-  labs(x=expression("n"[t]), y="tf-idf")+
-  geom_point(data=df,aes(x=x, y=y) ,col="tomato",size=3)+
-  geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35, hjust=-.13,parse=T)+
-  theme_minimal()
-```
-Tra le due metodologie di pesatura è stata scelta la seconda. Questo perchè la natura degli scontrini può essere meglio caratterizzata dai termini relativi a guasti e allarmi, che sono infatti meno frequenti rispetto a quelli che indicano un comportamento nominale dell'apparecchiatura. La frequenza dei termini "tipici" di uno scontrino indicante un comportamento anomalo è evidenziata nel grafico a barre in figura \label{barplotfig}.
+                size=0.7,
+                colour="black") +
+  labs(x=expression("n"[t]), y="TF-IDF")+
+  geom_point(data=df,aes(x=x, y=y) ,fill=col,size=2.5, shape=21,stroke=0.8,colour="black")+
+  geom_text(data=df,aes(x=x, y=y,label=name),vjust=-1.35,parse=T, hjust=-.13, colour="black")+
+  theme_economist_white()+
+  theme(panel.grid.major = element_blank(),panel.background = element_blank(),plot.background = element_blank())
 
-```{r, echo=FALSE, message=F, fig.align='center',fig.cap="\\label{barplotfig}Frequenza dei 40 termini più comuni nel corpus degli scontrini."}
+```
+
+Tra le due metodologie di pesatura elencate, è stata scelta la seconda. Questo perchè la natura degli scontrini può essere meglio caratterizzata dai termini relativi a guasti e allarmi, che sono infatti meno frequenti rispetto a quelli che indicano un comportamento nominale dell'apparecchiatura. La frequenza dei termini "tipici" di uno scontrino indicante un comportamento anomalo è evidenziata nel grafico a barre in figura \ref{barplotfig}.
+
+```{r, fig.height=6,echo=FALSE, message=F, fig.align='center',fig.cap="\\label{barplotfig}Frequenza dei 40 termini più comuni nel corpus degli scontrini."}
 library("ggplot2",verbose = F,quietly = T)
 library("viridis",verbose = F,quietly = T)
 library(tidyverse,verbose = F,quietly = T)
@@ -227,10 +242,12 @@ library(magrittr,verbose = F,quietly = T)
 library(viridis,verbose = F,quietly = T)
 library(ggthemes,verbose = F,quietly = T)
 library(hrbrthemes,verbose = F,quietly = T)
-library(cowplot,verbose = F,quietly = T)
 library(here,verbose = F,quietly = T)
-library(tm,verbose = F,quietly = T)
+
+
+
 df2 <- read.csv2(here::here("Data/ISA/tabella_scontrini_text.csv"),stringsAsFactors = F)
+
 
 df2$testo <- iconv(df2$testo,"UTF-8", "UTF-8",sub='')
 
@@ -258,12 +275,13 @@ wordFreq=data.frame(apply(tdm,1,sum))
 names(wordFreq)="Frequency"
 wordFreq$Terms=row.names(wordFreq)
 
+col_termini <- "#A50104"
 
 row.names(wordFreq)=NULL
 wordFreq=wordFreq[,c(2,1)]
 
 wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato"),yes = 1,no = 0))) %>%
-  mutate(tick.color=ifelse(irregolare==1, "red4","black"))
+  mutate(tick.color=ifelse(irregolare==1, col_termini,"grey30"))
 
 subset <- subset(wordFreq, irregolare==1)
 
@@ -272,9 +290,9 @@ wordFreq$Terms <- factor(wordFreq$Terms)
 colors <- wordFreq$tick.color[order(wordFreq$Frequency)]
 ggplot(wordFreq,
        aes(x = reorder(Terms, Frequency), Frequency, fill = irregolare)) +
-       geom_bar(stat = "identity", color = "black",alpha=1) +
-       scale_fill_manual(values = c("0" = "lightblue", "1" = "red4")) +
-       labs(x = "Parole", y = "Frequenza nel corpus") +
+       geom_bar(stat = "identity", color = "black",alpha=1,size=0.3) +
+       scale_fill_manual(values = c("0" = "#A2AEBB", "1" = col_termini)) +
+       labs(x = "Termini nel corpus", y = "Frequenza nel corpus") +
        geom_text(
        data = subset,
        aes(
@@ -287,22 +305,152 @@ ggplot(wordFreq,
        vjust = 0.28,
        hjust = -0.19,
        size =3 ,
-       color="red4"
-       ) +  theme_clean()+
-       coord_flip() + guides(fill = F) +
-       theme(axis.text.y = element_text(color = colors,size=10))
+       color=col_termini
+       ) +  theme_economist_white()+
+        coord_flip() + guides(fill = F) +
+       theme(axis.text.y = element_text(color = colors,size=10),
+             panel.grid.major = element_blank(),
+             panel.background = element_blank(),
+             plot.background = element_blank())
+
 ```
 
-Basti pensare al numero di interventi di manutenzione correttiva che hanno interessato la lavaendoscopi da cui sono stati estratti gli scontrini. Dal software di gestione della manutenzione, infatti, è stato riscontrato che la macchina in questione è stata interessata da 47 interventi di manutenzione correttiva. Su circa 800 giorni di attività della macchina, quindi, i guasti sono da considerarsi come eventi estremamente rari, interessando infatti poco più del 5% dei giorni di attività totali.
 
-È parso ragionevole, quindi, al fine di discriminare in modo ottimale un comportamento anomalo da uno nominale, assegnare un peso maggiore ai termini con una frequenza relativa minore.
 
-A seguito di queste considerazioni, riportiamo di seguito le prime 5 righe della Document Term Matrix ottenuta dalla trasformazione del corpus.
+La rarità dei termini che riflettono un comportamento anomalo è diretta conseguenza della poca frequenza con cui si verificano eventi di guasto. Dal software di gestione della manutenzione, infatti, è stato riscontrato che la macchina in questione è stata interessata da 47 interventi di manutenzione correttiva. Su circa 800 giorni di attività della macchina, quindi, i guasti sono da considerarsi come eventi estremamente rari, interessando infatti poco più del 5% dei giorni di attività totali.
 
+È parso ragionevole, quindi, al fine di discriminare in modo ottimale un comportamento anomalo da uno nominale, assegnare un peso maggiore ai termini con una frequenza relativa minore tramite la tf-idf descritta sopra.
+
+A seguito di queste considerazioni, si riportano, a solo scopo di esempio, le prime 5 righe di una Document Term Matrix ottenuta dalla trasformazione del corpus.
+
+
+```{r, fig.height=6,echo=FALSE, message=F}
+library("ggplot2",verbose = F,quietly = T)
+library("viridis",verbose = F,quietly = T)
+library(tidyverse,verbose = F,quietly = T)
+library(tm,verbose = F,quietly = T)
+library(magrittr,verbose = F,quietly = T)
+library(viridis,verbose = F,quietly = T)
+library(ggthemes,verbose = F,quietly = T)
+library(hrbrthemes,verbose = F,quietly = T)
+library(here,verbose = F,quietly = T)
+
+
+
+df2 <- read.csv2(here::here("Data/ISA/tabella_scontrini_text.csv"),stringsAsFactors = F)
+
+
+df2$testo <- iconv(df2$testo,"UTF-8", "UTF-8",sub='')
+
+clean_corpus <- function(corpus) {
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeNumbers)
+
+  # corpus <- tm_map(corpus, stemDocument)
+}
+
+
+corpus <- VCorpus(VectorSource(df2$testo)) %>%
+    clean_corpus(.)
+  bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
+    corpus,
+    control = list(weighting = function(x) weightTfIdf(x))
+  )),row.names = paste("Scontrino", c(1:5328)))
+  tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
+
+  tdm <- TermDocumentMatrix(corpus)
+
+  library(kableExtra)
+  kable(bag_dtm[1:5,which(colnames(bag_dtm)%in%c("allarme", "regolare", "irregolare", "disinfezione", "ciclo","sterilizzante"))], "latex", align = "c", booktabs = T, caption = "Document Term Matrix")%>%
+  kable_styling(latex_options = "HOLD_position")
+```
 
 
 \FloatBarrier
 
+### Fase di training e testing
+
+Una volta raggruppati gli scontrini in bormmse corrispondenti a 7 giorni di attività, ad ogni borsa è stata assegnata la label "positiva", se tra gli scontrini della borsa era presente almeno uno corrispondente ad uno dei giorni "predittivi", definiti nel paragrafo \ref{mil}, "negativa" altrimenti. Le borse sono poi state ridotte ad un'unica osservazione (metascontrino) mediando i valori della DTM per ogni termine presente al suo interno.
+
+Successivamente, i dati sono stati divisi in gruppo di training e testing (chiamati d'ora in avanti training e test set), sui quali è stato costruito il modello di predizione. Per il processo di training è stato utilizzato un pacchetto di R chiamato "caret" (acronimo di "<strong>C</strong>lassification <strong>A</strong>nd <strong>RE</strong>gression <strong>T</strong>raining"), contenente un gruppo di funzioni che facilitano la creazione di modelli predittivi tramite strumenti per la divisione dei dati in gruppo di training e testing (data splitting), pre-processamento dei dati, ottimizzazione dei modelli (model tuning) e altre funzionalità.
+
+Specificatamente, nella fase di training, le funzioni nel pacchetto caret si occupano di:
+
+- valutare, ripetendo le operazioni di addestramento di un modello tramite ri-selezione dei dati (resampling), l'effetto dei parametri di ottimizzazione (ovvero i parametri specifici di un modello, come $\alpha$ e $\beta$ della di una regressione logistica, descritti nel capitolo \ref{logregcap}) sulle performance di predizione
+- scegliere il modello "ottimale" tra questi parametri
+- stimare le performance del modello dal training set
+
+In particolare, per agevolare la fase di training e test, è stata creata una funzione chiamata "model_maker" in grado di allenare diversi modelli, definiti da una lista scelta dall'utente, in modo sequenziale e di salvare le performance di predizione di ogni modello in una tabella consultabile a fine addestramento. Questo ha aiutato nella scelta del modello ottimale, in quanto è stato possibile confrontare diversi risultati di addestramento al variare di alcune opzioni di modellizzazione come ad esempio il metodo di resampling, la scelta dei modelli e la modalità di creazione dei metascontrini.
+
+\newpage
+
 ## Scelta del modello ottimale
 
-Nei capitoli successivi verranno descritti gli algoritmi utilizzati nelle fasi di
+Prima di introdurre i risultati, si riportano di seguito le definizioni delle statistiche utilizzate per la valutazione delle performance dei modelli sviluppati. Si utilizza come riferimento una matrice di confusione, struttura spesso utilizzata per valutare le performance di un modello di classificazione binaria (anche se facilmente estendibile al caso di classificazione multipla) caratterizzata dalla seguente struttura:
+
+
+
+```{r, echo=FALSE}
+
+# 98 9 n 27 8
+library(knitr)
+library(kableExtra)
+df <- data.frame("Previsione"=c("Previsione","Previsione"),
+                 "Oss"=c("Negativi", "Positivi"),
+                 "Negativi"=c(paste0("TN",footnote_marker_number(1,"latex")),paste0("FN",footnote_marker_number(2,"latex"))),
+                 "Positivi"=c(paste0("FP",footnote_marker_number(3,"latex")),paste0("TP",footnote_marker_number(4,"latex")))
+               )
+
+kable(df, col.names=c(" "," ", "Negativi", "Positivi"),escape = F, caption = "Matrice di confusione",booktabs=T, format="latex",align = "c") %>%
+  kable_styling(latex_options = "HOLD_position")%>%
+  add_header_above(c(" "," ","Riferimento" = 2),line=F) %>%
+  column_spec(1:2, bold = F) %>%
+  collapse_rows(1:2,valign="middle", latex_hline="none") %>%
+  footnote(number = c("True Negative: osservazioni classificate come negative, in modo corretto",
+  "False Negative: osservazioni classificate come negative, erroneamente",
+  "False Positive: osservazioni classificate come positive, in modo corretto",
+  "True Positive: osservazioni classificate come positive, erroneamente"),threeparttable = F)
+
+```
+
+Dalla tabella è possibile definire le seguenti statistiche:
+
+-**accuratezza**: rapporto tra le osservazioni classificate correttamente e il numero totale di osservazioni $$Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
+-**sensitività**: chiamata anche recall o true positive rate, è definita come il rapporto tra i veri positivi e i positivi totali
+$$Sensitivity = \frac{TP}{TP+FN}$$
+-**specificità**: definita come il rapporto tra i veri negativi e i negativi totali
+$$Specificity = \frac{TN}{TN+FP}$$
+-**precisione**: definita come il rapporto tra i veri positivi e la somma tra veri positivi e falsi positivi
+$$Precision = \frac{TP}{TP+FP}$$
+
+
+In un caso come questo di manutenzione predittiva, in cui gli eventi di guasto rappresentano la classe caratterizzata da una frequenza minore rispetto al normale comportamento del macchinario, la statistica di accuratezza non è un buon indice per valutare la bontà di un classificatore che ha come compito quello di identificare, appunto, comportamenti anomali. In casi come questi, in cui è presente uno sbilanciamento tra classi, è meglio fare affidamento su altre statistiche come sensitività, specificità e precisione, perchè esse tengono meglio conto della capacità del classificatore di discriminare tra eventi "positivi", di guasto, e "negativi".
+
+Di seguito si riportano le performance di predizione dei modelli ottenuti.
+
+
+\begin{table}[H]
+
+\caption{\label{tab:performance}Performance dei modelli ottenuti}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{16em}lllll}
+\toprule
+Model name & Accuracy & Sensitivity & Specificity & Precision & MCC\\
+\midrule
+Bayesian Generalized Linear Model & 0.75 & 0.23 & 0.92 & 0.47 & 0.19\\
+Generalized Linear Model & 0.39 & 0.71 & 0.29 & 0.25 & 0.00\\
+Naive Bayes & 0.73 & 0.11 & 0.93 & 0.36 & 0.08\\
+Neural Network & 0.71 & 0.11 & 0.91 & 0.29 & 0.03\\
+Support Vector Machine (Linear Kernel) & 0.73 & 0.20 & 0.91 & 0.41 & 0.14\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+Sebbene l'accuratezza risulti buona, essa, come già detto, è inaffidabile in un caso come questo, dove la distribuzione delle classi da predire risulta "sbilanciata". Tutti i modelli addestrati si dimostrano buoni classificatori per quanto riguarda l'identificazione della classe "negativa". Tuttavia, come intuibile dal valore di sensitività molto basso caratteristico a tutti i modelli, essi non risultano essere in grado di discriminare la classe di interesse. Ciò è dovuto molto probabilmente al numero eccessivamente basso di osservazioni a disposizione per l'addestramento dei modelli.
+
+Di per sé , infatti, lo sbilanciamento delle classi è un problema facilmente aggirabile tramite diversi approcci come ad esempio specificando al pacchetto caret di utilizzare un metodo di resampling che tenga conto del forte sbilanciamento di classi (downsampling). In questo modo, ad esempio, ad ogni iterazione vengono selezionate un pari numero di osservazioni positive e negative (utilizzando tutte quelle positive a disposizione), annullando quindi lo sbilanciamento.
+
+In questo lavoro, tuttavia, accorgimenti di questo tipo non hanno migliorato in modo sufficiente le performance di classificazione, ottenendo comunque sensitività e specificità molto basse. Performance migliori possono essere ottenute, banalmente, aumentando il numero di dati a disposizione prelevando da altre macchine simili i file di backup. Elemento essenziale per poter meglio sviluppare questi modelli sarà, comunque, la presenza di uno storico dato da un software di gestione delle manutenzioni senza il quale, infatti, non si avrebbe la possibilità di etichettare i dati a disposizione, invalidando quindi il concetto di apprendimento supervisionato.

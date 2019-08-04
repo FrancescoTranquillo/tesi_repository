@@ -54,6 +54,8 @@ df <- df %>%
 #aggiunta della bag-label
 df <- df %>%
   mutate("CHIAMATA" = factor(ifelse(.$GIORNO %in% coswin, 1, 0)))
+
+df$testo <- iconv(df$testo,"UTF-8", "UTF-8",sub='')
 # "BAG"=factor(cut.Date(df$GIORNO, breaks = "5 days",labels = F)))
 
 # ignore_columns <- c("TEST.DI.TENUTA","NUMERO.CICLO",
@@ -66,7 +68,7 @@ giorni_guasti <- unique(df[which(df$CHIAMATA==1),which(colnames(df)=="GIORNO")])
 #trovo le date dei 5 giorni precedenti ad ognuno dei giorni appena trovati
 # attraverso la funzione backprop
 backprop <- function(giorno){
-  as.list(seq(from=giorno-1,to =giorno-2,by = -1))
+  as.list(seq(from=giorno-1,to =giorno-6,by = -1))
 }
 
 giorni_predittivi <- sapply(giorni_guasti, backprop)
@@ -85,36 +87,37 @@ clean_corpus <- function(corpus) {
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, content_transformer(tolower))
   corpus <- tm_map(corpus, removeNumbers)
-  corpus <- tm_map(corpus, stemDocument)
+  # corpus <- tm_map(corpus, stemDocument)
   
   
 }
 
 #Data preparation – cleaning and standardizing text data####
 
+
 descr_corpus_train <- VCorpus(VectorSource(nlp_training$testo))
 descr_train_labels <- factor(nlp_training$flag)
 descr_corpus_clean_train<-clean_corpus(descr_corpus_train)
-descr_dtm_train <- DocumentTermMatrix(descr_corpus_clean_train)
+descr_dtm_train <- DocumentTermMatrix(descr_corpus_clean_train,control = list(weighting = function(x) weightTfIdf(x)))
 
 descr_corpus_test <- VCorpus(VectorSource(nlp_testing$testo))
 descr_test_labels <- factor(nlp_testing$flag)
 descr_corpus_clean_test<-clean_corpus(descr_corpus_test)
 
 
-descr_dict <- findFreqTerms(descr_dtm_train, lowfreq = 1)
-descr_dtm_freq_test <- DocumentTermMatrix(descr_corpus_clean_test, list(dictionary=descr_dict))
-descr_dtm_freq_train <- DocumentTermMatrix(descr_corpus_clean_train, list(dictionary=descr_dict))
+descr_dict <- findFreqTerms(descr_dtm_train, highfreq = 600)
+descr_test <- as.data.frame(as.matrix(DocumentTermMatrix(descr_corpus_clean_test, list(dictionary=descr_dict,weighting=function(x) weightTfIdf(x)))))
+descr_train <- as.data.frame(as.matrix(DocumentTermMatrix(descr_corpus_clean_train, list(dictionary=descr_dict,weighting=function(x) weightTfIdf(x)))))
 
 # descr_dtm_freq_train <- descr_dtm_train[, descr_freq_words]
 # descr_dtm_freq_test <- descr_dtm_test[, descr_freq_words]
-convert_counts <- function(x) {
-  x <- ifelse(x > 0, "Yes", "No")
-}
-
-
-descr_train <-as.data.frame(apply(descr_dtm_freq_train, MARGIN = 2, convert_counts))
-descr_test <- as.data.frame(apply(descr_dtm_freq_test, MARGIN = 2, convert_counts))
+# convert_counts <- function(x) {
+#   x <- ifelse(x > 0, "Yes", "No")
+# }
+# 
+# 
+# descr_train <-as.data.frame(apply(descr_dtm_freq_train, MARGIN = 2, convert_counts))
+# descr_test <- as.data.frame(apply(descr_dtm_freq_test, MARGIN = 2, convert_counts))
 
 
 # descr_classifier2 <-
@@ -126,15 +129,15 @@ descr_test <- as.data.frame(apply(descr_dtm_freq_test, MARGIN = 2, convert_count
 # levels(descr_test_labels) <- c("neg", "pos")
 # confusionMatrix(descr_test_pred2, descr_test_labels,positive = "1")
 
-
-descr_train %<>%
-  mutate_each_(funs(factor(.)),c(1:61)) %>%
-  .[, sapply(descr_train, function(col) length(unique(col))) > 1]
-
-descr_test %<>%
-  mutate_each_(funs(factor(.)),c(1:61)) %>%
-  .[, sapply(descr_test, function(col) length(unique(col))) > 1]
-
+# 
+# descr_train %<>%
+#   mutate_each_(funs(factor(.)),c(1:61)) %>%
+#   .[, sapply(descr_train, function(col) length(unique(col))) > 1]
+# 
+# descr_test %<>%
+#   mutate_each_(funs(factor(.)),c(1:61)) %>%
+#   .[, sapply(descr_test, function(col) length(unique(col))) > 1]
+# 
 
 descr_train$TARGET <- factor(nlp_training$flag)
 levels(descr_train$TARGET) <- c("neg", "pos")
@@ -155,7 +158,8 @@ grid <- expand.grid(size = c(1,3,5,10,15,20,15,50),
 # train_pp_nozv$TARGET <- factor(nlp_training$flag)
 # levels(train_pp_nozv$TARGET) <- c("neg", "pos")
 
-
+table(descr_train$TARGET
+      )
 
 fitControl <- trainControl(method = "repeatedcv", 
                            number = 10,
@@ -163,19 +167,17 @@ fitControl <- trainControl(method = "repeatedcv",
                            verboseIter=T,
                            # classProbs = TRUE,
                            allowParallel = T,
+                           sampling = "down"
                             # summaryFunction = twoClassSummary,
                            )
 
 
 nlp_classifier <-
-  train(
-    x = descr_train[, -which(names(descr_train) %in% "TARGET")],
-    y = descr_train$TARGET,
-    # TARGET~.,
-    # data=descr_train,
-    method = "nb",
+  train(TARGET~.,
+     data=descr_train,
+    method = "bayesglm",
     trControl = fitControl,
-    tuneLength = 10
+    tuneLength = 2
   )
 # tuneGrid=grid)
 

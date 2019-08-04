@@ -31,7 +31,7 @@ n <- ncol(df)
 df[,c(2,4:(n-2))] %<>% lapply(function(x) factor(x))
 
 df$INIZIO.CICLO <-
-  parse_date_time(df$INIZIO.CICLO, orders = "dmy hms")
+  parse_date_time(df$INIZIO.CICLO, orders = "dmy HMS")
 
 coswin <- read.csv2(file = "coswin-isa/108841.csv",
                     header = T,
@@ -91,8 +91,7 @@ clean_corpus <- function(corpus) {
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, content_transformer(tolower))
   corpus <- tm_map(corpus, removeNumbers)
-  
-  # corpus <- tm_map(corpus, stemDocument)
+  corpus <- tm_map(corpus, stemDocument)
 }
 
 meta <- function(bag) {
@@ -102,7 +101,7 @@ meta <- function(bag) {
   bag_dtm <- as.data.frame(as.matrix(DocumentTermMatrix(
     bag_corpus,
     control = list(dictionary = testo_dict,
-                   weighting = function(x) weightTf(x))
+                     weighting = function(x) weightTfIdf(x))
   )))
   tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
   cbind("TARGET" = bag$BAG_FLAG, tfidf)
@@ -112,9 +111,9 @@ df$testo <- iconv(df$testo,"UTF-8", "UTF-8",sub='')
 testo_corpus <- VCorpus(VectorSource(df$testo))
 testo_corpus_clean<-clean_corpus(testo_corpus)
 testo_dtm<- DocumentTermMatrix(testo_corpus_clean)
-testo_dict <- findFreqTerms(testo_dtm, lowfreq = 100)
+testo_dict <- findFreqTerms(testo_dtm)
 write.table(testo_dict, file="dizionario_scontrini.txt",row.names = F)
-trainIndex <- createDataPartition(df$flag, p = .95,
+trainIndex <- createDataPartition(df$flag, p = .75,
                                   list = FALSE,
                                   times = 1)
 
@@ -154,13 +153,13 @@ levels(df_meta_test$TARGET) <- c("neg", "pos")
 # al gruppo flag = 1 (scontrini 5 giorni prima di un guasto)
 
 df_pos <- df[which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "7 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "1 days",labels = F)))
 df_pos_bag <- as.list(split(df_pos,f = df_pos$BAG))
 #le righe con flag=1 sono le bag positive
 
 #bag "negative", separate in bags da 5 giorni
 df_neg <- df[-which(df$flag==1),] %>% 
-  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "7 days",labels = F)))
+  mutate("BAG"=factor(cut.Date(.$GIORNO, breaks = "1 days",labels = F)))
 df_neg_bag <- as.list(split(df_neg,f = df_neg$BAG))
 
 # assegno ad ogni elemento delle bag create il flag 1 o 0
@@ -220,8 +219,7 @@ fitControl <- trainControl(method = "repeatedcv",
                            repeats = 3,
                            verboseIter=T,
                            classProbs = TRUE,
-                           allowParallel = T,
-                           sampling = "down"
+                           allowParallel = T
                            # summaryFunction = twoClassSummary
 )
 
@@ -232,23 +230,23 @@ model_maker <- function(nome_modello, nome_algoritmo, nome_file){
           data=tm_training,
           method = nome_algoritmo,
           trControl = fitControl,
-          tuneLength=5,
+          tuneLength=3,
           # ntree = 5,
           # maxit=200,
-          preProcess=c("range")
+          preProcess=c("range","nzv")
           # metric="Kappa"
           # weights = model_weights
     )
   nome_modello <- model_object
   filename <- paste0(nome_file,"_",nome_algoritmo, ".rds")
-  saveRDS(model_object, here(filename))
+  saveRDS(model_object, here::here(filename))
   return(nome_modello)
   }
 
 modelli <- mapply(model_maker,
                   c("Neural Network","Bayesian Generalized Linear Model", "Naive Bayes", "Logistic Regression", "Support Vector Machine Linear" ), 
                   c("nnet","bayesglm","naive_bayes","glm","svmLinear3"),
-                  c("mm", "mm", "mm", "mm", "mm"),
+                  c("w", "w", "w", "w", "w"),
                   SIMPLIFY=FALSE)
 
 results <- resamples(modelli)
@@ -257,8 +255,8 @@ summary(results)
 bwplot(results)
 # dot plots of results
 dotplot(results)
-parallelplot(results)
-splom(results)
+parallelplot(results,auto.key = list(columns = 2))
+splom(results,auto.key = list(columns = 2))
 densityplot(results,pch = "|",auto.key = list(columns = 2),metrics=c("Sens", "Spec"))
 
 
@@ -287,16 +285,13 @@ mcc(preds = predictions, df_meta_test$TARGET)
 # saveRDS(nn, here("18_bayesglm.rds"))
 # saveRDS(nn, here("18_pcannet.rds"))
 # saveRDS(nn, here("18_svmlinear3.rds"))
-plot(nn)
+# plot(nn)
 
 #linux
 # modelli <- lapply(as.list(list.files(here(),"linux")),read_rds)
-modelli <- lapply(as.list(list.files(here(),"mm_*")),read_rds)
+modelli <- lapply(as.list(list.files(here(),"w*")),read_rds)
 l_predictions <- lapply(modelli, function(modello) predict(modello, df_meta_test))
-
-round(mcc(l_predictions[[1]],df_meta_test$TARGET),2)
-
-a <- confusionMatrix(l_predictions[[1]], df_meta_test$TARGET, "pos",mode="everything")
+matrici <- lapply(l_predictions, function(predizioni) confusionMatrix(predizioni, df_meta_test$TARGET, "pos", mode = "everything"))
 
 nomi_modelli <- lapply(modelli,
                        function(modello) data.frame("Model name"=modello[["modelInfo"]][["label"]])) %>% 
@@ -315,7 +310,8 @@ performance <- lapply(l_predictions,
                                     "Sensitivity" = round(cm$byClass[1], 2),
                                     "Specificity" = round(cm$byClass[2], 2),
                                     "Precision" = round(cm$byClass[5], 2),
-                                    "Recall" = round(cm$byClass[6], 2))
+                                    "MCC" = round(mcc(preds = predizioni,df_meta_test$TARGET),2)
+                                  )
                                 return(performance)}) %>% 
   do.call("rbind",.)
 
