@@ -96,6 +96,36 @@ L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre 
 
 \FloatBarrier
 
+### Gli altri presidi della ASST di Vimercate
+
+#### Carate
+
+L'Ospedale di Carate Brianza ha origini antiche: fondato nel 1200, era inizialmente un complesso che metteva a disposizione un medico per le cure e provvedeva al trasporto dei malati più gravi alla Ca' Granda di Milano.
+
+
+
+Solo agli inizi del '900 sorse la struttura ospedaliera vera e propria. I lavori iniziarono nel 1908 e si conclusero due anni dopo. L'ospedale era costituito da un plesso centrale a due piani e due padiglioni laterali.
+
+
+Nel corso dei decenni il nosocomio caratese ha subito costanti opere di miglioria ed ampliamento. Nel 1974 è iniziata la costruzione di un nuovo edificio e nel 1998 è stato inaugurato il reparto materno infantile. L'inaugurazione della nuova struttura si è svolta nel marzo del 2000.
+
+#### Seregno
+
+L'Ospedale di Seregno è costituito da tre padiglioni, edificati nel corso degli anni a partire dal 1863, quando Francesco Trabattoni finanziò la costruzione del primo settore. La facciata dell'edificio posta lungo Via Giuseppe Verdi fu innalzata per volere del benefattore, presidente di un'associazione, e per testamento pubblico.
+Nel 1874 si raggiunse il completamento dei lavori e l'Ospedale ottenne per Decreto Ministeriale il riconoscimento come Ente Morale.
+Il secondo blocco fu realizzato in seguito alla donazione di Luigi Ronzoni, che si impegnò a costituire un complesso chirurgico a proprie spese, prendendosi la responsabilità di mantenerlo. Lo spazio rimase allo stato originario fino al termine della seconda guerra mondiale, poi venne modificato in base a nuovi criteri di funzionalità. L'Amministrazione fece eliminare le vecchie corsie, sostituite con camere di degenza. L'ultimo padiglione risale, invece, agli anni 1952-'53.
+
+#### Giussano
+
+L'Ospedale "C. Borella" nasce, con atto pubblico del 20 ottobre 1891, per volontà di Rachele Rossari vedova Borella, come fondazione voluta per "gli ammalati poveri del Comune di Giussano e Briosco".
+
+
+Il 14 gennaio 1892 Umberto I, re d'Italia, ne decreta la costituzione ad Ente Morale.
+Durante la Prima Guerra Mondiale il presidio di Giussano dà ricovero e cura ai civili e ai militari colpiti dalla guerra, svolgendo funzioni di sanatorio.
+
+
+Negli anni più recenti la vecchia struttura è stata affiancata dal nuovo padiglione in cui vengono accolte le Unità di degenza, le sale operatorie ed i diversi Servizi ospedalieri, nell'ottica di rispondere adeguatamente alle esigenze concrete che si presentano con il passare degli anni.
+
 ## L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate
 
 ### Organizzazione e attivià della Struttura
