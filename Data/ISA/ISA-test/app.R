@@ -40,16 +40,16 @@ library(tm)
 library(magrittr)
 library(tabulizer)
 library(viridis)
-rds <- as.list(list.files(here::here(),"*mm_*"))
+rds <- as.list(list.files(here::here("ISA-test"),"mm_*"))
 modelli <<- lapply(rds,function(x) readRDS(here(x)))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
 
-#editing offline
-# source(file = here::here("ISA-test/morpher.r"))
+# editing offline
+source(file = here::here("ISA-test/morpher.r"))
 
 #per pubblicare
-source(file = here("morpher.r"))
+# source(file = here("morpher.r"))
 
 
 # MODULI ------------------------------------------------------------------

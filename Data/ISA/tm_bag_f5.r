@@ -113,7 +113,7 @@ testo_corpus_clean<-clean_corpus(testo_corpus)
 testo_dtm<- DocumentTermMatrix(testo_corpus_clean)
 testo_dict <- findFreqTerms(testo_dtm)
 write.table(testo_dict, file="dizionario_scontrini.txt",row.names = F)
-trainIndex <- createDataPartition(df$flag, p = .75,
+trainIndex <- createDataPartition(df$flag, p = .95,
                                   list = FALSE,
                                   times = 1)
 
@@ -209,7 +209,10 @@ levels(tm_testing$TARGET) <- c("neg", "pos")
 table(tm_training$TARGET)
 table(df_meta_test$TARGET)
 
-
+Index <- createDataPartition(tm_training$TARGET, p = .5,
+                                  list = FALSE,
+                                  times = 1)
+tm_training_50 <- tm_training[Index,]
 set.seed(1045)
 # library(doParallel)
 # cl <- makeCluster(16)
@@ -219,7 +222,8 @@ fitControl <- trainControl(method = "repeatedcv",
                            repeats = 3,
                            verboseIter=T,
                            classProbs = TRUE,
-                           allowParallel = T
+                           allowParallel = T,
+                           sampling = "down"
                            # summaryFunction = twoClassSummary
 )
 
@@ -227,7 +231,7 @@ model_maker <- function(nome_modello, nome_algoritmo, nome_file){
   
   model_object<-
     train(TARGET~., 
-          data=tm_training,
+          data=tm_training_50,
           method = nome_algoritmo,
           trControl = fitControl,
           tuneLength=3,

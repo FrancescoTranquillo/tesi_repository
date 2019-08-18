@@ -1,22 +1,31 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Rete territoriale ATS Brianza }}{3}{figure.1.1}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Organigramma aziendale }}{5}{figure.1.2}
-\contentsline {figure}{\numberline {1.3}{\ignorespaces Ospedale di Vimercate, ingresso }}{8}{figure.1.3}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Ospedale di Vimercate, vista aerea }}{10}{figure.1.4}
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Ruoli dei diversi attori coinvolti nella manutenzione programmata }}{19}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Documenti di riferimento relativi alla procedura di manutenzione programmata }}{19}{figure.2.2}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Ruoli dei diversi attori coinvolti nella manutenzione correttiva }}{23}{figure.2.3}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces documenti di riferimento }}{23}{figure.2.4}
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Numero di prestazioni ambulatoriali in ASST Vimercate per tipologia di esame. }}{28}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Modello di neurone artificiale.}}{36}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Topologia di rete neurale feedforward.}}{38}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Topologia di una LSTM }}{40}{figure.3.4}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Lava-Sterilizzatrice MEDIVATORS\textregistered ISA\textregistered }}{47}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Report stampato dalla lava-sterilizzatrice MEDIVATORS \textregistered ISA \textregistered }}{49}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Schema di lavoro }}{50}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Divisione degli scontrini nelle parti di Intro, Header e Footer }}{53}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Tabella ottenuta dalla conversione dei file testuali degli scontrini. }}{54}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Apprendimento ad istanza multipla. La prima borsa \IeC {\`e} associata ad una etichetta ``negativa'' in quanto al di fuori dell'intervallo di predizione dei 7 giorni. }}{56}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Valore dato dalla tf-idf per due termini generici $t_{1}$ e $t_{2}$, ipotizzando la stessa frequenza ($f_{d,t_{1,2}}=3$) all'interno di un generico documento $d$. $t_{1}$ compare in meno documenti del corpus ($n_{t_{1}}=4$), di conseguenza il suo peso risulta maggiore.}}{59}{figure.4.7}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Frequenza dei 40 termini pi\IeC {\`u} comuni nel corpus degli scontrini.}}{60}{figure.4.8}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Rete territoriale ATS Brianza }}{4}{figure.1.1}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Organigramma aziendale }}{6}{figure.1.2}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Ospedale di Vimercate, ingresso }}{10}{figure.1.3}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Ospedale di Vimercate, vista aerea }}{12}{figure.1.4}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Ruoli dei diversi attori coinvolti nella manutenzione programmata }}{26}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Documenti di riferimento relativi alla procedura di manutenzione programmata }}{27}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Ruoli dei diversi attori coinvolti nella manutenzione correttiva }}{31}{figure.2.3}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces documenti di riferimento }}{32}{figure.2.4}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Numero di prestazioni ambulatoriali in ASST Vimercate per tipologia di esame. }}{37}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Modello di neurone artificiale.}}{49}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Topologia di rete neurale feedforward.}}{51}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Topologia di una LSTM }}{54}{figure.3.4}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Lava-Sterilizzatrice MEDIVATORS\textregistered ISA\textregistered }}{63}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Report stampato dalla lava-sterilizzatrice MEDIVATORS \textregistered ISA \textregistered }}{65}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Schema di lavoro }}{66}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Divisione degli scontrini nelle parti di Intro, Header e Footer }}{70}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Tabella ottenuta dalla conversione dei file testuali degli scontrini. }}{71}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Apprendimento ad istanza multipla. La prima borsa \IeC {\`e} associata ad una etichetta ``negativa'' in quanto al di fuori dell'intervallo di predizione dei 7 giorni. }}{73}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Valore dato dalla tf-idf per due termini generici $t_{1}$ e $t_{2}$, ipotizzando la stessa frequenza ($f_{d,t_{1,2}}=3$) all'interno di un generico documento $d$. $t_{1}$ compare in meno documenti del corpus ($n_{t_{1}}=4$), di conseguenza il suo peso risulta maggiore.}}{78}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Frequenza dei 40 termini pi\IeC {\`u} comuni nel corpus degli scontrini.}}{79}{figure.4.8}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Sidebar, Date-picker e men\IeC {\`u} dei numeri seriali}}{91}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Overview }}{92}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Tabella modale interattiva con visualizzazione print-out }}{94}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Diagramma di Sankey dei cicli di lavaggio effettuati }}{95}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Allarmi per categoria di strumento }}{96}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Diagramma di Sankey relativo alla categoria Gastroscope. Le quantit\IeC {\`a} numeriche sono visualizzabili quando l'utente posiziona il cursore del mouse sui flussi del diagramma.}}{98}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Cicli eseguiti per categoria di strumento }}{99}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Tabella dei cicli regolari/irregolari per la categoria di strumento scelta }}{100}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Numero di cicli per operatore. Vista Totale }}{101}{figure.5.9}

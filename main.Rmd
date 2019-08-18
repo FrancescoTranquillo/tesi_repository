@@ -1,7 +1,7 @@
 ---
 bibliography: My Library.bib
 csl: style.csl
-fontsize: 10pt
+fontsize: 12pt
 geometry: asymmetric
 header-includes:
 - \usepackage[italian]{babel}
