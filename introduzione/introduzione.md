@@ -42,7 +42,7 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 
 Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, l'intero territorio della ATS Brianza e, in rosso, la rete territoriale della  ASST Vimercate. Le puntine indicano i presidi ospedalieri dei rispettivi distretti territoriali.
 
-![Rete territoriale ATS Brianza \label{mappaasst}](introduzione/img/ASST.pdf)
+![Rete territoriale ATS Brianza \label{mappaasst}](introduzione/img/asst.PNG)
 
 \FloatBarrier
 

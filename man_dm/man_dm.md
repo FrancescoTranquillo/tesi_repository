@@ -4,9 +4,26 @@ Nella prima parte di questo capitolo verranno introdotte le definizioni di "disp
 ## Definizioni
 
 ### Dispositivo medico
-Un dispositivo medico, secondo quanto stabilito dal decreto legislativo 24/02/1997 nr. 46, con la quale viene recepita, in Italia, la direttiva europea 93/42/EEC (MDD, medical device directive), viene definito come:
+Un dispositivo medico, secondo quanto stabilito dal decreto legislativo 25/01/2010 nr. 36, con la quale viene attuata, in Italia, la direttiva europea 2007/47/CE (che modifica la direttiva 93/42/CE), viene definito come:
 
-_"qualsiasi strumento, apparecchio, impianto, sostanza o altro prodotto, utilizzato da solo o in combinazione, compreso il software informatico impiegato per il corretto funzionamento, e destinato dal fabbricante ad essere impiegato nell'uomo a scopo di diagnosi, prevenzione, controllo, terapia o attenuazione di una malattia; di diagnosi, controllo, terapia, attenuazione o compensazione di una ferita o di un handicap; di studio, sostituzione o modifica dell'anatomia o di un processo fisiologico; di intervento sul concepimento, il quale prodotto non eserciti l'azione principale, nel o sul corpo umano, cui è destinato, con mezzi farmacologici o immunologici né mediante processo metabolico ma la cui funzione possa essere coadiuvata da tali mezzi.[@GazzettaUfficiale]"_
+_"qualunque strumento, apparecchio, impianto,
+software,  sostanza  o  altro  prodotto,  utilizzato  da  solo  o  in
+combinazione,  compresi  gli  accessori tra cui il software destinato
+dal  fabbricante  ad  essere  impiegato  specificamente con finalita'
+diagnostiche  e/o terapeutiche e necessario al corretto funzionamento
+del dispositivo stesso, destinato dal fabbricante ad essere impiegato
+sull'uomo a fini di:
+
+  1)  diagnosi, prevenzione, controllo, trattamento o attenuazione di
+malattie;
+  2)  diagnosi,  controllo, trattamento, attenuazione o compensazione
+di una ferita o di un handicap;
+  3)  studio,  sostituzione  o  modifica  dell'anatomia  oppure di un
+processo fisiologico;
+  4)  controllo  del  concepimento,  che non eserciti nel o sul corpo
+umano  l'azione  principale cui e' destinato con mezzi farmacologici,
+immunologici o mediante processi metabolici, ma la cui funzione possa
+essere coadiuvata da tali mezzi.[@GazzettaUfficiale]"_
 
 ### Manutenzione correttiva e preventiva
 La manutenzione correttiva viene definita come :
@@ -63,16 +80,10 @@ L'ultima modalità organizzativa citata, come preannunciato nel capitolo precede
 
 Prima di descrivere nel dettaglio le attività di manutenzione (correttiva e programmata) sopracitate, è necessario specificare le forme di presenza con le quali una tecnologia biomedica può essere presente in una struttura sanitaria, dalle quali dipende l'organizzazione della manutenzione per la tecnologia. Le forme di presenza sono così definite:
 
-
-_**DA RIVEDERE**_
-
-- Acquisto: l’apparecchiatura acquistata è di proprietà dell’azienda ospedaliera a seguito del pagamento corrisposto al fornitore.
-- Noleggio: l’apparecchiatura in noleggio non è di proprietà dell’azienda ospedaliera. L'azienda versa un canone di noleggio all’azienda fornitrice per il periodo di tempo in cui il dispositivo sarà effettivamente utilizzato.
-- Service: anche in questo caso l’apparecchiatura non è di proprietà dell’azienda ospedaliera. L’azienda fornitrice si impegna a mettere a disposizione all’azienda ospedaliera il dispositivo in questione a titolo gratuito per l’intero periodo di validità del contratto stipulato.
-- Comodato d’uso
-
-_**DA RIVEDERE**_
-
+- acquisto: l’apparecchiatura acquistata diventa di proprietà dell’azienda ospedaliera a seguito del pagamento corrisposto al fornitore, solitamente successivo all'aggiudicazione di una gara d'appalto;
+- donazione: l'apparecchiatura, previo atto ufficiale, diventa di proprietà dell'azienda ospedaliera, che non è enuta al pagamento di un corrispettivo economico poichè il dispositivo è fornito a titolo gratuito dalla ditta produttrice o da un ente terzo;
+- noleggio: l’apparecchiatura non è di proprietà dell’azienda ospedaliera, ma questa verserà un canone di noleggio allà azienda fornitrice per il periodo di tempo in cui il dispositivo sarà effettivamente utilizzato dall'azienda ospedaliera;
+- service: l’apparecchiatura non è di proprietà dell’azienda ospedaliera, che in questo caso non è tenuta al pagamento per il dispositivo in utilizzo; si stipula un contratto in cui, a fronte dell'acquisto, a prezzi concordati e per l'intera durata del contratto, di determinate quantità di materiale di consumo compatibili con l'apparecchio fornito, l'azienda fornitrice si impegna a mettere a disposizione all'azienda ospedaliera il dispositivo in questione a titolo gratuito per l'intero periodo di validità del contratto.
 
 Tutte queste forme di presenza sono caratterizzate da una gestione della manutenzione simile tra loro, direttamente collegata al periodo di garanzia della macchina. Fino allo scadere della garanzia, infatti, l'azienda fornitrice del macchinario è tenuta a comunicare al servizio di ingegneria clinica un calendario (il piano di manutenzione) in cui vengono specificate le date di intervento che seguiranno il collaudo del macchinario stesso. Nello specifico, in questo calendario sono presenti:
 

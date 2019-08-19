@@ -33,6 +33,8 @@ Tutte queste modalità vengono intese come "svolte secondo un programma, su rich
 
 Riassumendo, quindi, la manutenzione predittiva si configura come un caso "avanzato" di manutenzione preventiva, che mira alla minimizzazione dei tempi di fermo macchina grazie all'applicazione di analisi predittive, con lo scopo di predire, con una certa accuratezza, il tempo rimanente prima di un successivo "guasto" della macchina in esame.
 
+Rispetto alla manutenzione preventiva, la manutenzione predittiva non si affida a dei controlli effettuati secondo una scadenza regolare. Essa infatti si basa sull'analisi (quasi in real-time) di diverse grandezze di interesse tramite degli avanzati algoritmi di analisi per stimare una distribuzione di probabilità dalla quale dipende l'evento di guasto. In questo modo si mantiene monitorato, spesso tramite una flotta di sensori collegati tra loro e ad una stazione centrale, lo stato di salute dei componenti di un sistema. Quando la probabilità di guasto predetta supera una certa soglia, si interviene operando una manutenzione correttiva sul componente (o sui componenti) al fine di valutarne lo stato di degradazione ed eventualmente ripristinarne la funzionalità. Questo approccio, ovvero l'utilizzo e l'analisi dei dati per effettuare decisioni, è chiamato data-driven.
+
 ## Vantaggi della manutenzione predittiva
 I vantaggi di questa strategia di manutenzione possono essere sintetizzati in quattro punti fondamentali:
 

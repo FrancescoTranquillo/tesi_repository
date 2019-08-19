@@ -1,62 +1,61 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {section}{Sommario}{VII}{section*.4}
-\contentsline {section}{Abstract}{IX}{section*.5}
-\contentsline {section}{\numberline {1}Introduzione e contesto}{1}{section.1}
-\contentsline {subsection}{\numberline {1.1}Organizzazione della ASST Vimercate}{1}{subsection.1.1}
-\contentsline {subsubsection}{\numberline {1.1.1}Polo Ospedaliero}{2}{subsubsection.1.1.1}
-\contentsline {subsubsection}{\numberline {1.1.2}Rete Territoriale}{3}{subsubsection.1.1.2}
-\contentsline {subsubsection}{\numberline {1.1.3}La Missione Aziendale}{5}{subsubsection.1.1.3}
-\contentsline {subsubsection}{\numberline {1.1.4}Il presidio di Vimercate}{9}{subsubsection.1.1.4}
-\contentsline {subsubsection}{\numberline {1.1.5}Gli altri presidi della ASST di Vimercate}{13}{subsubsection.1.1.5}
-\contentsline {paragraph}{\numberline {1.1.5.1}Carate}{13}{paragraph.1.1.5.1}
-\contentsline {paragraph}{\numberline {1.1.5.2}Seregno}{13}{paragraph.1.1.5.2}
-\contentsline {paragraph}{\numberline {1.1.5.3}Giussano}{14}{paragraph.1.1.5.3}
-\contentsline {subsection}{\numberline {1.2}L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate}{15}{subsection.1.2}
-\contentsline {subsubsection}{\numberline {1.2.1}Organizzazione e attivi\IeC {\`a} della Struttura}{15}{subsubsection.1.2.1}
-\contentsline {subsubsection}{\numberline {1.2.2}L'attivit\IeC {\`a} di manutenzione }{17}{subsubsection.1.2.2}
-\contentsline {section}{\numberline {2}La manutenzione dei dispositivi medici}{18}{section.2}
-\contentsline {subsection}{\numberline {2.1}Definizioni}{18}{subsection.2.1}
-\contentsline {subsubsection}{\numberline {2.1.1}Dispositivo medico}{18}{subsubsection.2.1.1}
-\contentsline {subsubsection}{\numberline {2.1.2}Manutenzione correttiva e preventiva}{19}{subsubsection.2.1.2}
-\contentsline {subsection}{\numberline {2.2}Modalit\IeC {\`a} organizzative di manutenzione nelle strutture sanitarie}{21}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}La manutenzione del parco tecnologico in ASST Vimercate}{23}{subsection.2.3}
-\contentsline {subsubsection}{\numberline {2.3.1}Manutenzioni programmate}{25}{subsubsection.2.3.1}
-\contentsline {subsubsection}{\numberline {2.3.2}Manutenzioni correttive}{29}{subsubsection.2.3.2}
-\contentsline {subsection}{\numberline {2.4}Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva }{32}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}Esempio di manutenzione programmata: Ecografo }{32}{subsection.2.5}
-\contentsline {section}{\numberline {3}Industria 4.0: tra manutenzione predittiva e tecnologie digitali}{33}{section.3}
-\contentsline {subsection}{\numberline {3.1}Industria 4.0 e tecnologie emergenti}{33}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Manutenzione predittiva: il contesto normativo}{35}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Vantaggi della manutenzione predittiva}{36}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Metodi analitici di predizione }{40}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Classificazione }{43}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Regressione}{48}{subsubsection.3.4.2}
-\contentsline {subsubsection}{\numberline {3.4.3}Detezione di anomalie}{53}{subsubsection.3.4.3}
-\contentsline {section}{\numberline {4}La manutenzione predittiva presso Vimercate}{56}{section.4}
-\contentsline {subsection}{\numberline {4.1}Indagine preliminare}{56}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}L'analisi dei log macchina}{59}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered }{62}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Raccolta Dati}{67}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Conversione dei file di backup }{67}{subsection.4.5}
-\contentsline {subsection}{\numberline {4.6}Modellizzazione }{72}{subsection.4.6}
-\contentsline {subsubsection}{\numberline {4.6.1}Apprendimento ad istanza multipla }{72}{subsubsection.4.6.1}
-\contentsline {subsubsection}{\numberline {4.6.2}Text mining: creazione del Corpus}{74}{subsubsection.4.6.2}
-\contentsline {subsubsection}{\numberline {4.6.3}Text mining: Document Term Matrix}{76}{subsubsection.4.6.3}
-\contentsline {subsubsection}{\numberline {4.6.4}Fase di training e testing}{80}{subsubsection.4.6.4}
-\contentsline {subsection}{\numberline {4.7}Scelta del modello ottimale}{83}{subsection.4.7}
-\contentsline {section}{\numberline {5}``INSIGHT''}{87}{section.5}
-\contentsline {subsection}{\numberline {5.1}Sviluppo}{87}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Funzionamento e interfaccia utente}{89}{subsection.5.2}
-\contentsline {subsubsection}{\numberline {5.2.1}Sidebar}{89}{subsubsection.5.2.1}
-\contentsline {subsubsection}{\numberline {5.2.2}Overview }{92}{subsubsection.5.2.2}
-\contentsline {subsubsection}{\numberline {5.2.3}Allarmi}{96}{subsubsection.5.2.3}
-\contentsline {subsubsection}{\numberline {5.2.4}Strumentazione}{98}{subsubsection.5.2.4}
-\contentsline {subsubsection}{\numberline {5.2.5}Operatori}{100}{subsubsection.5.2.5}
-\contentsline {subsection}{\numberline {5.3}Software deployment}{102}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Criticit\IeC {\`a} incontrate}{103}{subsection.5.4}
-\contentsline {subsection}{\numberline {5.5}Feedback da parte del reparto di Endoscopia}{105}{subsection.5.5}
-\contentsline {section}{\numberline {6}Conclusioni}{107}{section.6}
-\contentsline {subsection}{\numberline {6.1}Risultati ottenuti}{107}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Sviluppi futuri}{109}{subsection.6.2}
-\contentsline {section}{Bibliografia}{111}{section*.6}
+\contentsline {section}{Sommario}{VII}{section*.4}% 
+\contentsline {section}{Abstract}{IX}{section*.5}% 
+\contentsline {section}{\numberline {1}Introduzione e contesto}{1}{section.1}% 
+\contentsline {subsection}{\numberline {1.1}Organizzazione della ASST Vimercate}{1}{subsection.1.1}% 
+\contentsline {subsubsection}{\numberline {1.1.1}Polo Ospedaliero}{2}{subsubsection.1.1.1}% 
+\contentsline {subsubsection}{\numberline {1.1.2}Rete Territoriale}{3}{subsubsection.1.1.2}% 
+\contentsline {subsubsection}{\numberline {1.1.3}La Missione Aziendale}{4}{subsubsection.1.1.3}% 
+\contentsline {subsubsection}{\numberline {1.1.4}Il presidio di Vimercate}{9}{subsubsection.1.1.4}% 
+\contentsline {subsubsection}{\numberline {1.1.5}Gli altri presidi della ASST di Vimercate}{13}{subsubsection.1.1.5}% 
+\contentsline {paragraph}{\numberline {1.1.5.1}Carate}{13}{paragraph.1.1.5.1}% 
+\contentsline {paragraph}{\numberline {1.1.5.2}Seregno}{13}{paragraph.1.1.5.2}% 
+\contentsline {paragraph}{\numberline {1.1.5.3}Giussano}{14}{paragraph.1.1.5.3}% 
+\contentsline {subsection}{\numberline {1.2}L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate}{15}{subsection.1.2}% 
+\contentsline {subsubsection}{\numberline {1.2.1}Organizzazione e attivi\IeC {\`a} della Struttura}{15}{subsubsection.1.2.1}% 
+\contentsline {subsubsection}{\numberline {1.2.2}L'attivit\IeC {\`a} di manutenzione }{17}{subsubsection.1.2.2}% 
+\contentsline {section}{\numberline {2}La manutenzione dei dispositivi medici}{18}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}Definizioni}{18}{subsection.2.1}% 
+\contentsline {subsubsection}{\numberline {2.1.1}Dispositivo medico}{18}{subsubsection.2.1.1}% 
+\contentsline {subsubsection}{\numberline {2.1.2}Manutenzione correttiva e preventiva}{19}{subsubsection.2.1.2}% 
+\contentsline {subsection}{\numberline {2.2}Modalit\IeC {\`a} organizzative di manutenzione nelle strutture sanitarie}{21}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.3}La manutenzione del parco tecnologico in ASST Vimercate}{23}{subsection.2.3}% 
+\contentsline {subsubsection}{\numberline {2.3.1}Manutenzioni programmate}{25}{subsubsection.2.3.1}% 
+\contentsline {subsubsection}{\numberline {2.3.2}Manutenzioni correttive}{30}{subsubsection.2.3.2}% 
+\contentsline {subsection}{\numberline {2.4}Esempio di manutenzione programmata: Ecografo }{33}{subsection.2.4}% 
+\contentsline {section}{\numberline {3}Industria 4.0: tra manutenzione predittiva e tecnologie digitali}{34}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Industria 4.0 e tecnologie emergenti}{34}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Manutenzione predittiva: il contesto normativo}{35}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}Vantaggi della manutenzione predittiva}{37}{subsection.3.3}% 
+\contentsline {subsection}{\numberline {3.4}Metodi analitici di predizione }{41}{subsection.3.4}% 
+\contentsline {subsubsection}{\numberline {3.4.1}Classificazione }{44}{subsubsection.3.4.1}% 
+\contentsline {subsubsection}{\numberline {3.4.2}Regressione}{49}{subsubsection.3.4.2}% 
+\contentsline {subsubsection}{\numberline {3.4.3}Detezione di anomalie}{54}{subsubsection.3.4.3}% 
+\contentsline {section}{\numberline {4}La manutenzione predittiva presso Vimercate}{57}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}Indagine preliminare}{57}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}L'analisi dei log macchina}{60}{subsection.4.2}% 
+\contentsline {subsection}{\numberline {4.3}Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered }{63}{subsection.4.3}% 
+\contentsline {subsection}{\numberline {4.4}Raccolta Dati}{67}{subsection.4.4}% 
+\contentsline {subsection}{\numberline {4.5}Conversione dei file di backup }{68}{subsection.4.5}% 
+\contentsline {subsection}{\numberline {4.6}Modellizzazione }{73}{subsection.4.6}% 
+\contentsline {subsubsection}{\numberline {4.6.1}Apprendimento ad istanza multipla }{73}{subsubsection.4.6.1}% 
+\contentsline {subsubsection}{\numberline {4.6.2}Text mining: creazione del Corpus}{75}{subsubsection.4.6.2}% 
+\contentsline {subsubsection}{\numberline {4.6.3}Text mining: Document Term Matrix}{77}{subsubsection.4.6.3}% 
+\contentsline {subsubsection}{\numberline {4.6.4}Fase di training e testing}{81}{subsubsection.4.6.4}% 
+\contentsline {subsection}{\numberline {4.7}Scelta del modello ottimale}{84}{subsection.4.7}% 
+\contentsline {section}{\numberline {5}``INSIGHT''}{88}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Sviluppo}{88}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Funzionamento e interfaccia utente}{90}{subsection.5.2}% 
+\contentsline {subsubsection}{\numberline {5.2.1}Sidebar}{90}{subsubsection.5.2.1}% 
+\contentsline {subsubsection}{\numberline {5.2.2}Overview }{93}{subsubsection.5.2.2}% 
+\contentsline {subsubsection}{\numberline {5.2.3}Allarmi}{96}{subsubsection.5.2.3}% 
+\contentsline {subsubsection}{\numberline {5.2.4}Strumentazione}{98}{subsubsection.5.2.4}% 
+\contentsline {subsubsection}{\numberline {5.2.5}Operatori}{100}{subsubsection.5.2.5}% 
+\contentsline {subsection}{\numberline {5.3}Software deployment}{102}{subsection.5.3}% 
+\contentsline {subsection}{\numberline {5.4}Criticit\IeC {\`a} incontrate}{103}{subsection.5.4}% 
+\contentsline {subsection}{\numberline {5.5}Feedback da parte del reparto di Endoscopia}{105}{subsection.5.5}% 
+\contentsline {section}{\numberline {6}Conclusioni}{107}{section.6}% 
+\contentsline {subsection}{\numberline {6.1}Risultati ottenuti}{107}{subsection.6.1}% 
+\contentsline {subsection}{\numberline {6.2}Sviluppi futuri}{108}{subsection.6.2}% 
+\contentsline {section}{Bibliografia}{111}{section*.6}% 
