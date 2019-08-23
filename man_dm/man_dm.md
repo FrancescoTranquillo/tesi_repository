@@ -6,24 +6,17 @@ Nella prima parte di questo capitolo verranno introdotte le definizioni di "disp
 ### Dispositivo medico
 Un dispositivo medico, secondo quanto stabilito dal decreto legislativo 25/01/2010 nr. 36, con la quale viene attuata, in Italia, la direttiva europea 2007/47/CE (che modifica la direttiva 93/42/CE), viene definito come:
 
-_"qualunque strumento, apparecchio, impianto,
-software,  sostanza  o  altro  prodotto,  utilizzato  da  solo  o  in
-combinazione,  compresi  gli  accessori tra cui il software destinato
-dal  fabbricante  ad  essere  impiegato  specificamente con finalita'
-diagnostiche  e/o terapeutiche e necessario al corretto funzionamento
-del dispositivo stesso, destinato dal fabbricante ad essere impiegato
-sull'uomo a fini di:
+_"qualunque strumento, apparecchio, impianto, software,  sostanza  o  altro  prodotto,  utilizzato  da  solo  o  in
+combinazione,  compresi  gli  accessori tra cui il software destinato dal  fabbricante  ad  essere  impiegato  specificamente con finalità diagnostiche e/o terapeutiche e necessario al corretto funzionamento del dispositivo stesso, destinato dal fabbricante ad essere impiegato sull'uomo a fini di:_
 
-  1)  diagnosi, prevenzione, controllo, trattamento o attenuazione di
-malattie;
-  2)  diagnosi,  controllo, trattamento, attenuazione o compensazione
-di una ferita o di un handicap;
-  3)  studio,  sostituzione  o  modifica  dell'anatomia  oppure di un
-processo fisiologico;
-  4)  controllo  del  concepimento,  che non eserciti nel o sul corpo
-umano  l'azione  principale cui e' destinato con mezzi farmacologici,
-immunologici o mediante processi metabolici, ma la cui funzione possa
-essere coadiuvata da tali mezzi.[@GazzettaUfficiale]"_
+\begin{enumerate}
+	{\itshape\item diagnosi, prevenzione, controllo, trattamento o attenuazione di malattie;}
+	{\itshape\item diagnosi,  controllo, trattamento, attenuazione o compensazione di una ferita o di un handicap;}
+	{\itshape\item studio,  sostituzione  o  modifica  dell'anatomia  oppure di un processo fisiologico;}
+  {\itshape\item controllo del concepimento,}
+\end{enumerate}
+
+*che non eserciti nel o sul corpo umano  l'azione  principale cui e' destinato con mezzi farmacologici, immunologici o mediante processi metabolici, ma la cui funzione possa essere coadiuvata da tali mezzi.[@GazzettaUfficiale]"*
 
 ### Manutenzione correttiva e preventiva
 La manutenzione correttiva viene definita come :
@@ -48,11 +41,11 @@ degradazione del funzionamento di un dispositivo medico."_(CEI 62-122 – UNI 99
 
 La programmabilità dell'intervento consente una maggiore organizzazione dei lavoro di manutenzione e garantisce la possibilità di gestire i fermo macchina nella maniera più conveniente. Vengono inoltre date le definizioni (CEI 62-122) di:
 
-* **Manutenzione preventiva di primo livello**: _"controlli preventivi che dovrebbero
+* **manutenzione preventiva di primo livello**: _"controlli preventivi che dovrebbero
 essere effettuati dall’operatore consistenti nell’ispezione a vista e, se applicabili in semplici prove
 utilizzando i dispositivi medici. Queste prove/controlli devono essere descritti nel manuale d’uso."_
 
-* **Manutenzione preventiva di secondo livello**: _"manutenzione preventiva effettuata da
+* **manutenzione preventiva di secondo livello**: _"manutenzione preventiva effettuata da
 personale qualificato, consistente nell’ispezione visiva, nelle misure dei parametri importanti ai fini
 della sicurezza, nell’accertamento che la manutenzione di primo livello sia stata correttamente
 eseguita, nonché nell’esecuzione dei programmi di manutenzione prescritti dal costruttore."_
@@ -95,7 +88,7 @@ Tutte queste forme di presenza sono caratterizzate da una gestione della manuten
 Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingengeri biomedici e tecnici informatici ed elettronici).
 
 ### Manutenzioni programmate
-Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista. Un esempio di procedura utilizzata dal Global per condurre una manutenzione programmata viene riportata nel capitolo \ref{es_prog}
+Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista.
 
 Di seguito si riporta quanto presente nella Procedura Operativa Aziendale dal titolo "Manutenzione programmata" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni programmate di apparecchiature elettromedicali (indicate d'ora in avanti con la lettera "a") nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
 
@@ -157,6 +150,41 @@ Il coinvolgimento delle diverse strutture operative nella manutenzione correttiv
 ![documenti di riferimento \label{diz_corr}](man_dm/img/diz_correttiva.PNG)
 
 \FloatBarrier
-## Esempio di manutenzione correttiva: Risonanza magnetica Philips Achieva \label {es_corr}
+## Esempio di manutenzione correttiva: Risonanza Magnetica Philips Achieva \label {es_corr}
 
-## Esempio di manutenzione programmata: Ecografo \label{es_prog}
+### Risonanza Magnetica (RM)
+
+Il principio di base che sta alla base dell'imaging tramite RM è lo sfruttamento delle proprietà magnetiche del nucleo di atomi soggetti a campi magnetici per ottenere informazioni fisiche e chimiche sulle molecole: il funzionamento si basa sull'eccitazione dei protoni degli atomi di idrogeno contenuti nel corpo umano; il segnale emesso dai protoni consente di ottenere una mappa della loro distribuzione e dei loro comportamento, a seconda dell'ambiente in cui si trovano (liquido, semiliquido, solido, ecc.).
+
+Tramite questo principio fisico, attraverso la RM si possono produrre immagini di tipo tomografico digitale utilizzando campi magnetici statici e onde elettromagnetiche a radiofrequenza, quindi senza utilizzare radiazioni ionizzanti; viene utilizzata per produrre immagini ad alta definizione dell’interno del corpo umano su piani sagittali, coronale o trasversali, al fine di ottenere informazioni morfologiche, metaboliche, funzionali e molecolari, non accessibili tramite altre tecniche diagnostiche.
+
+Una RM convenzionale è costituita da un magnete cilindrico cavo, attraverso il quale è fatto
+passare il paziente, e comprende 4 componenti fondamentali:
+
+1. **magnete**: elemento principale dell’apparecchiatura e la sua potenza, che viene espressa in Tesla, influenza in maniera proporzionale il numero di atomi di idrogeno
+che rispondono alla stimolazione con gli impulsi di radiofrequenza. I più recenti magneti sono progettati in modo tale da generare campi magnetici molto stabili caratterizzati da alta intensità di campo tramite la proprietà fisica della superconduzione. I magneti di questo tipo sono costruiti utilizzando leghe di niobio-titanio che raggiungono lo stato sopracitato tramite un raffreddamento ad elio liquido posto ad una temperatura prossima a quella dello zero assoluto.
+
+2. **bobine di gradiente**: hanno lo scopo di modificare l’intensità del campo magnetico lungo i tre assi spaziali, tramite cui è resa possibile la codifica spaziale del segnale proveniente dal corpo umano.
+
+3. **canali di ricezione**: influenzano direttamente la qualità dell’immagine e la loro
+numerosità migliora pertanto il rapporto segnale rumore.
+
+4. **sequenze**: per sequenze si intendono una serie di accensioni preordinate dei gradienti, legate all’invio di impulsi di radiofrequenza: sono fondamentali per l’eccitazione selettiva dei tessuti nelle loro componenti molecolari, tramite cui si ottengono immagini in cui sia in risalto la componente solida o la componente liquida dei
+tessuti. A una serie base di sequenze presenti in tutte le apparecchiature, si aggiungono altre tipologie, in relazione agli specifici usi clinici di cui si necessità (RM cardio; RM
+mammaria; RM angio; RM neuro avanzato; RM funzionale; Diffusion tensor-imaging; RM perfusion; Spettroscopia.)
+
+### L'intervento di manutenzione correttiva alla Philips Achieva
+
+Durante l'attività di tirocinio, si è assistito a un intervento di manutenzione correttiva ad una delle due risonanze magnetiche presenti nell'ospedale nuovo di Vimercate. Le risonanze sono entrambe di marca Philips ed entrambe dotate di magnete a tipologia superconduttore, ma con magneti di diversa potenza (una da 3 Tesla e una da 1.5 Tesla). Quest'ultima (modello Philips Achieva, figura \ref{achieva}), durante le prime settimane di marzo, è stata sottoposta a diversi interventi di manutenzione correttiva da una squadra di tecnici specializzati (field engineers) di Philips, essendo la RM ancora nel periodo di garanzia. Il reparto di radiologia ha infatti segnalato al servizio di manutenzione, tramite richiesta di intervento sul software interno Coswin8i, alcuni problemi relativi alla qualità delle immagini prodotte dalla risonanza su determinate sequenze (in particolare RM toracica e RM neuro) e utilizzando determinate bobine di ricezione. In particolare, le immagini prodotte durante questa tipologia di esami risultavano caratterizzate da un'alta percentuale di rumore, tale da renderle inutilizzabili ai fini diagnostici.
+
+![Risonanza Magnetica Philips Achieva da 1.5 Tesla \label{achieva}](man_dm/img/achieva.jpg){width=60%}
+
+È stato rilevante osservare, per il lavoro della presente tesi, le modalità con cui la squadra di tecnici ha affrontato l'intervento correttivo. Dopo un primo e routinario controllo sullo stato di salute di alcuni "spinotti" di collegamento tra le bobine e il magnete principale della RM, chiamati Quick Change Head, i tecnici hanno provveduto, seguendo un loro protocollo, ad effettuare dei test sulla qualità dell'isolamento del locale RM durante l'esecuzione di determinate sequenze.
+
+![Sala controlli adiacente alla Philips Achieva \label{salacontrolli}](man_dm/img/achieva2.jpg){width=70%}
+
+In questa fase, i tecnici hanno avuto la necessità di prelevare i log macchina della RM dalle postazioni della sala di controllo adiacente alla stanza della Philips Achieva (figura \ref{salacontrolli} ). I log macchina, come si vedrà in modo dettagliato nel paragrafo \ref{logs}, sono dei file, spesso testuali, in cui vengono salvate le registrazioni delle operazioni effettuate, da un utente o automaticamente da un software, man mano che vengono eseguite dal sistema o applicazione. È importante sottolineare che l'accesso a questi file di sistema è riservato solamente a personale Philips. Una volta estratti alcuni log campione (riferiti a pochi giorni di attività), i tecnici hanno inserito questi file in un software proprietario in grado di analizzarli ed evidenziare statistiche relative ad errori o messaggi di allarme che la macchina ha generato.
+
+È altresì importante evidenziare il fatto che, senza il software sopracitato, un'eventuale analisi di questi log macchina effettuata da personale non addetto è difficilmente attuabile. I log infatti, sebbene non siano file protetti da crittografia, sono di difficile interpretazione se analizzati da terzi. Il linguaggio, i nomi dati ai vari componenti della RM riportati nei log e il significato di molte variabili numeriche registrate, non apportano alcun contenuto informativo se non si ha una conoscenza avanzata a livello informatico e meccanico del sistema in esame e di come lo stesso operi per registrare questi dati.
+
+Di queste considerazioni si parlerà anche nel capitolo \ref{vim_pred}, capitolo dedicato alla descrizione del lavoro di ricerca effettuato per individuare una famiglia di macchinari adatti ad essere analizzati per studiare l'applicabilità di una strategia di manutenzione predittiva.

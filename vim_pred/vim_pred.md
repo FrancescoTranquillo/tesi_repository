@@ -3,7 +3,7 @@ output:
   html_document: default
   pdf_document: default
 ---
-# La manutenzione predittiva presso Vimercate
+# La manutenzione predittiva presso Vimercate \label {vim_pred}
 
 In questo capitolo si parlerà dell'applicabilità di una strategia di manutenzione predittiva nell'ambito dell'Ospedale di Vimercate. In questi termini, verrà indicata innanzitutto la modalità di ricerca intrapresa al fine di identificare la classe di dispositivi di maggiore interesse e quella più adatta per essere analizzata con l'obiettivo di progettare e applicare un programma di manutenzione predittiva.
 Si indagheranno quindi i requisiti necessari per l'applicabilità di questa tipologia di manutenzione, andando poi a valutare il parco macchine presente in ospedale dal punto di vista dell'applicabilità stessa. Nella seconda metà del capitolo verrà riportato il risultato della ricerca preliminare e si evidenzieranno, oltre ai risultati ottenuti dal punto di vista di algoritmi sviluppati, le criticità e le limitazioni incontrate.
@@ -18,20 +18,20 @@ Come visto nel capitolo precedente, la previsione dell'insorgenza di un guasto i
 
 Per l'individuazione di una classe di dispositivi adeguata per essere trattata e analizzata nell'ottica di manutenzione predittiva, ci si è avvalsi della consultazione sia del Global Service, sia del personale del SIC. I risultati di queste consultazioni possono essere sintetizzati nei seguenti punti:
 
-- L'interesse comune rispetto all'applicazione di una strategia di manutenzione predittiva è indirizzato verso la minimizzazione del fermo macchina in tutte quelle apparecchiature elettromedicali considerati "ad alta incidenza", ovvero il cui guasto comporta importanti rallentamenti nell'erogazione dei servizi sanitari e l'applicazione clinica per il quale sono utilizzati interessa una grande parte del bacino di utenza della popolazione. Fanno parte di questa famiglia: TAC, Risonanze magnetiche, Mammografi, ecografi, defibrillatori etc.(**esiste una definizione specifica?**)
+- L'interesse comune rispetto all'applicazione di una strategia di manutenzione predittiva è indirizzato verso la minimizzazione del fermo macchina in tutte quelle apparecchiature elettromedicali considerati "ad alta incidenza", ovvero il cui guasto comporta importanti rallentamenti nell'erogazione dei servizi sanitari e l'applicazione clinica per il quale sono utilizzati interessa una grande parte del bacino di utenza della popolazione. Fanno parte di questa famiglia: TAC, Risonanze Magnetiche, Mammografi, ecografi, defibrillatori etc.
 - Esiste, nel software attualmente utilizzato per la gestione delle apparecchiature elettromedicali (Coswin8i), una funzionalità che permetterebbe di monitorare le prestazioni di alcuni dispositivi per effettuare una sorta di manutenzione predittiva, ma quest'ultima risulta inutilizzata e la documentazione relativa risulta del tutto assente.
 - Esistono molti dispositivi, in ospedale, che hanno una connessione internet per il collegamento alla rete dell'ospedale, ma nessuno di questi comunica dati fisici utili ad un'analisi di tipo predittivo sullo stato di salute del macchinario. Questa è la maggiore criticità incontrata.
 - L'eventuale modifica di un apparecchio elettromedicale, anche se di proprietà dell'ospedale, al fine dell'inserimento di sensori utili alla raccolta di dati fisici (come un semplice termometro) risulterebbe in una invalidazione della certificazione CE, garanzia della sicurezza del dispositivo, innalzando il rischio (sia per il paziente, sia per l'operatore) relativo all'utilizzazione dello stesso.
 
 Si ha quindi una situazione generale dove risulta difficile, per l'Azienda Ospedaliera in generale e per Ingegneria Clinica in particolare, pensare di poter applicare una metodologia di manutenzione così avanzata. Tuttavia, il sistema informativo presente in Ospedale ha, come si vedrà più avanti nel capitolo \ref{insight} relativo allo sviluppo del software , tutti i requisiti per poter, in futuro, ospitare un sistema di manutenzione di questo tipo.
 
-## L'analisi dei log macchina
+## L'analisi dei log macchina \label{logs}
 
 A fronte della situazione delineata si è cercato di sfruttare sistemi e risorse attualmente disponibili in Azienda, per ottenere dei risultati che, sebbene non paragonabili alla "manutenzione predittiva" eseguita in altri settori (come quello manifatturiero), dimostrano l'esistenza di possibilità pratiche, per l'Ospedale, di indirizzarsi su un percorso di profondo sviluppo tecnologico dove la digitalizzazione, la data engineering, l'IoT e applicazioni di intelligenza artificiale hanno e avranno un ruolo predominante.
 
-In questo contesto, è necessario fare riferimento alle variabili fisiche precedentemente descritte e ai sensori responsabili delle loro misurazioni. In realtà, tutte le variabili citate possono essere soggette a monitoraggio automatico "interno" in quei macchinari dotati di un sistema computerizzato. Queste e molte altre letture ed analisi sui processi svolti vengono condotte dai computer, installati all'interno dei macchinari, in modo automatico e a frequenza variabile (impostata dal produttore) per poi essere salvate in file di memoria chiamati _"log"_ (o più comunemente log macchina). I log macchina, nei sistemi progettati per produrli, rappresentano un sistema di autodiagnostica utile ai fini del controllo del normale funzionamento del dispositivo da parte del personale tecnico. Si pensi infatti al caso di manutenzione correttiva effettuata sulla risonanza magnetica Philips Achieva (d'ora in avanti chiamata Achieva per brevità) descritto nel capitolo \ref{es_prog}. In quel frangente, il personale tecnico di Philips ha estratto e caricato i log macchina generati dalla Achieva in un software proprietario in grado di riassumere i log e di fornire al tecnico un rapido riassunto di tutti gli eventi (interni) che hanno interessato la macchina.
+In questo contesto, è necessario fare riferimento alle variabili fisiche precedentemente descritte e ai sensori responsabili delle loro misurazioni. In realtà, tutte le variabili citate possono essere soggette a monitoraggio automatico "interno" in quei macchinari dotati di un sistema computerizzato. Queste e molte altre letture ed analisi sui processi svolti vengono condotte dai computer, installati all'interno dei macchinari, in modo automatico e a frequenza variabile (impostata dal produttore) per poi essere salvate in file di memoria chiamati _"log"_ (o più comunemente log macchina). I log macchina, nei sistemi progettati per produrli, rappresentano un sistema di autodiagnostica utile ai fini del controllo del normale funzionamento del dispositivo da parte del personale tecnico. Si pensi infatti al caso di manutenzione correttiva effettuata sulla risonanza magnetica Philips Achieva (d'ora in avanti chiamata Achieva per brevità) descritto nel capitolo \ref{es_corr}. In quel frangente, il personale tecnico di Philips ha estratto e caricato i log macchina generati dalla Achieva in un software proprietario in grado di riassumere i log e di fornire al tecnico un rapido riassunto di tutti gli eventi (interni) che hanno interessato la macchina.
 
-La ricerca si è quindi indirizzata, a fronte delle criticità incontrate, nell'analisi dei log macchina al fine di costruire dei modelli predittivi sullo stato di salute del dispositivo che li ha generati.
+La ricerca si è indirizzata, a fronte delle criticità incontrate, nell'analisi dei log macchina al fine di costruire dei modelli predittivi sullo stato di salute del dispositivo che li ha generati.
 
 In particolare, per l'attività si è fatto principalmente riferimento allo studio condotto da Sipos et al. [@siposLogbasedPredictiveMaintenance2014] nel quale ci si è avvalsi di diversi Terabytes di log macchina estratti da diverse migliaia di risonanze magnetiche prodotte da Siemens \textregistered. La quantità di dati a disposizione, come si vedrà, rappresenta una dei principali requisiti per la modellizzazione di algoritmi di machine learning perchè, dalla stessa, dipendono fortemente le capacità di apprendimento del modello che si vuole sviluppare.
 
@@ -43,49 +43,47 @@ In questo studio, gli autori evidenziano tre principali problematiche relativo a
 
 Elemento imprescindibile per poter effettuare delle analisi predittive è la disponibilità di dati relativi ad interventi di manutenzione passati effettuati sulla macchina in esame. Grazie a questi, infatti, è possibile correlare ogni guasto avvenuto (noto) con il corrispondente insieme di log macchina.
 
-Partendo da questi presupposti si è cercato, in un primo tentativo, di utilizzare i log macchina derivanti dalla Achieva estratti in concomitanza con l'intervento di manutenzione correttiva descritto nel capitolo (REF). Tuttavia, i dati a disposizione estratti facevano riferimento a pochi giorni di attività della macchina, insufficienti ad essere utilizzati per condurre un'analisi che desse buoni risultati. Si è presentata quindi la necessità di reperire dalla macchina stessa altri log. Tuttavia sono state incontrate diverse difficoltà legate alla modalità di ottenimento di tali dati. Sinteticamente, per accedere ai log macchina è necessario, infatti, accedere dal terminale della risonanza magnetica tramite le credenziali di accesso in dotazione esclusiva ai tecnici e ai field engineers autorizzati (di Philips).
+Partendo da questi presupposti si è cercato, in un primo tentativo, di utilizzare i log macchina derivanti dalla Achieva estratti in concomitanza con l'intervento di manutenzione correttiva descritto nel capitolo \ref{es_corr}. Tuttavia, i dati a disposizione estratti facevano riferimento a pochi giorni di attività della macchina, insufficienti ad essere utilizzati per condurre un'analisi che desse buoni risultati. Si è presentata quindi la necessità di reperire dalla macchina stessa altri log. Tuttavia, come evidenziato capitolo sopracitato, le modalità di acquisizione dei log non hanno reso possibile la copia e l'utilizzo di altri dati.
 
-## Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered
+## Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered \label{ivamed}
 
 \FloatBarrier
 
 A seguito di tali limitazioni, si è spostata l'attenzione su un sistema più semplice rispetto ad una risonanza magnetica, ma caratterizzata da una modalità di generazione e salvataggio di log macchina utili ai fini predittivi. Su suggerimento di uno degli ingegneri biomedici del SIC, è stata individuata una famiglia di dispositivi medici chiamate lavaendoscopi, su cui poi è stato sviluppato un software di monitoraggio comprensivo di un modulo di manutenzione predittiva. In figura \ref{isa} è riportata una fotografia del dispositivo in questione.
 
-![Lava-Sterilizzatrice MEDIVATORS\textregistered ISA\textregistered \label{isa}](vim_pred/img/isa.jpg){width="50%"}
+![Lava-Sterilizzatrice MEDIVATORS\textregistered ISA\textregistered \label{isa}](vim_pred/img/isa.jpg){width=36%}
 
 Nello specifico, la Lava-Sterilizzatrice MEDIVATORS® ISA® è un dispositivo medico progettato per il lavaggio e la sterilizzazione chimica a freddo degli endoscopi rigidi e flessibili e degli accessori endoscopici.
 
 In sintesi, il processo di utilizzo della macchina consiste in diverse fasi:
 
-1. Accensione della macchina
-2. Carico endoscopi nella vasca
-3. Chiusura della vasca e selezione del ciclo di riprocessazione desiderato
-4. Prelievo dell'endoscopio dalla vasca
+1. accensione della macchina;
+2. carico endoscopi nella vasca;
+3. chiusura della vasca e selezione del ciclo di riprocessazione desiderato;
+4. prelievo dell'endoscopio dalla vasca;
 
 In concomitanza con la fine di un ciclo di lavaggio, il dispositivo registra nel proprio hard disk tutte le informazioni relative a tutti ai cicli eseguiti creando un archivio elettronico consultabile in qualsiasi momento. Inoltre, è dotato di una stampante integrata che, al termine di ogni ciclo, stampa in automatico un report del ciclo. Il report è un documento essenziale per la convalida del ciclo e deve essere sempre conservato.
 
 L'attenzione è stata posta proprio su questi report di stampa chiamati per brevità "scontrini". In figura \ref{scontrino} viene riportato un esempio di scontrino in formato digitale.
 
-![Report stampato dalla lava-sterilizzatrice MEDIVATORS \textregistered ISA \textregistered \label{scontrino}](vim_pred/img/scont.PNG){height="70%"}
+![Report stampato dalla lava-sterilizzatrice MEDIVATORS \textregistered ISA \textregistered \label{scontrino}](vim_pred/img/scont.PNG){width=40%}
 
 Sempre in riferimento alla figura \ref{scontrino}, i parametri inseriti in stampa sono:
 
-- Data ed ora di inizio ciclo
-- Dati strumento (categoria-s/n)
-- Medico (opzionale)
-- Paziente (opzionale)
-- Tipo di ciclo eseguito
-- Numero progressivo del ciclo
-- Fasi del ciclo con relativi tempi di contatto e temperatura
-- Esito del ciclo
+- data ed ora di inizio ciclo;
+- dati strumento (categoria-s/n);
+- medico (opzionale);
+- paziente (opzionale);
+- tipo di ciclo eseguito;
+- numero progressivo del ciclo;
+- fasi del ciclo con relativi tempi di contatto e temperatura;
+- esito del ciclo;
 
 Gli scontrini rappresentano una buona fonte di dati per quanto riguarda lo stato di funzionamentio della macchina in quanto, come visto, essi riportano sia gli attori coinvolti nello specifico ciclo di lavaggio, sia gli eventuali allarmi registrati durante il lavaggio. Essi riportano inoltre variabili numeriche quali temperatura e tempi delle varie fasi del ciclo selezionato.
 
 Con questi dati a disposizione si è indagata quindi la possibilità di prevedere, con un anticipo di 7 giorni, l'insorgenza di guasti tali da indurre il personale del reparto a richiedere un intervento di manutenzione correttiva al Global Service.
 
-L'attività svolta si è articolata in diverse fasi, descritte nel dettaglio nei successivi paragrafi. Lo schema delle operazioni eseguite è riassunto nella figura \ref{schema}.
-
-![Schema di lavoro \label{schema}](vim_pred/img/schema.pdf)
+L'attività svolta si è articolata in diverse fasi, descritte nel dettaglio nei successivi paragrafi.
 
 \FloatBarrier
 
@@ -117,11 +115,12 @@ Con operazioni simili a quelle descritte, ovvero analizzando il testo degli scon
 È importante sottolineare il fatto che, tra le feature selezionate, ne è stata creata una che contenesse il testo dello scontrino "pulito" dai caratteri di punteggiatura e caratteri non alfanumerici. Il motivo di questa scelta sta nella decisione di sfruttare la natura "testuale" di questi log macchina utilizzando tecniche di text mining per costruire dei modelli predittivi basandosi esclusivamente sulle parole contenute nei diversi file testuali, andando a sfruttare quindi la struttura originaria del log macchina.
 
 ## Modellizzazione \label{modeling}
-La fase di modellizzazione è stata sicuramente quella in cui sono state incontrate più difficoltà, principalmente dovute, come si vedrà, ad un non sufficiente numero di dati a disposizione. Innanzitutto, è stato necessario estrarre dal software di manutenzione "Coswin8" utilizzato in ospedale, lo storico delle manutenzioni effettuate sulla macchina da cui sono stati estratti gli scontrini. Avendo a disposizione questi ultimi dati, si sono potuti incrociare le date presenti sugli scontrini con quelle riportate dal servizio di manutenzione, così da avere la possibilità di studiare gli scontrini corrispondenti a 7 giorni precedenti all'effettiva chiamata al Global Service (d'ora in avanti chiamati per brevità "giorni predittivi"). Si è cercato quindi, nel seguente lavoro, di correlare i guasti della lavaendoscopi alle informazioni contenute negli scontrini dei giorni predittivi, al fine di ottenere un modello di predizione che calcolasse la probabilità di guasto della lavaendoscopi sulla base dello storico dato dai 3 anni di informazioni a disposizione.
+La fase di modellizzazione è stata sicuramente quella in cui sono state incontrate più difficoltà, principalmente dovute, come si vedrà, ad un non sufficiente numero di dati a disposizione. Innanzitutto, è stato necessario estrarre dal software di manutenzione "Coswin8i" utilizzato in ospedale, lo storico delle manutenzioni effettuate sulla macchina da cui sono stati estratti gli scontrini. Sono state, quindi, incrociate le date presenti sugli scontrini con quelle riportate dal servizio di manutenzione, così da avere la possibilità di studiare gli scontrini corrispondenti a 7 giorni precedenti all'effettiva chiamata al Global Service (d'ora in avanti chiamati per brevità "giorni predittivi"). Tentativo di questo lavoro è stato quello di correlare i guasti della lavaendoscopi alle informazioni contenute negli scontrini dei giorni predittivi, al fine di ottenere un modello di predizione in grado di calcolare probabilità di guasto della lavaendoscopi sulla base utilizzando, per l'apprendimento del modello, i file di backup corrispondenti a 3 anni di attività raccolti dalla macchina stessa. Questo
+
 
 ### Apprendimento ad istanza multipla \label{mil}
 
-Per costruire tale modello è stato prima indagato l'approccio di apprendimento migliore, sulla base di quanto descritto nel capitolo \ref{digital}, ed è stato scelto, sulla base di un precedente lavoro trovato in letteratura  , una tipologia di apprendimento supervisionato chiamato "Apprendimento ad istanza multipla" (Multiple instance learning, MIL). In questa metodologia, il classificatore non riceve una serie di esempi indipendenti $x_{i}$ caratterizzati da una etichetta (l'output desiderato $t_{i}$) come avviene nel classico apprendimento supervisionato, ma riceve un insieme di "borse" o "contenitori" a cui viene associata un'etichetta che rappresenta l'output che dovrà imparare a produrre. Ogni borsa può contenere più istanze (che in questo caso sono gli scontrini di un giorno di attività) e, nello specifico, una borsa viene etichettata come "positiva" se contiene al suo interno scontrini appartenenti ad un "giorno predittivo", mentre invece viene etichettata come "negativa" altrimenti. Di conseguenza, il classificatore desiderato è stato progettato per classificare una borsa di scontrini come positiva o negativa, a seconda delle informazioni contenute negli scontrini di un singolo giorno. Uno schema riassuntivo dell'approccio descritto è apprezzabile in figura \ref{mil-schema}.
+Per costruire tale modello è stato prima indagato l'approccio di apprendimento migliore, in riferimento al capitolo \ref{digital}, ed è stato scelto, sulla base di un precedente lavoro trovato in letteratura, una tipologia di apprendimento supervisionato chiamato "Apprendimento ad Istanza Multipla" (Multiple instance learning, MIL). In questa metodologia, il classificatore non riceve una serie di esempi indipendenti $x_{i}$ caratterizzati da una etichetta (l'output desiderato $t_{i}$) come avviene nel classico apprendimento supervisionato, ma riceve un insieme di "borse" o "contenitori" a cui viene associata un'etichetta che rappresenta l'output che dovrà imparare a produrre. Ogni "borsa" può contenere più istanze, corrispondenti in questo caso agli scontrini di un giorno di attività, e, nello specifico, una "borsa" viene etichettata come "positiva" se contiene al suo interno scontrini appartenenti ad un "giorno predittivo" e "negativa" altrimenti. Di conseguenza, il classificatore desiderato è stato progettato per classificare una borsa di scontrini come positiva o negativa, a seconda delle informazioni contenute negli scontrini di un singolo giorno. Uno schema riassuntivo dell'approccio descritto è riportato in figura \ref{mil-schema}.
 
 \FloatBarrier
 
@@ -129,11 +128,26 @@ Per costruire tale modello è stato prima indagato l'approccio di apprendimento 
 
 \FloatBarrier
 
-Successivamente al raggruppamento degli scontrini in borse, si è cercato di risolvere questo problema di classificazione riducendo la complessità generale passando da un approccio MIL a quello più standard di apprendimento supervisionato. Questo è stato reso possibile grazie alla trasformazione di tutti gli scontrini presenti in una singola borsa in un unico "metascontrino" (il cui nome specifico è quello di "metaesempio"), ovvero una osservazione unica generata tramite la sintetizzazione delle informazioni presenti in tutti gli scontrini della stessa borsa. Così facendo, quindi, non si hanno più degli insiemi di scontrini contenenti diverse osservazioni, ma, allineandosi al più tradizionale approccio di apprendimento supervisionato, una serie di osservazioni (i metascontrini) caratterizzate da una etichetta. Quest'ultima struttura risultante (associabile ad un dataframe di righe e colonne) risulta più facile da gestire per quanto riguarda la modellizzazione di un algoritmo di predizione.
+Successivamente al raggruppamento degli scontrini in "borse", si è cercato di risolvere il problema di classificazione riducendo la complessità generale passando cioè dall'approccio MIL a quello più standard di apprendimento supervisionato. Questo è stato reso possibile grazie alla trasformazione di tutti gli scontrini presenti in una singola borsa in un unico "metascontrino", detto specificatamente "metaesempio", consistente un'unica osservazione generata tramite la sintetizzazione delle informazioni presenti in tutti gli scontrini della stessa borsa. Così facendo non si hanno più degli insiemi di scontrini contenenti diverse osservazioni, ma, allineandosi al più tradizionale approccio di apprendimento supervisionato, si ha una serie di osservazioni (i metascontrini) caratterizzate da un'etichetta unica. Quest'ultima struttura così ottenuta, associabile ad una tabella, risulta più semplice da gestire per quanto riguarda la modellizzazione di un algoritmo di predizione in quanto le librerie utilizzate per l'apprendimento dei modelli di predizione richiedono spesso una struttura dati di questo tipo.
 
 ### Text mining: creazione del Corpus
 
-Per creare questi "metascontrini" sono state utilizzate diverse tecniche di text mining sfruttando le capacità della libreria R chiamata "tm", diminutivo di "text mining". A partire dalla feature chiamata "testo", creata dalla funzione descritta nel paragrafo \ref{preprocessing}, è stato infatti creato un "corpus" ovvero una collezione di documenti. In particolare, convertendo tutti gli scontrini presenti, il corpus ottenuto è un oggetto composto da 5441 documenti, ognuno dei quali composto da diversi caratteri. Esplorando i primi 5 documenti del corpus, per esempio, si ottiene:
+Per creare questi "metascontrini" sono state utilizzate diverse tecniche di Text Mining sfruttando le capacità della libreria R chiamata "tm", diminutivo, appuntoi, di "text mining".
+
+Il Text Mining consiste nell'applicazione di tecniche di Data Mining a testi non strutturati (agenzie stampa, pagine web, e-mail, ecc.) e più in generale a qualsiasi "corpus" di documenti, allo scopo di:
+
+- individuare i principali gruppi tematici;
+- classificare i documenti in categorie predefinite;
+- scoprire associazioni nascoste (legami tra argomenti, o tra autori, trend temporali, ...);
+- estrarre informazioni specifiche (es: nomi di geni, nomi di aziende, ...);
+- addestrare motori di ricerca;
+- estrarre concetti per la creazione di ontologie (ontology learning).
+
+Vista la natura prettamente testuale degli scontrini, si è deciso di utilizzare alcune delle metodiche proprie del Text Mining al fine di trasformare il testo di ogni scontrino in un insieme di features da utilizzare per la creazione di un modello di predizione. Questa scelta rappresenta un approccio innovativo al tema della manutenzione predittiva. Infatti, oltre all'utilizzo del Text Mining nel lavoro di Sipos et al. [@siposLogbasedPredictiveMaintenance2014], attualmente non esistono in letteratura casi riportati di utilizzo di queste tecniche applicate al tema della manutenzione predittiva che, infatti, si basa più comunemente sull'analisi numerica di variabili fisiche misurate per via diretta o derivata.
+
+A partire dalla feature chiamata "testo", creata dalla funzione descritta nel paragrafo \ref{preprocessing}, è stato quindi creato un "corpus", ovvero una collezione di documenti, per ognuna delle "borse" di scontrini. Esplorando i primi 5 documenti di un corpus, per esempio, si ottiene:
+
+\newpage
 
 \begin{lstlisting}[frame=single]
 <<VCorpus>>
@@ -167,7 +181,7 @@ Content:  chars: 115
 
 \end{lstlisting}
 \newpage
-Nell'output precedente è intuibile la struttura del corpus. Ogni elemento dello stesso viene identificato come un "PlainTextDocument" il cui contenuto è dato da un variabile numero di caratteri testuali. Esplorando ad esempio il primo documento è possibile leggere il testo del relativo scontrino, pulito precedentemente da eventuali caratteri speciali, punteggiatura e numeri:
+Nell'output precedente è intuibile la struttura del corpus: ogni elemento dello stesso viene identificato come un "PlainTextDocument" il cui contenuto è dato da un variabile numero di caratteri testuali. Esplorando il primo documento è possibile leggere il testo del relativo scontrino, pulito precedentemente da eventuali caratteri speciali, punteggiatura e numeri:
 
 \begin{lstlisting}[frame=single]
 <<PlainTextDocument>>
@@ -179,20 +193,21 @@ tipo ciclo complete disinfection test di tenuta allarme pressione minima test di
 
 ### Text mining: Document Term Matrix
 
-Il passo successivo è stato quello di convertire il corpus creato in una struttura a matrice tipicamente utilizzata in applicazioni di text mining chiamata "Document Term Matrix". Questo tipo di matrice è composta da un numero di righe pari al numero di documenti presenti nel corpus e da tante colonne quanti sono i termini presenti in tutti i documenti, presi una sola volta. Il valore all'incrocio di una riga e di una colonna determina la tipologia di "peso" che viene assegnato ad ogni termine rispetto ad ogni documento. Tra le "pesature" possibili, si riportano quelle più comunemente utilizzate in questo tipo di applicazioni:
+Il passo successivo è stato quello di convertire i corpora creati in una struttura a matrice tipicamente utilizzata in applicazioni di text mining chiamata "Document Term Matrix". Questo tipo di matrice è composta da un numero di righe pari al numero di documenti presenti in un corpus e da tante colonne quanti sono i termini presenti in tutti i documenti dello stesso, presi una sola volta. Il valore all'incrocio di una riga e di una colonna determina la tipologia di "peso" che viene assegnato ad ogni termine rispetto ad ogni documento. Tra le "pesature" possibili, si riportano quelle più comunemente utilizzate in questo tipo di applicazioni:
 
-1. **Term Frequency (tf)**: indicata con $tf(t,d) = f_{t,d}$ rappresenta il conteggio delle volte in cui è presente un termine $t$ in un documento $d$.
-2. **Term Frequency - Inverse Document Frequency (tf-idf)**: definita come il prodotto tra la Term Frequency ed la Inverse Document Frequency. Quest'ultima è una misura del quantitativo informativo che una parola apporta rispetto alla sua frequenza in un set di documenti. Matematicamente è definita come:
+ 1. **Term Frequency (tf)**: indicata con $tf(t,d) = f_{t,d}$ rappresenta il conteggio delle volte in cui è presente un termine $t$ in un documento $d$.
+ 2. **Term Frequency - Inverse Document Frequency (tf-idf)**: definita come il prodotto tra la Term Frequency ed la Inverse Document Frequency. Quest'ultima è una misura del quantitativo informativo che una parola apporta rispetto alla sua frequenza in un set di documenti. Matematicamente è definita come:
 
-\begin{equation}
-\sf idf(t,D) = \log(\frac{N}{n_{t}})
-\label{eq:idf}
-\end{equation}
+ \begin{equation}
+ \sf idf(t,D) = \log(\frac{N}{n_{t}})
+ \label{eq:idf}
+ \end{equation}
 
-dove:
+ dove:
 
   - $N$ rappresenta il numero di documenti nel corpus
   - $n_{t}$ è il numero di documenti in cui compare il termine t
+
 
 Di conseguenza, la tf-idf è definita come:
 
@@ -201,7 +216,7 @@ Di conseguenza, la tf-idf è definita come:
 \label{eq:tfidf}
 \end{equation}
 
-In figura \ref{tfidf_plot} viene riportato un esempio di come la pesatura tramite tf-idf tende a configurarsi come un "filtro" per i termini più comuni, prendendo come esempio due termini presenti in uno stesso documento con la stessa frequenza. Si osserva, infatti, che a pari frequenza corrisponde un punteggio che è maggiore per i termini che compaiono meno frequentemente nel corpus.
+In figura \ref{tfidf_plot} viene riportato un esempio di come la pesatura tramite tf-idf tenda ad agire come un "filtro" per i termini più comuni, prendendo come esempio due termini presenti in uno stesso documento con la stessa frequenza. Si osserva, infatti, che a pari frequenza corrisponde un punteggio che è maggiore per i termini che compaiono meno frequentemente nel corpus.
 
 
 ```{r,echo=FALSE,warning=FALSE ,message=FALSE,fig.align='center',fig.cap="\\label{tfidf_plot}Valore dato dalla tf-idf per due termini generici $t_{1}$ e $t_{2}$, ipotizzando la stessa frequenza ($f_{d,t_{1,2}}=3$) all'interno di un generico documento $d$. $t_{1}$ compare in meno documenti del corpus ($n_{t_{1}}=4$), di conseguenza il suo peso risulta maggiore."}
@@ -231,9 +246,10 @@ ggplot(data.frame(x=c(1, 50)), aes(x=x)) +
 
 ```
 
-Tra le due metodologie di pesatura elencate, è stata scelta la seconda. Questo perchè la natura degli scontrini può essere meglio caratterizzata dai termini relativi a guasti e allarmi, che sono infatti meno frequenti rispetto a quelli che indicano un comportamento nominale dell'apparecchiatura. La frequenza dei termini "tipici" di uno scontrino indicante un comportamento anomalo è evidenziata nel grafico a barre in figura \ref{barplotfig}.
+Tra le due metodologie di pesatura elencate, è stata scelta la seconda. Questo perchè la natura degli scontrini può essere meglio caratterizzata dai termini relativi a guasti e allarmi, che sono infatti meno frequenti rispetto a quelli che indicano un comportamento normale dell'apparecchiatura.
+È stato inoltre costruito un corpus "generale" utilizzando come documenti tutti gli scontrini a disposizione in modo tale da valutare la frequenza dei termini più comuni e di quelli "tipici" di uno scontrino "anomalo" è evidenziata nel grafico a barre in figura \ref{barplotfig}.
 
-```{r, fig.height=6,echo=FALSE, message=F, fig.align='center',fig.cap="\\label{barplotfig}Frequenza dei 40 termini più comuni nel corpus degli scontrini."}
+```{r, fig.height=6,echo=FALSE, message=F, fig.align='center',fig.cap="\\label{barplotfig}Frequenza dei 40 termini più comuni nel corpus generale degli scontrini."}
 library("ggplot2",verbose = F,quietly = T)
 library("viridis",verbose = F,quietly = T)
 library(tidyverse,verbose = F,quietly = T)
@@ -280,7 +296,7 @@ col_termini <- "#A50104"
 row.names(wordFreq)=NULL
 wordFreq=wordFreq[,c(2,1)]
 
-wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato"),yes = 1,no = 0))) %>%
+wordFreq %<>% mutate(irregolare=factor(ifelse(Terms%in%c("irregolare", "allarme", "scollegato", "otturato", "perdita"),yes = 1,no = 0))) %>%
   mutate(tick.color=ifelse(irregolare==1, col_termini,"grey30"))
 
 subset <- subset(wordFreq, irregolare==1)
@@ -321,7 +337,7 @@ La rarità dei termini che riflettono un comportamento anomalo è diretta conseg
 
 È parso ragionevole, al fine di discriminare in modo ottimale un comportamento anomalo da uno nominale, assegnare un peso maggiore ai termini con una frequenza relativa minore tramite la tf-idf descritta sopra.
 
-A seguito di queste considerazioni, si riportano, a solo scopo di esempio, le prime 5 righe di una Document Term Matrix ottenuta dalla trasformazione del corpus.
+A seguito di queste considerazioni, si riportano, a solo scopo di esempio, le prime 5 righe di una Document Term Matrix ottenuta dalla trasformazione di uno dei corpora ottenuti.
 
 
 ```{r, fig.height=6,echo=FALSE, message=F}
@@ -378,9 +394,9 @@ Successivamente, i dati sono stati divisi in gruppo di training e testing (chiam
 
 Specificatamente, nella fase di training, le funzioni nel pacchetto caret si occupano di:
 
-- valutare, ripetendo le operazioni di addestramento di un modello tramite ri-selezione dei dati (resampling), l'effetto dei parametri di ottimizzazione (ovvero i parametri specifici di un modello, come $\alpha$ e $\beta$ della di una regressione logistica, descritti nel capitolo \ref{logregcap}) sulle performance di predizione
-- scegliere il modello "ottimale" tra questi parametri
-- stimare le performance del modello dal training set
+- valutare, ripetendo le operazioni di addestramento di un modello tramite ri-selezione dei dati (resampling), l'effetto dei parametri di ottimizzazione (ovvero i parametri specifici di un modello, come $\alpha$ e $\beta$ della di una regressione logistica, descritti nel capitolo \ref{logregcap}) sulle performance di predizione;
+- scegliere il modello "ottimale" tra questi parametri;
+- stimare le performance del modello dal training set.
 
 In particolare, per agevolare la fase di training e test, è stata creata una funzione in grado di allenare diversi modelli, definiti da una lista scelta dall'utente, in modo sequenziale e di salvare le performance di predizione di ogni modello in una tabella consultabile a fine addestramento. Questo ha aiutato nella scelta del modello ottimale, in quanto è stato possibile confrontare diversi risultati di addestramento al variare di alcune opzioni di modellizzazione come ad esempio il metodo di resampling, la scelta dei modelli e la modalità di creazione dei metascontrini.
 
@@ -417,12 +433,12 @@ kable(df, col.names=c(" "," ", "Negativi", "Positivi"),escape = F, caption = "Ma
 
 Dalla tabella è possibile definire le seguenti statistiche:
 
--**accuratezza**: rapporto tra le osservazioni classificate correttamente e il numero totale di osservazioni $$Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
--**sensitività**: chiamata anche recall o true positive rate, è definita come il rapporto tra i veri positivi e i positivi totali
+- **accuratezza**: rapporto tra le osservazioni classificate correttamente e il numero totale di osservazioni $$Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
+- **sensitività**: chiamata anche recall o true positive rate, è definita come il rapporto tra i veri positivi e i positivi totali
 $$Sensitivity = \frac{TP}{TP+FN}$$
--**specificità**: definita come il rapporto tra i veri negativi e i negativi totali
+- **specificità**: definita come il rapporto tra i veri negativi e i negativi totali
 $$Specificity = \frac{TN}{TN+FP}$$
--**precisione**: definita come il rapporto tra i veri positivi e la somma tra veri positivi e falsi positivi
+- **precisione**: definita come il rapporto tra i veri positivi e la somma tra veri positivi e falsi positivi
 $$Precision = \frac{TP}{TP+FP}$$
 
 
@@ -432,27 +448,26 @@ Di seguito si riportano le performance di predizione dei modelli ottenuti.
 
 
 \begin{table}[H]
-
 \caption{\label{tab:performance}Performance dei modelli ottenuti}
 \centering
-\begin{tabular}{>{\raggedright\arraybackslash}p{16em}lllll}
+\begin{tabular}{>{\raggedright\arraybackslash}p{14em}lllll}
 \toprule
-Model name & Accuracy & Sensitivity & Specificity & Precision & MCC\\
+Model name & Accuracy & Sensitivity & Specificity & Precision\\
 \midrule
-Bayesian Generalized Linear Model & 0.75 & 0.23 & 0.92 & 0.47 & 0.19\\
-Generalized Linear Model & 0.39 & 0.71 & 0.29 & 0.25 & 0.00\\
-Naive Bayes & 0.73 & 0.11 & 0.93 & 0.36 & 0.08\\
-Neural Network & 0.71 & 0.11 & 0.91 & 0.29 & 0.03\\
-Support Vector Machine (Linear Kernel) & 0.73 & 0.20 & 0.91 & 0.41 & 0.14\\
+Bayesian Generalized Linear Model & 0.75 & 0.23 & 0.92 & 0.47\\
+Generalized Linear Model & 0.39 & 0.21 & 0.89 & 0.25\\
+Naive Bayes & 0.73 & 0.11 & 0.93 & 0.36\\
+Neural Network & 0.71 & 0.11 & 0.91 & 0.29\\
+Support Vector Machine (Linear Kernel) & 0.73 & 0.20 & 0.91 & 0.4\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 
-Sebbene l'accuratezza risulti buona, essa, come già detto, è inaffidabile in un caso come questo, dove la distribuzione delle classi da predire risulta "sbilanciata". Tutti i modelli addestrati si dimostrano buoni classificatori per quanto riguarda l'identificazione della classe "negativa". Tuttavia, come intuibile dal valore di sensitività molto basso caratteristico a tutti i modelli, essi non risultano essere in grado di discriminare la classe di interesse. Ciò è dovuto molto probabilmente al numero eccessivamente basso di osservazioni a disposizione per l'addestramento dei modelli.
+Sebbene l'accuratezza risulti buona, essa, come già detto, è inaffidabile in un caso come questo, dove la distribuzione delle classi da predire risulta "sbilanciata". L'elevato valore di specificità comune a tutti i modelli addestrati significa che essi si dimostrano buoni classificatori per quanto riguarda l'identificazione della classe "negativa". Tuttavia, come intuibile dai bassi valori di sensitività, essi non risultano essere in grado di discriminare la classe di interesse. Ciò è dovuto molto probabilmente al numero eccessivamente basso di osservazioni a disposizione per l'addestramento dei modelli.
 
 Di per sé , infatti, lo sbilanciamento delle classi è un problema facilmente aggirabile tramite diversi approcci come ad esempio specificando al pacchetto caret di utilizzare un metodo di resampling che tenga conto del forte sbilanciamento di classi (downsampling). In questo modo, ad esempio, ad ogni iterazione vengono selezionate un pari numero di osservazioni positive e negative (utilizzando tutte quelle positive a disposizione), annullando quindi lo sbilanciamento.
 
-In questo lavoro, tuttavia, accorgimenti di questo tipo non hanno migliorato in modo sufficiente le performance di classificazione, ottenendo comunque sensitività e specificità molto basse. Performance migliori possono essere ottenute, banalmente, aumentando il numero di dati a disposizione prelevando da altre macchine simili i file di backup. Elemento essenziale per poter meglio sviluppare questi modelli sarà, comunque, la presenza di uno storico dato da un software di gestione delle manutenzioni senza il quale, infatti, non si avrebbe la possibilità di etichettare i dati a disposizione, invalidando quindi il concetto di apprendimento supervisionato.
+In questo lavoro, tuttavia, accorgimenti di questo tipo non hanno migliorato in modo sufficiente le performance di classificazione, ottenendo comunque sensitività e precisione molto basse. Performance migliori possono essere ottenute aumentando il numero di dati a disposizione prelevando da altre macchine simili i file di backup. Elemento essenziale per poter meglio sviluppare questi modelli sarà, comunque, la presenza di dati relativi agli interventi manutentivi effettuati senza i quali, infatti, non si avrebbe la possibilità di etichettare i dati a disposizione, invalidando quindi il concetto di apprendimento supervisionato.
 
 Il lavoro svolto è comunque un buon punto di partenza per eventuali sviluppi futuri, in quanto l'aggiunta di ulteriori dati non implicherebbe la modifica di tutte le fasi elencate precedentemente, ma semplicemente un maggiore tempo di elaborazione per l'addestramento dei modelli, in misura proporzionale alla quantità di nuove osservazioni.

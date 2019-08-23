@@ -40,7 +40,7 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 - Nuclei operativi alcologia di Seregno, Vimercate
 - Servizio dipendenze di Carate Brianza
 
-Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, l'intero territorio della ATS Brianza e, in rosso, la rete territoriale della  ASST Vimercate. Le puntine indicano i presidi ospedalieri dei rispettivi distretti territoriali.
+Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, il territorio della ATS Brianza e, in rosso, la rete territoriale della  ASST Vimercate. Le puntine indicano i presidi ospedalieri dei rispettivi distretti territoriali.
 
 ![Rete territoriale ATS Brianza \label{mappaasst}](introduzione/img/asst.PNG)
 
@@ -53,7 +53,7 @@ L’Azienda, conformemente alle indicazioni Regionali, ha strutturato un sistema
 
 In figura \ref{org} viene riportato l'organigramma aziendale in cui sono evidenziati gli organi di vertice e le strutture (semplici e complesse) cui essi fanno capo.
 
-![Organigramma aziendale \label{org}](introduzione/img/organigramma.png)
+![Organigramma aziendale \label{org}](introduzione/img/organigramma.png){width=40%}
 
 Costituiscono la Direzione Strategica dell'Azienda, unitamente al Direttore Generale, il Direttore Amministrativo, il Direttore Sanitario ed il Direttore Sociosanitario. Essi partecipano con il Direttore Generale alla direzione dell'Azienda, assumono diretta responsabilità delle funzioni attribuite alla loro competenza e concorrono, con proposte e pareri, alla formulazione delle decisioni della Direzione Strategica. Sono, quindi, soggetti attori, unitamente al Direttore Generale, di quella funzione di programmazione, di allocazione delle risorse, di committenza dei servizi e di valutazione dei risultati, propria della Direzione Strategica. Essi esercitano le loro funzioni attraverso il processo di budget, che li vede direttamente coinvolti e responsabili dal momento delle scelte aziendali di programmazione alla negoziazione dei budget con i Direttori dei Dipartimenti ed i Responsabili delle Funzioni di Staff, al monitoraggio e all'eventuale revisione degli obiettivi di budget fissati.
 
@@ -62,14 +62,14 @@ In particolare, le funzioni proprie di ogni Direzione possono essere riassunte c
 - **Direzione Generale**: il Direttore Generale rappresenta legalmente l'Azienda ed esercita tutti i poteri di gestione complessiva, coadiuvato dai Direttori Amministrativo, Sanitario e Sociosanitario. Egli ha il compito di combinare i fattori produttivi per il perseguimento degli obiettivi sanitari posti dalla Regione, in condizioni di massima efficienza ed efficacia. Il Direttore Generale è quindi responsabile del governo clinico dell'azienda, con riferimento sia alla qualità, che all'efficacia e all'efficienza tecnica. Il governo clinico si realizza nell'esercizio della responsabilità del miglioramento continuo dei servizi erogati, nella salvaguardia di alti standard assistenziali da parte dei professionisti dell'organizzazione, ed è volto ad assicurare l'adozione di sistemi di garanzia e di qualità, compatibilmente con le risorse disponibili.
 
 - **Direzione Amministrativa**: il Direttore Amministrativo dirige i servizi amministrativi della Azienda Socio Sanitaria Territoriale. In particolare:
-    - Svolge attività di direzione e coordinamento, nei confronti dei direttori delle strutture amministrative complesse.
-    - Svolge attività necessarie per il controllo di gestione dell’azienda ed il controllo di qualità dei servizi come la nomina dei responsabili delle strutture organizzative professionali e funzionali dell'area amministrativa.
-    - Persegue il buon andamento e l'imparzialità dell'azione amministrativa, con particolare riferimento agli aspetti giuridico-amministrativi ed economico-finanziari.
+    - svolge attività di direzione e coordinamento, nei confronti dei direttori delle strutture amministrative complesse.
+    - svolge attività necessarie per il controllo di gestione dell’azienda ed il controllo di qualità dei servizi come la nomina dei responsabili delle strutture organizzative professionali e funzionali dell'area amministrativa.
+    - persegue il buon andamento e l'imparzialità dell'azione amministrativa, con particolare riferimento agli aspetti giuridico-amministrativi ed economico-finanziari.
 
-- **Direzione Sanitaria**:  Il Direttore Sanitario dirige i servizi sanitari ai fini organizzativi ed igienico-sanitari. In particolare:
-    - Svolge attività di indirizzo, coordinamento, supporto, verifica nei confronti dei responsabili dei servizi sanitari e promuove l'integrazione dei servizi stessi.
-    - Esercita per tutte le strutture ed i Centri di responsabilità sanitari dell'azienda le funzioni di verifica e di controllo dei risultati conseguiti rispetto agli obiettivi assegnati.
-    - Coordina le strutture dell'azienda ospedaliera e garantisce l’integrazione tra le stesse, anche attraverso la predisposizione di appositi protocolli.
+- **Direzione Sanitaria**:  il Direttore Sanitario dirige i servizi sanitari ai fini organizzativi ed igienico-sanitari. In particolare:
+    - svolge attività di indirizzo, coordinamento, supporto, verifica nei confronti dei responsabili dei servizi sanitari e promuove l'integrazione dei servizi stessi.
+    - esercita per tutte le strutture ed i Centri di responsabilità sanitari dell'azienda le funzioni di verifica e di controllo dei risultati conseguiti rispetto agli obiettivi assegnati.
+    - coordina le strutture dell'azienda ospedaliera e garantisce l’integrazione tra le stesse, anche attraverso la predisposizione di appositi protocolli.
 
 - **Direzione Socio-Sanitaria**: il Direttore Sociosanitario dirige il settore aziendale rete territoriale della Azienda Socio Sanitaria Territoriale.
 
@@ -77,7 +77,7 @@ In particolare, le funzioni proprie di ogni Direzione possono essere riassunte c
 \FloatBarrier
 Nella figura \ref{os1} viene riportata un'immagine dell'ingresso principale del nuovo Ospedale di Vimercate.
 
-![Ospedale di Vimercate, ingresso \label{os1}](introduzione/img/ospedale.jpg)
+![Ospedale di Vimercate, ingresso \label{os1}](introduzione/img/ospedale.jpg){width=80%}
 
 
 Il Presidio di Vimercate vanta una storia millenaria: nacque, grazie all'azione dei Monaci di Sant'Ambrogio, come ricovero per pellegrini nell'833 con il nome di “L’Hospitale di San Damiano”. Fu ribattezzato nel 1447 dapprima con il nome di "Hospitale di San Giuseppe" e quindi "Hospitale Pauperum", infine venne indicato con il nome di "Hospitale del Borgo di Vicomercato", a seguito di un'opera di riorganizzazione indotta dall'allora arcivescovo di Milano, Enrico Rampini.
@@ -90,7 +90,7 @@ Importante è sottolineare che dal 30 ottobre 2010 l'Ospedale di Vimercate ha in
 
 Il nuovo Ospedale, vero fiore all'occhiello dell'Azienda, progettato dall'arch. Mario Botta e costruito in soli tre anni, si sviluppa su tre piani fuori terra e due interrati, per una superficie totale di 113.000 mq (nella figura \ref{os2} si riporta una ricostruzione di una visualizzazione aerea tratta dai piani di costruzione del nuovo Ospedale [@pessinacostruzioniPessinaCostruzioni2009]).
 
-![Ospedale di Vimercate, vista aerea \label{os2}](introduzione/img/ospedale-aereo.png)
+![Ospedale di Vimercate, vista aerea \label{os2}](introduzione/img/ospedale-aereo.png){width=80%}
 
 L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre al centro dei percorsi logistici e diagnostico-terapeutici il paziente, con le sue patologie e il suo vissuto familiare e sociale; anche per questo motivo l'assistenza è organizzata secondo il modello per intensità di cura.
 
@@ -98,7 +98,7 @@ L'architettura, la tecnologia e l'organizzazione sono tutte finalizzate a porre 
 
 ### Gli altri presidi della ASST di Vimercate
 
-#### Carate
+#### Carate {-}
 
 L'Ospedale di Carate Brianza ha origini antiche: fondato nel 1200, era inizialmente un complesso che metteva a disposizione un medico per le cure e provvedeva al trasporto dei malati più gravi alla Ca' Granda di Milano.
 
@@ -109,13 +109,13 @@ Solo agli inizi del '900 sorse la struttura ospedaliera vera e propria. I lavori
 
 Nel corso dei decenni il nosocomio caratese ha subito costanti opere di miglioria ed ampliamento. Nel 1974 è iniziata la costruzione di un nuovo edificio e nel 1998 è stato inaugurato il reparto materno infantile. L'inaugurazione della nuova struttura si è svolta nel marzo del 2000.
 
-#### Seregno
+#### Seregno {-}
 
 L'Ospedale di Seregno è costituito da tre padiglioni, edificati nel corso degli anni a partire dal 1863, quando Francesco Trabattoni finanziò la costruzione del primo settore. La facciata dell'edificio posta lungo Via Giuseppe Verdi fu innalzata per volere del benefattore, presidente di un'associazione, e per testamento pubblico.
 Nel 1874 si raggiunse il completamento dei lavori e l'Ospedale ottenne per Decreto Ministeriale il riconoscimento come Ente Morale.
 Il secondo blocco fu realizzato in seguito alla donazione di Luigi Ronzoni, che si impegnò a costituire un complesso chirurgico a proprie spese, prendendosi la responsabilità di mantenerlo. Lo spazio rimase allo stato originario fino al termine della seconda guerra mondiale, poi venne modificato in base a nuovi criteri di funzionalità. L'Amministrazione fece eliminare le vecchie corsie, sostituite con camere di degenza. L'ultimo padiglione risale, invece, agli anni 1952-'53.
 
-#### Giussano
+#### Giussano {-}
 
 L'Ospedale "C. Borella" nasce, con atto pubblico del 20 ottobre 1891, per volontà di Rachele Rossari vedova Borella, come fondazione voluta per "gli ammalati poveri del Comune di Giussano e Briosco".
 
@@ -137,19 +137,19 @@ L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica, in staff alla Direzi
 
 La Struttura si occupa dell’aspetto gestionale e strategico delle tecnologie biomediche, svolgendo un ruolo di supporto alla Direzione Strategica attraverso:
 
-- La programmazione e la valutazione degli acquisti
-- La manutenzione delle apparecchiature elettromedicali in dotazione all’Azienda
-- Valutazioni di Hospital Based Health Technology Assessment finalizzate all’introduzione di nuove tecnologie ed ottimizzazione nell’utilizzo delle risorse tecnologiche a disposizione.
+- la programmazione e la valutazione degli acquisti
+- la manutenzione delle apparecchiature elettromedicali in dotazione all’Azienda
+- valutazioni di Hospital Based Health Technology Assessment finalizzate all’introduzione di nuove tecnologie ed ottimizzazione nell’utilizzo delle risorse tecnologiche a disposizione.
 
 La Struttura svolge la propria attività coordinandosi con altre strutture
 tecniche, amministrative, con il personale sanitario dirigente e del comparto per il perseguimento di obiettivi comuni e la realizzazione di attività e progetti di interesse aziendale.
 Le principali attività svolte all’interno dell’U.O.C. Ingegneria Clinica comprendono:
 
-- **Gestione strategica degli investimenti**:
+- **gestione strategica degli investimenti**:
   effettuata mediante azioni di ricognizione delle esigenze (in supporto alla Direzione Strategica), attività di programmazione delle acquisizioni di apparecchiature elettromedicali attraverso strategie di Health Technology Assessment, attività di supporto alla U.O.C. Approvigionamenti per la predisposizione di capitolati di fornitura tramite elaborazione di fabbisogni e dettagli tecnici necessari e infine attività di valutazione tecnica delle offerte pervenute e partecipazione alle commissioni giudicatrici.
-- **Gestione tecnica e operativa**:
+- **gestione tecnica e operativa**:
   include la gestione e la supervisione delle attività facenti parte del "ciclo di vita" delle tecnologie biomedicali (accettazione e collaudo, manutenzione correttiva, preventiva, straordinaria, verifiche elettriche, controlli qualità, gestione database tecnico delle apparecchiature, training degli operatori, dismissione) tramite il supporto di un servizio di manutenzione esternalizzata e contratti con i produttori.
-- **Gestione dei contratti**:
+- **gestione dei contratti**:
   le specifiche competenze sono relative all’esecuzione dei contratti di manutenzione, acquisizione in noleggio o proprietà di apparecchiature elettromedicali.
 
 ### L'attività di manutenzione \label{1}

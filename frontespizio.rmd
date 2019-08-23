@@ -32,7 +32,7 @@ output: pdf_document
 
 
   Relatore: Prof. Veronica Cimolin \\
-  Correlatore: Ing. Daniela Motta 
+  Correlatore: Ing. Daniela Motta
 
 \end{flushleft}
 \vspace*{1.0cm}
@@ -49,4 +49,4 @@ output: pdf_document
 
 
   Anno Accademico 2018-2019
-\end{center} \cleardoublepage
+\end{center}

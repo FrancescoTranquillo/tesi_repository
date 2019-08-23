@@ -4,6 +4,7 @@ csl: style.csl
 fontsize: 12pt
 geometry: asymmetric
 header-includes:
+- \usepackage{emptypage}
 - \usepackage[italian]{babel}
 - \usepackage{placeins}
 - \usepackage{setspace}
@@ -11,6 +12,7 @@ header-includes:
 - \usepackage{chngcntr}
 - \usepackage{amsmath}
 - \usepackage{physics}
+- \usepackage{enumitem}
 - \usepackage{textcomp}
 - \usepackage{tikz}
 - \usetikzlibrary{positioning}
@@ -26,12 +28,14 @@ header-includes:
 linestretch: 1.5
 link-citations: yes
 output:
+  word_document: default
   pdf_document:
     fig_caption: yes
     fig_height: 3
     fig_width: 5
     number_sections: yes
 ---
+\newcommand*\NewPage{\newpage\null\thispagestyle{empty}\newpage\thispagestyle{empty}}
 <!-- <script type="text/x-mathjax-config"> -->
 <!-- MathJax.Hub.Config({ -->
 <!--   TeX: { equationNumbers: { autoNumber: "AMS" } } -->
@@ -39,10 +43,10 @@ output:
 <!-- </script> -->
 ```{r child='frontespizio.rmd'}
 ```
-\pagenumbering{gobble}
+\NewPage
 ```{r child='dedica.rmd'}
 ```
-\newpage
+\pagebreak
 \pagenumbering{Roman}
 \tableofcontents
 \newpage
@@ -77,5 +81,6 @@ output:
 ```{r child='conclusioni/conclusioni.md'}
 ```
 \pagebreak
-
-# Bibliografia
+\pagestyle{plain}
+```{r child='bibliografia.md'}
+```

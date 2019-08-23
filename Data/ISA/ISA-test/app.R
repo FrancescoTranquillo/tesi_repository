@@ -40,7 +40,7 @@ library(tm)
 library(magrittr)
 library(tabulizer)
 library(viridis)
-rds <- as.list(list.files(here::here("ISA-test"),"mm_*"))
+rds <- as.list(list.files(here::here("ISA-test"),"wa_*"))
 modelli <<- lapply(rds,function(x) readRDS(here(x)))
 
  # modello_predizione <- readRDS(here("tm_bag_prediction7_glm.rds"))
@@ -49,7 +49,7 @@ modelli <<- lapply(rds,function(x) readRDS(here(x)))
 source(file = here::here("ISA-test/morpher.r"))
 
 #per pubblicare
-# source(file = here("morpher.r"))
+# source(file = here::here("morpher.r"))
 
 
 # MODULI ------------------------------------------------------------------

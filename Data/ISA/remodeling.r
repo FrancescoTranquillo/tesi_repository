@@ -119,7 +119,7 @@ meta_test <- function(bag) {
     control = list(dictionary = DF_testo_dict,
                    weighting = function(x) weightTfIdf(x)))))
   
-    tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
+    tfidf <- summarise_all(bag_dtm, max, na.rm = T)
     cbind("TARGET" = bag$BAG_FLAG, tfidf)
 }
 
@@ -143,7 +143,7 @@ DF_test <- DF[-trainIndex,]
 
 table(DF_test$flag)
 
-DF_training %<>% mutate("BAG"=factor(cut.Date(.$giorno, breaks = "8 days",labels = F)))
+DF_training %<>% mutate("BAG"=factor(cut.Date(.$giorno, breaks = "7 days",labels = F)))
 DF_test%<>% mutate("BAG"=factor(cut.Date(.$giorno, breaks = "1 days",labels = F)))
 
 
@@ -213,8 +213,7 @@ fitControl <- trainControl(method = "repeatedcv",
                            repeats = 3,
                            verboseIter=T,
                            classProbs = TRUE,
-                           allowParallel = T,
-                           sampling = "down"
+                           allowParallel = T,sampling = "down"
 )
 
 model_maker <- function(nome_modello, nome_algoritmo, nome_file){
@@ -224,8 +223,8 @@ model_maker <- function(nome_modello, nome_algoritmo, nome_file){
           data=tm_training,
           method = nome_algoritmo,
           trControl = fitControl,
-          tuneLength=3,
-          preProcess=c("range","nzv")
+          tuneLength=3
+          # preProcess=c("range","nzv")
     )
   nome_modello <- model_object
   filename <- paste0(nome_file,"_",nome_algoritmo, ".rds")

@@ -1,4 +1,4 @@
-# "INSIGHT"
+# INSIGHT
 
 In questo capitolo viene descritto in che modo si è arrivati alla decisione di sviluppare una web app (chiamata "INSIGHT") per il reparto di endoscopia. Vengono prima indicate le problematiche relative alla riprocessazione della strumentazione endoscopica e, per ognuna di esse, verrà descritto in che modo la web app sviluppata può essere d'aiuto nella razionalizzazione e nella successiva risoluzione delle stesse. Verrà inoltre trattata la strategia utilizzata per effettuare il _software deployment_ che ha reso disponibile l'applicazione sulla rete interna dell'ospedale, grazie al contributo dell'U.O.C. Sistemi Informativi Aziendali. Infine si evidenzieranno sia le criticità incontrate durante lo sviluppo del software, sia il riscontro all'utilizzo dell'app da parte del personale del reparto.
 
@@ -51,7 +51,7 @@ Lo schema di funzionamento e gli elementi dell'interfaccia delle fasi sopracitat
 
 Una volta seleionato un intervallo di date valido e un insieme di numeri seriali, l'utente può navigare tra le varie pagine dell'applicazione, visualizzando le diverse informazioni in modo dinamico rispetto alle scelte effettuate nella sidebar. Se infatti l'utente cambia la selezione del numero seriale, i grafici e le tabelle cambieranno in modo reattivo seguendo la scelta impostata dall'utente.
 
-### Overview \label{over}
+### Overview \label{overcap}
 \FloatBarrier
 
 ![Overview \label{overview}](insight/img/overview.png)
@@ -108,7 +108,7 @@ La parte superiore contiene un grafico a barre verticali che mostra il numero di
 
 \FloatBarrier
 
-Quella inferiore permette di selezionare una categoria di strumento per visualizzare, tramite una tabella del tutto simile a quelle presenti nella pagina "Overview" (paragrafo \ref{over}), i dettagli dei cicli (selezionabili tra regolari e irregolari grazie a delle sezioni sopra la tabella) riferiti alla categoria di strumento scelta.
+Quella inferiore permette di selezionare una categoria di strumento per visualizzare, tramite una tabella del tutto simile a quelle presenti nella pagina "Overview" (paragrafo \ref{overcap}), i dettagli dei cicli (selezionabili tra regolari e irregolari grazie a delle sezioni sopra la tabella) riferiti alla categoria di strumento scelta.
 
 ![Tabella dei cicli regolari/irregolari per la categoria di strumento scelta \label{strum2}](insight/img/strum2.png)
 

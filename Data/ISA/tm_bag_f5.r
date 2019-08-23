@@ -103,7 +103,7 @@ meta <- function(bag) {
     control = list(dictionary = testo_dict,
                      weighting = function(x) weightTfIdf(x))
   )))
-  tfidf <- summarise_all(bag_dtm, mean, na.rm = T)
+  tfidf <- summarise_all(bag_dtm, max, na.rm = T)
   cbind("TARGET" = bag$BAG_FLAG, tfidf)
   
 }
@@ -250,7 +250,7 @@ model_maker <- function(nome_modello, nome_algoritmo, nome_file){
 modelli <- mapply(model_maker,
                   c("Neural Network","Bayesian Generalized Linear Model", "Naive Bayes", "Logistic Regression", "Support Vector Machine Linear" ), 
                   c("nnet","bayesglm","naive_bayes","glm","svmLinear3"),
-                  c("w", "w", "w", "w", "w"),
+                  c("wa", "wa", "wa", "wa", "wa"),
                   SIMPLIFY=FALSE)
 
 results <- resamples(modelli)
@@ -293,7 +293,7 @@ mcc(preds = predictions, df_meta_test$TARGET)
 
 #linux
 # modelli <- lapply(as.list(list.files(here(),"linux")),read_rds)
-modelli <- lapply(as.list(list.files(here(),"w*")),read_rds)
+modelli <- lapply(as.list(list.files(here(),"wa*")),read_rds)
 l_predictions <- lapply(modelli, function(modello) predict(modello, df_meta_test))
 matrici <- lapply(l_predictions, function(predizioni) confusionMatrix(predizioni, df_meta_test$TARGET, "pos", mode = "everything"))
 
