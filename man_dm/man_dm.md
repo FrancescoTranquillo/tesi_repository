@@ -51,7 +51,7 @@ della sicurezza, nell’accertamento che la manutenzione di primo livello sia st
 eseguita, nonché nell’esecuzione dei programmi di manutenzione prescritti dal costruttore."_
 
 
-## Modalità organizzative di manutenzione nelle strutture sanitarie
+## Modalità organizzative di manutenzione delle apparecchiature elettromedicali nelle strutture sanitarie
 
 La gestione e l'attuazione della manutenzione delle varie apparecchiature elettromedicali presenti in una struttura sanitaria, sono attività core del Servizio di Ingegneria Clinica, che possono essere riassunte con il termine "Techonology Management". Esso ha come obiettivo la soddisfazione di un bisogno primario comune a tutte le strutture sanitarie, ovvero l'ottimale gestione e l'utilizzo sicuro e appropriato di un parco macchine che, sviluppandosi di pari passo con lo sviluppo tecnologico, diventa sempre più diversificato e complesso.
 
@@ -81,16 +81,24 @@ Prima di descrivere nel dettaglio le attività di manutenzione (correttiva e pro
 Tutte queste forme di presenza sono caratterizzate da una gestione della manutenzione simile tra loro, direttamente collegata al periodo di garanzia della macchina. Fino allo scadere della garanzia, infatti, l'azienda fornitrice del macchinario è tenuta a comunicare al servizio di ingegneria clinica un calendario (il piano di manutenzione) in cui vengono specificate le date di intervento che seguiranno il collaudo del macchinario stesso. Nello specifico, in questo calendario sono presenti:
 
 - gli interventi di manutenzione ordinaria che l'azienda fornitrice svolgerà (di numero e frequenza variabile a seconda della tecnologia),
-- eventuali interventi di manutenzione correttiva,
-- verifiche elettriche
+- verifiche di sicurezza elettrica
 - controlli periodici di qualità (calibrazioni ecc.)
 
-Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingengeri biomedici e tecnici informatici ed elettronici).
+Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingegneri biomedici e tecnici informatici ed elettronici).
 
 ### Manutenzioni programmate
-Per quanto riguarda le manutenzioni programmate, il Global si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica del Global Service, ottenendo quindi una procedura mista.
+Per quanto riguarda le manutenzioni programmate, la società di manutenzione esternalizzata (Tecnologie Sanitarie S.p.A come indicata nel paragrafo \ref{1}) si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica di Tecnologie Sanitarie S.p.A, ottenendo quindi una procedura mista.
 
-Di seguito si riporta quanto presente nella Procedura Operativa Aziendale dal titolo "Manutenzione programmata" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni programmate di apparecchiature elettromedicali (indicate d'ora in avanti con la lettera "a") nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
+Di seguito si riporta quanto presente nella Procedura Operativa Aziendale dal titolo "Manutenzione programmata" che ha lo scopo di descrivere le modalità con cui l’UOC Ingegneria Clinica gestisce le manutenzioni programmate di apparecchiature elettromedicali nell’Azienda Ospedaliera al fine di garantirne l’integrità fisico-funzionale e l’affidabilità.
+
+La terminologia indicata nella documentazione fa riferimento alle seguenti definizioni:
+
+- **a**: Apparecchiatura elettromedicale in gestione al SIC;
+- **EST**: DITTA ESTERNA PRODUTTRICE O SUA EMANAZIONE;
+- **GS GLOBAL SERVICE**: Servizio per la manutenzione esternalizzata di (a);
+- **SIC**: SC INGEGNERIA CLINICA (Servizio Ingegneria Clinica);
+- **SS/SC**: STRUTTURA SEMPLICE/STRUTTURA COMPLESSA;
+- **UO**: Unità Operativa.
 
 I ruoli delle figure coinvolte nella procedura di manutenzione programmata vengono riportati in figura \ref{ruoli_prog}. La relativa documentazione di riferimento è riportata in figura \ref{diz_prog}.
 
@@ -127,7 +135,7 @@ La taratura sulle (a) proprietarie in A.O. viene eseguita secondo la periodicit�
 ### Manutenzioni correttive
 Le manutenzioni correttive avvengono in seguito all'insorgenza di un guasto ad un macchinario. Il reparto interessato dal problema compila una richiesta di intervento tramite il software del Global Service, "Coswin8i", descrivendo la natura del guasto e l'urgenza di un intervento correttivo. La "chiamata" viene ricevuta dai tecnici del Global che, se l'urgenza lo permette, pianificano una data in cui eseguire l'azione correttiva, in accordo anche con il reparto. Se invece il guasto richiede un intervento tempestivo, una squadra (solitamente composta da 2 o 3 tecnici) si reca nel reparto di ubicazione del macchinario di interesse e procede, dove possibile, ad effettuare una prima riparazione. Se la problematicità lo richiede, il macchinario viene portato nel laboratorio del Global Service, in cui è possibile effettuare riparazioni sia di tipo elettrico/elettronico, sia di tipo informatico e meccanico.
 
-Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un eventuale guasto, esso si assume la responsabilità (finanziaria) di contattare il fornitore dell'apparecchio e procede in una delle seguenti modalità:
+Nel caso in cui il Global Service non riesca, con mezzi propri, a riparare un eventuale guasto, provvede a contattare il fornitore dell'apparecchio e procede in una delle seguenti modalità:
 
 1. Il Global Service invia l'apparecchio in assistenza al fornitore e comunica al reparto un prospetto delle tempistiche necessarie per la risoluzione del guasto.
 2. Il Global Service richiede alla ditta produttrice del dispositivo l'intervento di un tecnico specializzato e stabilisce con essa una data di intervento utile a minimizzare i disagi che il fermo macchina può generare al reparto di interesse.
@@ -152,6 +160,11 @@ Il coinvolgimento delle diverse strutture operative nella manutenzione correttiv
 \FloatBarrier
 ## Esempio di manutenzione correttiva: Risonanza Magnetica Philips Achieva \label {es_corr}
 
+Viene qui di seguito descritto nel dettaglio un intervento di manutenzione correttiva, a cui si è assistito durante il periodo di tirocinio presso l'ASST Vimercate, al duplice fine di:
+
+1. evidenziare la complessità degli interventi di manutenzione correttiva con particolare riferimento ad apparecchiature ad alta tecnologia come ad esempio un tomografo a risonanza magnetica;
+2. introdurre i log macchina e la loro importanza sia dal punto di vista manutentivo, sia per il ruolo centrale che essi hanno ricoperto durante lo svolgimento di questo lavoro di tesi.
+
 ### Risonanza Magnetica (RM)
 
 Il principio di base che sta alla base dell'imaging tramite RM è lo sfruttamento delle proprietà magnetiche del nucleo di atomi soggetti a campi magnetici per ottenere informazioni fisiche e chimiche sulle molecole: il funzionamento si basa sull'eccitazione dei protoni degli atomi di idrogeno contenuti nel corpo umano; il segnale emesso dai protoni consente di ottenere una mappa della loro distribuzione e dei loro comportamento, a seconda dell'ambiente in cui si trovano (liquido, semiliquido, solido, ecc.).
@@ -175,7 +188,7 @@ mammaria; RM angio; RM neuro avanzato; RM funzionale; Diffusion tensor-imaging; 
 
 ### L'intervento di manutenzione correttiva alla Philips Achieva
 
-Durante l'attività di tirocinio, si è assistito a un intervento di manutenzione correttiva ad una delle due risonanze magnetiche presenti nell'ospedale nuovo di Vimercate. Le risonanze sono entrambe di marca Philips ed entrambe dotate di magnete a tipologia superconduttore, ma con magneti di diversa potenza (una da 3 Tesla e una da 1.5 Tesla). Quest'ultima (modello Philips Achieva, figura \ref{achieva}), durante le prime settimane di marzo, è stata sottoposta a diversi interventi di manutenzione correttiva da una squadra di tecnici specializzati (field engineers) di Philips, essendo la RM ancora nel periodo di garanzia. Il reparto di radiologia ha infatti segnalato al servizio di manutenzione, tramite richiesta di intervento sul software interno Coswin8i, alcuni problemi relativi alla qualità delle immagini prodotte dalla risonanza su determinate sequenze (in particolare RM toracica e RM neuro) e utilizzando determinate bobine di ricezione. In particolare, le immagini prodotte durante questa tipologia di esami risultavano caratterizzate da un'alta percentuale di rumore, tale da renderle inutilizzabili ai fini diagnostici.
+Durante l'attività di tirocinio, si è assistito a un intervento di manutenzione correttiva ad una delle due risonanze magnetiche presenti nell'ospedale nuovo di Vimercate. Le risonanze sono entrambe di marca Philips ed entrambe dotate di magnete a tipologia superconduttore, ma con magneti di diversa potenza (una da 3 Tesla e una da 1.5 Tesla). Quest'ultima (modello Philips Achieva, figura \ref{achieva}), durante le prime settimane di marzo, è stata sottoposta a diversi interventi di manutenzione correttiva da una squadra di tecnici specializzati (field engineers) di Philips, essendo la RM in contratto di manutenzione diretta tra ASST e ditta produttrice. Il reparto di radiologia ha infatti segnalato al servizio di manutenzione, tramite richiesta di intervento sul software interno Coswin8i, alcuni problemi relativi alla qualità delle immagini prodotte dalla risonanza su determinate sequenze (in particolare RM toracica e RM neuro) e utilizzando determinate bobine di ricezione. In particolare, le immagini prodotte durante questa tipologia di esami risultavano caratterizzate da un'alta percentuale di rumore, tale da renderle inutilizzabili ai fini diagnostici.
 
 ![Risonanza Magnetica Philips Achieva da 1.5 Tesla \label{achieva}](man_dm/img/achieva.jpg){width=60%}
 
@@ -187,4 +200,4 @@ In questa fase, i tecnici hanno avuto la necessità di prelevare i log macchina 
 
 È altresì importante evidenziare il fatto che, senza il software sopracitato, un'eventuale analisi di questi log macchina effettuata da personale non addetto è difficilmente attuabile. I log infatti, sebbene non siano file protetti da crittografia, sono di difficile interpretazione se analizzati da terzi. Il linguaggio, i nomi dati ai vari componenti della RM riportati nei log e il significato di molte variabili numeriche registrate, non apportano alcun contenuto informativo se non si ha una conoscenza avanzata a livello informatico e meccanico del sistema in esame e di come lo stesso operi per registrare questi dati.
 
-Di queste considerazioni si parlerà anche nel capitolo \ref{vim_pred}, capitolo dedicato alla descrizione del lavoro di ricerca effettuato per individuare una famiglia di macchinari adatti ad essere analizzati per studiare l'applicabilità di una strategia di manutenzione predittiva.
+Di queste considerazioni si parlerà anche nel capitolo \ref{vim_pred}, dedicato alla descrizione del lavoro di ricerca effettuato per individuare una famiglia di macchinari adatti ad essere analizzati per studiare l'applicabilità di una strategia di manutenzione predittiva.

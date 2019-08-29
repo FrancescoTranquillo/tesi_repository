@@ -40,9 +40,9 @@ Centri psichiatrici diurni/residenziali di Bernareggio, Besana Brianza, Carate B
 - Nuclei operativi alcologia di Seregno, Vimercate
 - Servizio dipendenze di Carate Brianza
 
-Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, il territorio della ATS Brianza e, in rosso, la rete territoriale della  ASST Vimercate. Le puntine indicano i presidi ospedalieri dei rispettivi distretti territoriali.
+Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, il territorio della ATS Brianza e, in rosso, la rete territoriale della  ASST Vimercate. Vengono evidenziati in figura i presidi ospedalieri dei rispettivi distretti territoriali.
 
-![Rete territoriale ATS Brianza \label{mappaasst}](introduzione/img/asst.PNG)
+![Rete territoriale ATS Brianza e ASST Vimercate \label{mappaasst}](introduzione/img/asst.PNG)
 
 \FloatBarrier
 
@@ -128,7 +128,7 @@ Negli anni più recenti la vecchia struttura è stata affiancata dal nuovo padig
 
 ## L'U.O.C. Ingegneria Clinica presso l'ASST Vimercate
 
-### Organizzazione e attivià della Struttura
+### Organizzazione e attività della Struttura
 L’Unità Operativa Complessa (U.O.C.) Ingegneria Clinica, in staff alla Direzione Sanitaria Aziendale come da organigramma aziendale in figura \ref{org}, partecipa alla cura della salute garantendo un uso sicuro, appropriato, efficiente ed economico delle apparecchiature elettromedicali in dotazione all’Azienda. L’U.O.C. Ingegneria Clinica si articola territorialmente con una sede centrale a Vimercate e un ufficio a Carate, è diretta da un Ingegnere Biomedico e si avvale delle seguenti risorse umane:
 
 * 3 collaboratori tecnici
