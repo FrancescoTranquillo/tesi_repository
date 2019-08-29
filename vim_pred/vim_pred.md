@@ -45,11 +45,70 @@ Elemento imprescindibile per poter effettuare delle analisi predittive è la dis
 
 Partendo da questi presupposti si è cercato, in un primo tentativo, di utilizzare i log macchina derivanti dal tomografo a risonanza magnetica  estratti in concomitanza con l'intervento di manutenzione correttiva descritto nel capitolo \ref{es_corr}. Tuttavia, i dati a disposizione estratti facevano riferimento a pochi giorni di attività della macchina, insufficienti ad essere utilizzati per condurre un'analisi che desse buoni risultati. Si è presentata quindi la necessità di reperire dalla macchina stessa altri log. Tuttavia, come evidenziato nel capitolo sopracitato, le modalità di acquisizione dei log non hanno reso possibile la copia e l'utilizzo di altri dati.
 
-## Le lavaendoscopi MEDIVATORS \textregistered ISA \textregistered \label{ivamed}
+## Le lavaendoscopi \label{ivamed}
 
 \FloatBarrier
 
-A seguito di tali limitazioni, si è spostata l'attenzione su un sistema più semplice rispetto ad una risonanza magnetica, ma caratterizzata da una modalità di generazione e salvataggio di log macchina utili ai fini predittivi. Su suggerimento di uno degli ingegneri biomedici del SIC, è stata individuata una famiglia di dispositivi medici chiamate lavaendoscopi, su cui poi è stato sviluppato un software di monitoraggio comprensivo di un modulo di manutenzione predittiva. In figura \ref{isa} è riportata una fotografia del dispositivo in questione.
+Da una approfondita analisi del parco apparecchiature della ASST Vimercate e da un confronto
+con l’Ingegneria Clinica su quali tecnologie fossero di rilevanza aziendale, non solo dal punto di vista tecnologico, ma anche dal punto di vista dell’efficienza prestazionale nei confronti dell’utenza, si è deciso di sviluppare il progetto concentrandosi sulle apparecchiature utilizzate per il re processing di strumenti endoscopici flessibili (gastroscopi, colonscopi, broncoscopi ecc.), definite nel linguaggio comune “lavaendoscopi”.
+
+Il corretto e puntuale funzionamento di tali apparecchiature è di fondamentale importanza perché garantisce l’esecuzione di tutti gli esami diagnostici e operativi su pazienti ricoverati ed esterni, compresi tutti quelli inseriti nei programmi di screening regionali. Attraverso la consultazione e l'analisi dei dati ricavati dal portale di Regione Lombardia per la fruizione degli open data [@PrestazioniAmbulatorialiOpen] è emerso che la ASST di Vimercate ha effettuato nel 2017 un numero totale di prestazioni ambulatoriali afferenti al reparto di endoscopia pari a 15678 prestazioni. Nella tabella seguente viene riportata la suddivisione di tale numero per le tipologie di attività cliniche.
+
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+library(tidyverse)
+library(stringr)
+library(kableExtra)
+#ciao rosti
+
+
+df <- read.csv("../Prestazioni_Ambulatoriali.csv")
+
+df_prest_endo <- df %>%
+  filter(grepl("ENDOSCOPIA", BRANCA_REGLE),
+         ENTE=="ASST DI VIMERCATE") %>%
+  group_by(TIPO_PREST) %>%
+  summarise(N_PREST_TOT = sum(N_PREST)) %>%
+  arrange(desc(N_PREST_TOT))
+
+  df_prest_endo$TIPO_PREST<- c("Ambulatorio", "Screening", "Pronto Soccorso")
+
+  kable(x = df_prest_endo, "latex", booktabs = T,
+  col.names = c("Tipologia", "Numero di prestazioni effettuate"),caption = "Numero totale
+  di attività cliniche suddivise per tipologia di prestazione effettuate nel 2017 dalla ASST di Vimercate afferenti al reparto di endoscopia")%>%
+  kable_styling(latex_options = "HOLD_position",font_size=11)%>%
+  column_spec(column=2, bold = T)
+
+```
+
+Sempre in relazione alle attività svolte dallo stesso reparto, si riportano le cinque prestazioni maggiormente effettuate dalla ASST di Vimercate nel 2017.
+
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+library(tidyverse)
+library(stringr)
+library(kableExtra)
+#ciao rosti
+
+
+df <- read.csv("../Prestazioni_Ambulatoriali.csv")
+
+df_prest_endo <- df %>%
+  filter(grepl("ENDOSCOPIA", BRANCA_REGLE),
+         ENTE=="ASST DI VIMERCATE") %>%
+  group_by(PREST_AMBLE) %>%
+  summarise(N_PREST_TOT = sum(N_PREST)) %>%
+  arrange(desc(N_PREST_TOT)) %>%
+  top_n(5)
+
+df_prest_endo$PREST_AMBLE <- stringr::str_to_title(as.character(df_prest_endo$PREST_AMBLE))
+
+kable(x = df_prest_endo, "latex", booktabs = T,
+col.names = c("Nome della prestazione", "Numero di prestazioni effettuate"),caption = "Top 5 prestazioni di tipo ambulatoriale effettuate")%>%
+kable_styling(latex_options = "HOLD_position",font_size=11,full_width=TRUE)%>%
+column_spec(column=2, bold = T)
+
+```
+
+Dai dati riportati è immediato constatare che le lavaendoscopi, pur non essendo apparecchiature particolarmente complesse, rappresentano però una tecnologia di grande impatto per l’ASST. Per queste macchine è stato quindi sviluppato un software di monitoraggio comprensivo di un modulo di manutenzione predittiva. In figura \ref{isa} è riportata una fotografia del dispositivo in questione.
 
 ![Lava-Sterilizzatrice MEDIVATORS\textregistered ISA\textregistered \label{isa}](vim_pred/img/isa.jpg){width=36%}
 
@@ -62,13 +121,13 @@ In sintesi, il processo di utilizzo della macchina consiste in diverse fasi:
 3. chiusura della vasca e selezione del ciclo di riprocessazione desiderato;
 4. prelievo dell'endoscopio dalla vasca;
 
-In concomitanza con la fine di un ciclo di lavaggio, il dispositivo registra nel proprio hard disk tutte le informazioni relative a tutti ai cicli eseguiti creando un archivio elettronico consultabile in qualsiasi momento. Inoltre, è dotato di una stampante integrata che, al termine di ogni ciclo, stampa in automatico un report del ciclo. Il report è un documento essenziale per la convalida del ciclo e deve essere sempre conservato.
+In concomitanza con la fine di un ciclo di lavaggio, il dispositivo registra nel proprio hard disk tutte le informazioni relative al ciclo eseguito creando un archivio elettronico consultabile in qualsiasi momento. Inoltre, è dotato di una stampante integrata che, al termine di ogni ciclo, stampa in automatico un report del ciclo. Il report è un documento essenziale per la convalida del ciclo e deve essere sempre conservato.
 
 L'attenzione è stata posta proprio su questi report di stampa chiamati per brevità "scontrini". In figura \ref{scontrino} viene riportato un esempio di scontrino in formato digitale.
 
 ![Report stampato dalla lava-sterilizzatrice MEDIVATORS \textregistered ISA \textregistered \label{scontrino}](vim_pred/img/scont.PNG){width=40%}
 
-Sempre in riferimento alla figura \ref{scontrino}, i parametri inseriti in stampa sono:
+Sempre in riferimento alla figura \ref{scontrino}, i parametri riportati sugli scontrini di fine lavaggio sono:
 
 - data ed ora di inizio ciclo;
 - dati strumento (categoria-s/n);
@@ -79,7 +138,7 @@ Sempre in riferimento alla figura \ref{scontrino}, i parametri inseriti in stamp
 - fasi del ciclo con relativi tempi di contatto e temperatura;
 - esito del ciclo;
 
-Gli scontrini rappresentano una buona fonte di dati per quanto riguarda lo stato di funzionamentio della macchina in quanto, come visto, essi riportano sia gli attori coinvolti nello specifico ciclo di lavaggio, sia gli eventuali allarmi registrati durante il lavaggio. Essi riportano inoltre variabili numeriche quali temperatura e tempi delle varie fasi del ciclo selezionato.
+Gli scontrini rappresentano una buona fonte di dati per quanto riguarda lo stato di funzionamento della macchina in quanto, come visto, essi riportano sia gli attori coinvolti nello specifico ciclo di lavaggio, sia gli eventuali allarmi registrati durante il lavaggio. Essi riportano inoltre variabili numeriche quali temperatura e tempi delle varie fasi del ciclo selezionato.
 
 Con questi dati a disposizione si è indagata quindi la possibilità di prevedere, con un anticipo di 7 giorni, l'insorgenza di guasti tali da indurre il personale del reparto a richiedere un intervento di manutenzione correttiva al Global Service.
 
@@ -88,10 +147,10 @@ L'attività svolta si è articolata in diverse fasi, descritte nel dettaglio nei
 \FloatBarrier
 
 ## Raccolta Dati
-La prima fase operativa è stata quella di raccolta ed estrapolazione degli scontrini dalle macchine in questione. Grazie alla responsabile del reparto di endoscopia e ad uno dei collaboratori tecnici del SIC, è stato possibile estrarre da una MEDIVATORS\textregistered ISA\textregistered, l'intero storico dei report di lavaggio conservati nell'hard disk della macchina per un totale di 5441 scontrini (pari a 3 anni di attività). I dati estratti sono stati salvati su una chiavetta USB e l'estrazione ha impiegato circa 20 minuti.
+La prima fase operativa è stata quella di raccolta ed estrapolazione degli scontrini dalle macchine in questione. Con al collaborazione del reparto di endoscopia e del SIC è stato possibile estrarre da una MEDIVATORS\textregistered ISA\textregistered, l'intero storico dei report di lavaggio conservati nell'hard disk della macchina per un totale di 5441 scontrini (pari a 3 anni di attività). I dati estratti sono stati salvati su una chiavetta USB e l'estrazione ha impiegato circa 20 minuti.
 
 ## Conversione dei file di backup \label{preprocessing}
-Per utilizzare le informazioni contenute negli scontrini estratti dalla memoria della macchina, sono stati scritti ed utilizzati diversi script utilizzando il linguaggio di programmazione R. Il primo tra questi ad essere progettato è stato quello responsabile della trasformazione dei 5441 file di testo in un unico file tabulare attraverso diverse funzioni scritte ad hoc. Questo script, chiamato "Analyzer.R" individua gli scontrini e riorganizza le informazioni estraibli da questi in un formato a righe e colonne (questo tipo di dato viene chiamato "dataframe" in R). In particolare, ogni riga corrisponde ad uno scontrino e ogni colonna rappresenta una "feature" identificabile nello scontrino stesso. Questo passaggio è stato necessario al fine di disporre di una struttura dati ben organizzata e coerente, indispensabile per le successive fasi di modellizzazione. La vera e propria conversione del dato avviene per mezzo di particolari pattern di ricerca chiamate "espressioni regolari" o "Regex" (Regular expression). Si è scelto di usare questo tipo di espressioni in quanto, sebbene tutti e i 5441 scontrini fossero file di testo diversi l'uno dall'altro, si basano sul concetto di sfruttare delle regolarità presenti in un dato testo ed estrapolarne informazioni di interesse. In sintesi, per la conversione degli scontrini si è organizzata la struttura degli stessi in 3 parti, per le quali sono state scritte funzioni di estrazione utilizzando le Regex citate precedentemente. La struttura degli scontrini è stata così separata:
+Per utilizzare le informazioni contenute negli scontrini estratti dalla memoria della macchina, sono stati scritti ed utilizzati diversi script utilizzando il linguaggio di programmazione R. Il primo tra questi ad essere progettato è stato quello responsabile della trasformazione dei 5441 file di testo in un unico file tabulare attraverso diverse funzioni scritte ad hoc. Questo script individua gli scontrini e riorganizza le informazioni estraibli da questi in un formato a righe e colonne (questo tipo di dato viene chiamato "dataframe" in R). In particolare, ogni riga corrisponde ad uno scontrino e ogni colonna rappresenta una "feature" identificabile nello scontrino stesso. Questo passaggio è stato necessario al fine di disporre di una struttura dati ben organizzata e coerente, indispensabile per le successive fasi di modellizzazione. La vera e propria conversione del dato avviene per mezzo di particolari pattern di ricerca chiamate "espressioni regolari" o "Regex" (Regular expression). Si è scelto di usare questo tipo di espressioni in quanto, sebbene tutti e i 5441 scontrini fossero file di testo diversi l'uno dall'altro, si basano sul concetto di sfruttare delle regolarità presenti in un dato testo ed estrapolarne informazioni di interesse. In sintesi, per la conversione degli scontrini si è organizzata la struttura degli stessi in 3 parti, per le quali sono state scritte funzioni di estrazione utilizzando le Regex citate precedentemente. La struttura degli scontrini è stata così separata:
 
 1. **Intro**: parte introduttiva dello scontrino che reca il nome della macchina (Medivators ISA), il nome della ASST e il reparto di ubicazione della macchina. Queste righe, comuni a tutti gli scontrini, non apportano contenuto informativo utile ai fini predittivi e sono quindi stati scartati.
 2. **Header**: questa parte di testo contiene alcune delle informazioni precedentemente elencate in riferimento alla figura \ref{scontrino}. Queste informazioni sono presentate (in tutti gli scontrini) con la stessa "struttura" ovvero: `NOME CAMPO: VALORE CAMPO`.
@@ -115,7 +174,8 @@ Con operazioni simili a quelle descritte, ovvero analizzando il testo degli scon
 È importante sottolineare il fatto che, tra le feature selezionate, ne è stata creata una che contenesse il testo dello scontrino "pulito" dai caratteri di punteggiatura e caratteri non alfanumerici. Il motivo di questa scelta sta nella decisione di sfruttare la natura "testuale" di questi log macchina utilizzando tecniche di text mining per costruire dei modelli predittivi basandosi esclusivamente sulle parole contenute nei diversi file testuali, andando a sfruttare quindi la struttura originaria del log macchina.
 
 ## Modellizzazione \label{modeling}
-La fase di modellizzazione è stata sicuramente quella in cui sono state incontrate più difficoltà, principalmente dovute, come si vedrà, ad un non sufficiente numero di dati a disposizione. Innanzitutto, è stato necessario estrarre dal software di manutenzione "Coswin8i" utilizzato in ospedale, lo storico delle manutenzioni effettuate sulla macchina da cui sono stati estratti gli scontrini. Sono state, quindi, incrociate le date presenti sugli scontrini con quelle riportate dal servizio di manutenzione, così da avere la possibilità di studiare gli scontrini corrispondenti a 7 giorni precedenti all'effettiva chiamata al Global Service (d'ora in avanti chiamati per brevità "giorni predittivi"). Tentativo di questo lavoro è stato quello di correlare i guasti della lavaendoscopi alle informazioni contenute negli scontrini dei giorni predittivi, al fine di ottenere un modello di predizione in grado di calcolare probabilità di guasto delle lavaendoscopi utilizzando, per l'apprendimento del modello, i file di backup corrispondenti a 3 anni di attività raccolti dalla macchina stessa.
+
+Per prima cosa è stato necessario estrarre dal software di manutenzione "Coswin8i" utilizzato in ospedale, lo storico delle manutenzioni effettuate sulla macchina da cui sono stati estratti gli scontrini. Sono state, quindi, incrociate le date presenti sugli scontrini con quelle riportate dal servizio di manutenzione, così da avere la possibilità di studiare gli scontrini corrispondenti a 7 giorni precedenti all'effettiva chiamata al Global Service (d'ora in avanti chiamati per brevità "giorni predittivi"). Tentativo di questo lavoro è stato quello di correlare i guasti della lavaendoscopi alle informazioni contenute negli scontrini dei giorni predittivi, al fine di ottenere un modello di predizione in grado di calcolare probabilità di guasto delle lavaendoscopi utilizzando, per l'apprendimento del modello, i file di backup corrispondenti a 3 anni di attività raccolti dalla macchina stessa.
 
 
 ### Apprendimento ad istanza multipla \label{mil}
@@ -143,7 +203,7 @@ Il Text Mining consiste nell'applicazione di tecniche di Data Mining a testi non
 - addestrare motori di ricerca;
 - estrarre concetti per la creazione di ontologie (ontology learning).
 
-Vista la natura prettamente testuale degli scontrini, si è deciso di utilizzare alcune delle metodiche proprie del Text Mining al fine di trasformare il testo di ogni scontrino in un insieme di features da utilizzare per la creazione di un modello di predizione. Questa scelta rappresenta un approccio innovativo al tema della manutenzione predittiva. Infatti, oltre all'utilizzo del Text Mining nel lavoro di Sipos et al. [@siposLogbasedPredictiveMaintenance2014], attualmente non esistono in letteratura casi riportati di utilizzo di queste tecniche applicate al tema della manutenzione predittiva che, infatti, si basa più comunemente sull'analisi numerica di variabili fisiche misurate per via diretta o derivata.
+Vista la natura prettamente testuale degli scontrini, si è deciso di utilizzare alcune delle metodiche proprie del Text Mining al fine di trasformare il testo di ogni scontrino in un insieme di features da utilizzare per la creazione di un modello di predizione. Questa scelta rappresenta un approccio innovativo al tema della manutenzione predittiva. Infatti, oltre all'utilizzo del Text Mining nel lavoro di Sipos et al. [@siposLogbasedPredictiveMaintenance2014], attualmente non stati reperiti in letteratura casi di utilizzo di queste tecniche applicate al tema della manutenzione predittiva che, infatti, si basa più comunemente sull'analisi numerica di variabili fisiche misurate per via diretta o derivata.
 
 A partire dalla feature chiamata "testo", creata dalla funzione descritta nel paragrafo \ref{preprocessing}, è stato quindi creato un "corpus", ovvero una collezione di documenti, per ognuna delle "borse" di scontrini. Esplorando i primi 5 documenti di un corpus, per esempio, si ottiene:
 
@@ -333,7 +393,7 @@ ggplot(wordFreq,
 
 
 
-La rarità dei termini che riflettono un comportamento anomalo è diretta conseguenza della poca frequenza con cui si verificano eventi di guasto. Dal software di gestione della manutenzione, infatti, è stato riscontrato che la macchina in questione è stata interessata da 47 interventi di manutenzione correttiva. Su circa 800 giorni di attività della macchina i guasti sono da considerarsi come eventi estremamente rari, interessando infatti poco più del 5% dei giorni di attività totali.
+La rarità dei termini che riflettono un comportamento anomalo è diretta conseguenza della poca frequenza con cui si verificano eventi di guasto. Dal software di gestione della manutenzione, infatti, è stato riscontrato che la macchina in questione è stata interessata da 47 interventi di manutenzione correttiva. Su circa 800 giorni di attività della macchina i guasti sono da considerarsi come eventi rari, interessando infatti poco più del 5% dei giorni di attività totali.
 
 È parso ragionevole, al fine di discriminare in modo ottimale un comportamento anomalo da uno nominale, assegnare un peso maggiore ai termini con una frequenza relativa minore tramite la tf-idf descritta sopra.
 
@@ -464,10 +524,10 @@ Support Vector Machine (Linear Kernel) & 0.73 & 0.20 & 0.91 & 0.4\\
 \end{table}
 
 
-Sebbene l'accuratezza risulti buona, essa, come già detto, è inaffidabile in un caso come questo, dove la distribuzione delle classi da predire risulta "sbilanciata". L'elevato valore di specificità comune a tutti i modelli addestrati significa che essi si dimostrano buoni classificatori per quanto riguarda l'identificazione della classe "negativa". Tuttavia, come intuibile dai bassi valori di sensitività, essi non risultano essere in grado di discriminare la classe di interesse. Ciò è dovuto molto probabilmente al numero eccessivamente basso di osservazioni a disposizione per l'addestramento dei modelli.
+Sebbene l'accuratezza risulti buona nella maggior parte dei modelli, essa, a causa del forte sbilanciamento delle classi da predire, deve essere razionalizzata e considerata insieme ad altre misure più consone al caso in esame. L'elevato valore di specificità comune a tutti i modelli addestrati significa che essi si dimostrano buoni classificatori per quanto riguarda l'identificazione della classe "negativa". Tuttavia, i bassi valori di sensitività indicano che la capacità dei modelli di identificare correttamente la classe "positiva" dovrà essere migliorata aumentando il numero di dati a disposizione per l'apprendimento dei modelli stessi.
 
-Di per sé , infatti, lo sbilanciamento delle classi è un problema facilmente aggirabile tramite diversi approcci come ad esempio specificando al pacchetto caret di utilizzare un metodo di resampling che tenga conto del forte sbilanciamento di classi (downsampling). In questo modo, ad esempio, ad ogni iterazione vengono selezionate un pari numero di osservazioni positive e negative (utilizzando tutte quelle positive a disposizione), annullando quindi lo sbilanciamento.
+Di per sé , infatti, il sopracitato sbilanciamento delle classi è un problema comune in applicazioni di machine learning ed è facilmente aggirabile tramite diversi approcci come ad esempio specificando al pacchetto caret di utilizzare un metodo di apprendimento che tenga conto del forte sbilanciamento di classi (downsampling). In questo modo, ad esempio, ad ogni iterazione della fase di apprendimento vengono selezionate un pari numero di osservazioni positive e negative (utilizzando tutte quelle positive a disposizione), annullando quindi lo sbilanciamento.
 
-In questo lavoro, tuttavia, accorgimenti di questo tipo non hanno migliorato in modo sufficiente le performance di classificazione, ottenendo comunque sensitività e precisione molto basse. Performance migliori possono essere ottenute aumentando il numero di dati a disposizione prelevando da altre macchine simili i file di backup. Elemento essenziale per poter meglio sviluppare questi modelli sarà, comunque, la presenza di dati relativi agli interventi manutentivi effettuati senza i quali, infatti, non si avrebbe la possibilità di etichettare i dati a disposizione, invalidando quindi il concetto di apprendimento supervisionato.
+Un ulteriore margine di miglioramento consisterebbe nell'aumentare il numero di dati relativi esclusivamente alla classe "positiva", in modo da facilitare l'apprendimento dei modelli. Per ottenere tali dati sarà essenziale la presenza di dati relativi agli interventi manutentivi effettuati senza i quali, infatti, non si avrebbe la possibilità di etichettare le osservazioni a disposizione, invalidando quindi il concetto di apprendimento supervisionato.
 
-Il lavoro svolto è comunque un buon punto di partenza per eventuali sviluppi futuri, in quanto l'aggiunta di ulteriori dati non implicherebbe la modifica di tutte le fasi elencate precedentemente, ma semplicemente un maggiore tempo di elaborazione per l'addestramento dei modelli, in misura proporzionale alla quantità di nuove osservazioni.
+Il lavoro svolto risulta quindi un buon punto di partenza per eventuali sviluppi futuri, in quanto l'aggiunta di ulteriori dati non implicherebbe la modifica di tutte le fasi elencate precedentemente, ma semplicemente un maggiore tempo di elaborazione per l'addestramento dei modelli, in misura proporzionale alla quantità di nuove osservazioni.

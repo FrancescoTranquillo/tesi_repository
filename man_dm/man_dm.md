@@ -16,7 +16,7 @@ combinazione,  compresi  gli  accessori tra cui il software destinato dal  fabbr
   {\itshape\item controllo del concepimento,}
 \end{enumerate}
 
-*che non eserciti nel o sul corpo umano  l'azione  principale cui e' destinato con mezzi farmacologici, immunologici o mediante processi metabolici, ma la cui funzione possa essere coadiuvata da tali mezzi.[@GazzettaUfficiale]"*
+*che non eserciti nel o sul corpo umano  l'azione  principale cui e' destinato con mezzi farmacologici, immunologici o mediante processi metabolici, ma la cui funzione possa essere coadiuvata da tali mezzi.[@GazzettaUfficialeRepubblica]"*
 
 ### Manutenzione correttiva e preventiva
 La manutenzione correttiva viene definita come :
@@ -94,10 +94,10 @@ Di seguito si riporta quanto presente nella Procedura Operativa Aziendale dal ti
 La terminologia indicata nella documentazione fa riferimento alle seguenti definizioni:
 
 - **a**: Apparecchiatura elettromedicale in gestione al SIC;
-- **EST**: DITTA ESTERNA PRODUTTRICE O SUA EMANAZIONE;
+- **EST**: Ditta esterna produttrice o sua emanazione;
 - **GS GLOBAL SERVICE**: Servizio per la manutenzione esternalizzata di (a);
-- **SIC**: SC INGEGNERIA CLINICA (Servizio Ingegneria Clinica);
-- **SS/SC**: STRUTTURA SEMPLICE/STRUTTURA COMPLESSA;
+- **SIC**: Servizio Ingegneria Clinica;
+- **SS/SC**: Struttura semplice/Struttura complessa;
 - **UO**: Unità Operativa.
 
 I ruoli delle figure coinvolte nella procedura di manutenzione programmata vengono riportati in figura \ref{ruoli_prog}. La relativa documentazione di riferimento è riportata in figura \ref{diz_prog}.

@@ -49,7 +49,7 @@ Lo schema di funzionamento e gli elementi dell'interfaccia delle fasi sopracitat
 \FloatBarrier
 
 
-Una volta seleionato un intervallo di date valido e un insieme di numeri seriali, l'utente può navigare tra le varie pagine dell'applicazione, visualizzando le diverse informazioni in modo dinamico rispetto alle scelte effettuate nella sidebar. Se infatti l'utente cambia la selezione del numero seriale, i grafici e le tabelle cambieranno in modo reattivo seguendo la scelta impostata dall'utente.
+Una volta selezionato un intervallo di date valido e un insieme di numeri seriali, l'utente può navigare tra le varie pagine dell'applicazione, visualizzando le diverse informazioni in modo dinamico rispetto alle scelte effettuate nella sidebar. Se infatti l'utente cambia la selezione del numero seriale, i grafici e le tabelle cambieranno in modo reattivo seguendo la scelta impostata dall'utente.
 
 ### Overview \label{overcap}
 \FloatBarrier
@@ -128,20 +128,20 @@ Anche per i grafici di questa sezione viene specificato che l'utente può visual
 
 Una volta ottenuta una versione semi-definitiva dell'applicazione, si è pensato a come poterla rendere accessibile al reparto di endoscopia. Applicazioni web di questo tipo, create con il pacchetto Shiny, possono essere gratuitamente "hostate" su internet grazie al servizio chiamato "Shinyapps.io" grazie al quale, previa registrazione, è possibile caricare un numero illimitato di applicazioni Shiny scegliendo tra diversi piani tariffari. Quello gratuito presenta delle limitazioni per quanto riguarda le ore di accesso ad una applicazione. In particolare, con questa opzione è possibile utilizzare una app per non più di 25 ore mensili, allo scadere delle quali il server risponde con una pagina di reindirizzamento e impedendo l'accesso al servizio. Per ovviare a questo inconveniente e contemporaneamente per offrire all'ospedale un servizio completamente gratuito e senza limiti di utilizzo, si è richiesto il supporto dell'U.O.C Sistemi Informativi. Si è quindi indagata la possibilità di usufruire di un server (interno all'opsedale) su cui, previa configurazione delle porte di accesso e di varie impostazioni necessarie al corretto funzionamento dell'applicazione, è stato caricato il software.
 
-Il server messo a disposizione è dotato di sistema operativo CentOS 7 (una distribuzione di Linux) e l'accesso all'applicazione è riservato solamente ai computer della rete ospedaliera. Il vantaggio di questa configurazione sta sicuramente nel fatto di avere a disposizione, per un numero illimitato di ore, l'applicazione sviluppata. Uno dei lati negativi sta tuttavia negli eventuali crash di sistema che possono incorrere durante l'utilizzo del software. In questo caso, l'applicazione deve essere riavviata tramite console di comando accedendo al server da una postazione abilitata.
+Il server messo a disposizione è dotato di sistema operativo CentOS 7 (una distribuzione di Linux) e l'accesso all'applicazione è riservato solamente ai computer della rete ospedaliera. Il vantaggio di questa configurazione sta sicuramente nel fatto di avere a disposizione, per un numero illimitato di ore, l'applicazione sviluppata. Tra le criticità si possono contemplare eventuali crash di sistema che possono incorrere durante l'utilizzo del software. In questo caso, l'applicazione deve essere riavviata tramite console di comando accedendo al server da una postazione abilitata.
 
 
-## Criticità incontrate
+## Opportunità di miglioramento
 
 La modalità di upload degli scontrini necessaria all'utilizzo dell'applicazione rimane problematica per quanto riguarda il caricamento di un alto numero di scontrini (situazione che può verificarsi spesso soprattutto se si decide di utilizzare l'applicazione a cadenza mensile o trimestrale).
 
 La soluzione a questo problema è relativamente semplice: sfruttando la possibilità di collegare le lavaendoscopi alla rete dell'ospedale (tramite degli attacchi di rete presenti sulle macchine stesse) e configurando le stesse macchine per far sì che eseguano i backup su una cartella interna alla rete informatica dell'ospedale, i file degli scontrini potrebbero essere salvati direttamente sul server dove attualmente è installata "INSIGHT". La stessa applicazione dovrà quindi essere modificata in modo da eliminare definitivamente il passaggio obbligato di "caricamento", in quanto gli algoritmi di analisi degli stessi potrebbero essere eseguiti ogniqualvolta una lavaendoscopi esegua un ciclo di lavaggio. Così facendo, si avrebbe un monitoraggio quasi in real-time delle performance dei dispositivi. Una soluzione di questo tipo si presta bene anche a sviluppi futuri quali la progettazione e l'implementazione di un database nel quale poter inserire, di volta in volta, gli scontrini di lavaggio per avere a disposizione una struttura dati altamente organizzata e sicura sulla quale poter svolgere, secondo necessità, altre tipologie di analisi.
 Tuttavia,l'applicazione di tale soluzione non è stata possibile in quanto la configurazione dei sopracitati attacchi di rete non è stata ancora eseguita.
 
-La seconda critictà incontrata durante lo sviluppo riguarda la fase di software deployment e in particolare la necessità di dover riavviare manualmente il server di "INSIGHT" tramite console di comando nel caso di crash imprevisti.
+La seconda criticità incontrata durante lo sviluppo riguarda la fase di software deployment e in particolare la necessità di dover riavviare manualmente il server di "INSIGHT" tramite console di comando nel caso di crash imprevisti.
 Una soluzione a questo problema risiede in una modalità di sicurezza chiamata "Upstart" normalmente presente tra le configurazioni possibili di una applicazione Shiny. Con questa modalità è infatti possibile fare in modo che qualsiasi interruzione imprevista del servizio venga identificata e risolta tramite un riavvio del server. Di conseguenza, con questa modalità, un eventuale crash non determinerebbe la necessità di intervenire manualmente per riavviare il servizio. Purtroppo però questa modalità è attivabile solo sui sistemi operativi Ubuntu 14.04 e RedHat 6, quindi il sistema attualmente in uso può essere riavviato solo manualmente. La soluzione più semplice sarebbe quella di cambiare sistema operativo e ripetere l'installazione del software con il nuovo sistema.
 
-## Feedback da parte del reparto di Endoscopia
+## Punti di forza
 
 Terminato lo sviluppo, è stato chiesto alla responsabile di reparto di testare l'applicazione e di riportare eventuali osservazioni e giudizi circa la sua utilità. "INSIGHT" è stata ritenuta una applicazione utile ed efficace per diversi aspetti:
 
