@@ -57,7 +57,7 @@ La gestione e l'attuazione della manutenzione delle varie apparecchiature elettr
 
 In questo scenario di continua innovazione e crescente complessità tecnologica dei macchinari, si capisce la trasformazione che ha interessato negli ultimi anni l’attività manutentiva. Essa, concepita negli anni passati esclusivamente in funzione del ripristino di apparecchiature biomediche non funzionanti, sta progressivamente mutando verso una vera e propria funzione manageriale volta, in ultima analisi, al miglioramento della qualità dell’assistenza al paziente del cui iter diagnostico-terapeutico l’elemento tecnologico gioca un ruolo fondamentale. Questo miglioramento di qualità è ottenuto grazie alla risoluzione degli obiettivi cardine dell'attività manutentiva, volti alla riduzione dei rischi connessi all’uso dei dispositivi medici, a diminuire i tempi di inutilizzo, a prevenire i guasti, a garantire la qualità delle prestazioni erogate, ad ottimizzare quindi, la durata fisiologica del prodotto.
 
-Nelle diverse strutture sanitarie in cui è stato organizzato un Servizio di Ingegneria Clinica (SIC), è possibile individuare tre diversi modelli di organizzativi “ideali”:
+Nelle diverse strutture sanitarie in cui è stato organizzato un Servizio di Ingegneria Clinica (SIC), è possibile individuare tre diversi modelli di organizzativi:
 
 - **SIC interno**: istituito internamente alla struttura sanitaria e con personale dipendente
 dalla struttura stessa. La tipologia di un Servizio di Ingegneria Clinica totalmente interno all’Azienda Sanitaria prevede che tutte le funzioni proprie dell’ingegneria clinica siano svolte con personale interno dipendente. La gestione della tecnologia secondo quest’ottica si basa sul presupposto che il personale sia altamente qualificato, che conosca dettagliatamente la situazione dell’ente, che abbia solidi legami con l’organizzazione sanitaria, tecnica ed amministrativa.
@@ -84,7 +84,7 @@ Tutte queste forme di presenza sono caratterizzate da una gestione della manuten
 - verifiche di sicurezza elettrica
 - controlli periodici di qualità (calibrazioni ecc.)
 
-Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingegneri biomedici e tecnici informatici ed elettronici).
+Una volta terminato il periodo di garanzia (ovviamente inferiore rispetto alla vita utile effettiva del macchinario), sarà compito del Global Service effettuare tutte le attività di manutenzione espresse precedentemente, tramite le competenze del personale tecnico specializzato (ingegneri biomedici e tecnici informatici ed elettronici) o avvalendosi dei produttori o altre società specificatamente individuate.
 
 ### Manutenzioni programmate
 Per quanto riguarda le manutenzioni programmate, la società di manutenzione esternalizzata (Tecnologie Sanitarie S.p.A come indicata nel paragrafo \ref{1}) si avvale di schede tecniche, specifiche per ogni classe di dispositivo, che contengono procedure guidate sulle operazioni da seguire in sede di manutenzione programmata. Queste schede tecniche sono redatte unendo sia le indicazioni del fabbricante del dispositivo, sia l'esperienza tecnica di Tecnologie Sanitarie S.p.A, ottenendo quindi una procedura mista.
@@ -163,7 +163,7 @@ Il coinvolgimento delle diverse strutture operative nella manutenzione correttiv
 Viene qui di seguito descritto nel dettaglio un intervento di manutenzione correttiva, a cui si è assistito durante il periodo di tirocinio presso l'ASST Vimercate, al duplice fine di:
 
 1. evidenziare la complessità degli interventi di manutenzione correttiva con particolare riferimento ad apparecchiature ad alta tecnologia come ad esempio un tomografo a risonanza magnetica;
-2. introdurre i log macchina e la loro importanza sia dal punto di vista manutentivo, sia per il ruolo centrale che essi hanno ricoperto durante lo svolgimento di questo lavoro di tesi.
+2. introdurre i log macchina e la loro importanza sia dal punto di vista manutentivo, sia per il ruolo centrale che essi hanno ricoperto durante lo svolgimento di questo lavoro di tesi, come descritto nei paragrafi successivi.
 
 ### Risonanza Magnetica (RM)
 
@@ -186,9 +186,9 @@ numerosità migliora pertanto il rapporto segnale rumore.
 tessuti. A una serie base di sequenze presenti in tutte le apparecchiature, si aggiungono altre tipologie, in relazione agli specifici usi clinici di cui si necessità (RM cardio; RM
 mammaria; RM angio; RM neuro avanzato; RM funzionale; Diffusion tensor-imaging; RM perfusion; Spettroscopia.)
 
-### L'intervento di manutenzione correttiva alla Philips Achieva
+### L'intervento di manutenzione correttiva sulla risonanza Philips Achieva di proprietà della ASST Vimercate
 
-Durante l'attività di tirocinio, si è assistito a un intervento di manutenzione correttiva ad una delle due risonanze magnetiche presenti nell'ospedale nuovo di Vimercate. Le risonanze sono entrambe di marca Philips ed entrambe dotate di magnete a tipologia superconduttore, ma con magneti di diversa potenza (una da 3 Tesla e una da 1.5 Tesla). Quest'ultima (modello Philips Achieva, figura \ref{achieva}), durante le prime settimane di marzo, è stata sottoposta a diversi interventi di manutenzione correttiva da una squadra di tecnici specializzati (field engineers) di Philips, essendo la RM in contratto di manutenzione diretta tra ASST e ditta produttrice. Il reparto di radiologia ha infatti segnalato al servizio di manutenzione, tramite richiesta di intervento sul software interno Coswin8i, alcuni problemi relativi alla qualità delle immagini prodotte dalla risonanza su determinate sequenze (in particolare RM toracica e RM neuro) e utilizzando determinate bobine di ricezione. In particolare, le immagini prodotte durante questa tipologia di esami risultavano caratterizzate da un'alta percentuale di rumore, tale da renderle inutilizzabili ai fini diagnostici.
+Durante l'attività di tirocinio, si è assistito a un intervento di manutenzione correttiva ad una delle due risonanze magnetiche presenti nell'ospedale nuovo di Vimercate. Le risonanze sono entrambe di marca Philips ed entrambe dotate di magnete (da 1.5 Tesla) a tipologia superconduttore. Una di queste (modello Philips Achieva, figura \ref{achieva}), durante le prime settimane di marzo, è stata sottoposta a diversi interventi di manutenzione correttiva da una squadra di tecnici specializzati (field engineers) di Philips, essendo la RM in contratto di manutenzione diretta tra ASST e ditta produttrice. Il reparto di radiologia ha infatti segnalato al servizio di manutenzione, tramite richiesta di intervento sul software interno Coswin8i, alcuni problemi relativi alla qualità delle immagini prodotte dalla risonanza su determinate sequenze (in particolare RM toracica e RM neuro) e utilizzando determinate bobine di ricezione. In particolare, le immagini prodotte durante questa tipologia di esami risultavano caratterizzate da un'alta percentuale di rumore, tale da renderle inutilizzabili ai fini diagnostici.
 
 ![Risonanza Magnetica Philips Achieva da 1.5 Tesla \label{achieva}](man_dm/img/achieva.jpg){width=60%}
 

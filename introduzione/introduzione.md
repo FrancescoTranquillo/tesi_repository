@@ -46,7 +46,7 @@ Nella mappa riportata in figura \ref{mappaasst} è visibile, in blu, il territor
 
 \FloatBarrier
 
-### La Missione Aziendale
+### La Mission Aziendale
 La missione dell’Azienda è quella di contribuire alla promozione, al mantenimento e al recupero delle condizioni di salute della popolazione, erogando prestazioni sia sanitarie sia sociosanitarie, secondo standard di eccellenza, di media e elevata complessità, nel rispetto della dignità della persona, del bisogno di salute, dell’equità dell’accesso all’assistenza, della qualità delle cure e della loro appropriatezza, dell’economicità nell’impiego delle risorse ed in coerenza con i principi e gli obiettivi definiti dal Piano Sanitario Nazionale e dal Piano Sanitario Regionale.
 
 L’Azienda, conformemente alle indicazioni Regionali, ha strutturato un sistema “che si prenda cura” della persona e del suo benessere, collaborando attivamente con tutti gli attori del Sistema Socio-Sanitario, al fine di perseguire l’obiettivo di rafforzare nel cittadino la percezione di un’identità comune, garantendo così a tutti parità di accesso ai servizi.

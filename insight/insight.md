@@ -1,4 +1,4 @@
-# INSIGHT
+# Web App INSIGHT
 
 In questo capitolo viene descritto in che modo si è arrivati alla decisione di sviluppare una web app (chiamata "INSIGHT") per il reparto di endoscopia. Vengono prima indicate le problematiche relative alla riprocessazione della strumentazione endoscopica e, per ognuna di esse, verrà descritto in che modo la web app sviluppata può essere d'aiuto nella razionalizzazione e nella successiva risoluzione delle stesse. Verrà inoltre trattata la strategia utilizzata per effettuare il _software deployment_ che ha reso disponibile l'applicazione sulla rete interna dell'ospedale, grazie al contributo dell'U.O.C. Sistemi Informativi Aziendali. Infine si evidenzieranno sia le criticità incontrate durante lo sviluppo del software, sia il riscontro all'utilizzo dell'app da parte del personale del reparto.
 
@@ -34,7 +34,7 @@ Il primo elemento di interazione è rappresentato dal modulo di caricamento degl
 1. i file selezionati vengono copiati dalla cartella di origine in una cartella temporanea del pc in utilizzo;
 2. si utilizza la cartella temporanea per effettuare il vero e proprio caricamento, che avviene in modo asincrono.
 
-È stato riscontrato che i tempi di upload possono aumentare di molto se si utilizza un pc di fascia bassa. Questo perchè, come detto, la prima fase di caricamento consiste in una copiatura "interna" dei file tra una cartella e l'altra dello stesso computer, ininfluente quindi dalla qualità della connessione internet, che viene invece utilizzata per effettuare la seconda fase di caricamento.
+È stato riscontrato che i tempi di upload diminuiscono utilizzando pc performanti. Questo perchè, come detto, la prima fase di caricamento consiste in una copiatura "interna" dei file tra una cartella e l'altra dello stesso computer, ininfluente quindi dalla qualità della connessione internet, che viene invece utilizzata per effettuare la seconda fase di caricamento.
 
 Una volta completato l'upload dei file, gli algoritmi di trasformazione specificati nel capitolo precedente analizzano gli scontrini e all'utente viene chiesto di inserire un intervallo di date che si vuole indagare, tramite un date-picker. Il calendario è costruito in modo tale che siano selezionabili solamente effettivamentepresenti negli scontrini caricati
 
@@ -78,7 +78,7 @@ Una particolare nota va all'info box che riporta il numero totale dei cicli effe
 
 \FloatBarrier
 
-Per quanto riguarda il modulo della manutenzione predittiva, invece, esso viene attivato una volta che viene cliccato dall'utente. In questo caso, all'utente viene presentato un grafico con l'andamento della probabilità di guasto nei successivi 7 giorni per ogni macchina selezionata nella sidebar. La probabilità di guasto viene calcolata utilizzando i modelli addestrati, descritti nel capitolo \ref{modeling}. Ogni modello infatti predice la probabilità, per un certo insieme di scontrini, di appartenere o meno ad uno dei già citati "giorni predittivi". Le predizioni dei vari modelli vengono poi mediate (secondo la logica del model averaging) per ottenere un'unica predizione che tenga conto sia dei punti di forza sia delle debolezze dei vari modelli utilizzati. Tuttavia, come visto nel capitolo precedente, i modelli sviluppati non presentano performance ottimali per essere considerati affidabili ed essere quindi utilizzati a livello professionale. Si è deciso comunque di implementare i modelli predittivi nella versione rilasciata presso l'ospedale, avvertendo preventivamente della loro inefficacia, a puro scopo dimostrativo.
+Per quanto riguarda il modulo della manutenzione predittiva, invece, esso viene attivato una volta che viene cliccato dall'utente. In questo caso, all'utente viene presentato un grafico con l'andamento della probabilità di guasto nei successivi 7 giorni per ogni macchina selezionata nella sidebar. La probabilità di guasto viene calcolata utilizzando i modelli addestrati, descritti nel capitolo \ref{modeling}. Ogni modello infatti predice la probabilità, per un certo insieme di scontrini, di appartenere o meno ad uno dei già citati "giorni predittivi". Le predizioni dei vari modelli vengono poi mediate (secondo la logica del model averaging) per ottenere un'unica predizione che tenga conto sia dei punti di forza sia delle debolezze dei vari modelli utilizzati. Tuttavia, come visto nel capitolo precedente, i modelli sviluppati necessitano di ulteriori studi e integrazioni per aumentare l'affidabilità nella predizione.
 
 Infine, la parte inferiore della schermata di overview permette di visualizzare l'andamento nel tempo del numero di cicli regolari e irregolari.
 
@@ -100,15 +100,13 @@ La parte inferiore è composta invece, a sinistra, da una serie di controlli con
 
 ### Strumentazione
 
-Anche questa sezione è stata divisa in una parte superiore (figura \ref{strum1}) e una inferiore (figura \ref{strum2}).
-
-La parte superiore contiene un grafico a barre verticali che mostra il numero di cicli effettuati su ogni lavaendoscopi divisi per ogni categoria di strumento, evidenziando la distribuzione di cicli regolari e irregolari.
+In questa sezione, l'utente ha a disposzione due visualizzazioni: nella figura \ref{strum1} è rappresentata la prima, contenente un grafico a barre verticali che mostra il numero di cicli effettuati su ogni lavaendoscopi divisi per ogni categoria di strumento, evidenziando la distribuzione di cicli regolari e irregolari.
 
 ![Cicli eseguiti per categoria di strumento \label{strum1}](insight/img/strum1.png)
 
 \FloatBarrier
 
-Quella inferiore permette di selezionare una categoria di strumento per visualizzare, tramite una tabella del tutto simile a quelle presenti nella pagina "Overview" (paragrafo \ref{overcap}), i dettagli dei cicli (selezionabili tra regolari e irregolari grazie a delle sezioni sopra la tabella) riferiti alla categoria di strumento scelta.
+La seconda visualizzazione è riportata in figura \ref{strum2}: in questa interfaccia è possibile selezionare una categoria di strumento per visualizzare, tramite una tabella del tutto simile a quelle presenti nella pagina "Overview" (paragrafo \ref{overcap}) i dettagli dei cicli (selezionabili tra regolari e irregolari grazie a delle sezioni sopra la tabella) riferiti alla categoria di strumento scelta.
 
 ![Tabella dei cicli regolari/irregolari per la categoria di strumento scelta \label{strum2}](insight/img/strum2.png)
 
@@ -116,7 +114,7 @@ Quella inferiore permette di selezionare una categoria di strumento per visualiz
 
 ### Operatori
 
-L'ultima sezione dell'app è composta, a sinistra, di una finestra di controlli in cui l'utente seleziona, da un menù a tendina, uno o più operatori e specifica di quale cicli vuole avere il conteggio (regolari o irregolari o entrambi) mentre, a destra, si ha un grafico a barre verticali in cui viene presentato il conteggio dei cicli per ciascun operatore selezionato. L'utente può inoltre scegliere se visualizzare il totale dei conteggi oppure separare il numero di cicli per ciascuna delle lavaendoscopi selezionate nella sidebar.
+L'ultima sezione dell'app è composta, a sinistra, da una finestra di controlli in cui l'utente seleziona, da un menù a tendina, uno o più operatori e specifica di quale cicli vuole avere il conteggio (regolari o irregolari o entrambi) mentre, a destra, si ha un grafico a barre verticali in cui viene presentato il conteggio dei cicli per ciascun operatore selezionato. L'utente può inoltre scegliere se visualizzare il totale dei conteggi oppure separare il numero di cicli per ciascuna delle lavaendoscopi selezionate nella sidebar.
 
 ![Numero di cicli per operatore. Vista Totale \label{op}](insight/img/op.png)
 
@@ -128,7 +126,7 @@ Anche per i grafici di questa sezione viene specificato che l'utente può visual
 
 Una volta ottenuta una versione semi-definitiva dell'applicazione, si è pensato a come poterla rendere accessibile al reparto di endoscopia. Applicazioni web di questo tipo, create con il pacchetto Shiny, possono essere gratuitamente "hostate" su internet grazie al servizio chiamato "Shinyapps.io" grazie al quale, previa registrazione, è possibile caricare un numero illimitato di applicazioni Shiny scegliendo tra diversi piani tariffari. Quello gratuito presenta delle limitazioni per quanto riguarda le ore di accesso ad una applicazione. In particolare, con questa opzione è possibile utilizzare una app per non più di 25 ore mensili, allo scadere delle quali il server risponde con una pagina di reindirizzamento e impedendo l'accesso al servizio. Per ovviare a questo inconveniente e contemporaneamente per offrire all'ospedale un servizio completamente gratuito e senza limiti di utilizzo, si è richiesto il supporto dell'U.O.C Sistemi Informativi. Si è quindi indagata la possibilità di usufruire di un server (interno all'opsedale) su cui, previa configurazione delle porte di accesso e di varie impostazioni necessarie al corretto funzionamento dell'applicazione, è stato caricato il software.
 
-Il server messo a disposizione è dotato di sistema operativo CentOS 7 (una distribuzione di Linux) e l'accesso all'applicazione è riservato solamente ai computer della rete ospedaliera. Il vantaggio di questa configurazione sta sicuramente nel fatto di avere a disposizione, per un numero illimitato di ore, l'applicazione sviluppata. Tra le criticità si possono contemplare eventuali crash di sistema che possono incorrere durante l'utilizzo del software. In questo caso, l'applicazione deve essere riavviata tramite console di comando accedendo al server da una postazione abilitata.
+Il server messo a disposizione è dotato di sistema operativo CentOS 7 (una distribuzione di Linux) e l'accesso all'applicazione è riservato solamente ai computer della rete ospedaliera. Il vantaggio di questa configurazione sta nel fatto di poter usufruire, per un numero illimitato di ore, dell'applicazione sviluppata.
 
 
 ## Opportunità di miglioramento
@@ -136,10 +134,9 @@ Il server messo a disposizione è dotato di sistema operativo CentOS 7 (una dist
 La modalità di upload degli scontrini necessaria all'utilizzo dell'applicazione rimane problematica per quanto riguarda il caricamento di un alto numero di scontrini (situazione che può verificarsi spesso soprattutto se si decide di utilizzare l'applicazione a cadenza mensile o trimestrale).
 
 La soluzione a questo problema è relativamente semplice: sfruttando la possibilità di collegare le lavaendoscopi alla rete dell'ospedale (tramite degli attacchi di rete presenti sulle macchine stesse) e configurando le stesse macchine per far sì che eseguano i backup su una cartella interna alla rete informatica dell'ospedale, i file degli scontrini potrebbero essere salvati direttamente sul server dove attualmente è installata "INSIGHT". La stessa applicazione dovrà quindi essere modificata in modo da eliminare definitivamente il passaggio obbligato di "caricamento", in quanto gli algoritmi di analisi degli stessi potrebbero essere eseguiti ogniqualvolta una lavaendoscopi esegua un ciclo di lavaggio. Così facendo, si avrebbe un monitoraggio quasi in real-time delle performance dei dispositivi. Una soluzione di questo tipo si presta bene anche a sviluppi futuri quali la progettazione e l'implementazione di un database nel quale poter inserire, di volta in volta, gli scontrini di lavaggio per avere a disposizione una struttura dati altamente organizzata e sicura sulla quale poter svolgere, secondo necessità, altre tipologie di analisi.
-Tuttavia,l'applicazione di tale soluzione non è stata possibile in quanto la configurazione dei sopracitati attacchi di rete non è stata ancora eseguita.
+Tuttavia, non è stato possibile testare questa soluzione in quanto le lavaendoscopi sono di nuova acquisizione e i lavori impiantistici per la predisposizione delle prese di rete sono ancora in fase di svolgimento.
 
-La seconda criticità incontrata durante lo sviluppo riguarda la fase di software deployment e in particolare la necessità di dover riavviare manualmente il server di "INSIGHT" tramite console di comando nel caso di crash imprevisti.
-Una soluzione a questo problema risiede in una modalità di sicurezza chiamata "Upstart" normalmente presente tra le configurazioni possibili di una applicazione Shiny. Con questa modalità è infatti possibile fare in modo che qualsiasi interruzione imprevista del servizio venga identificata e risolta tramite un riavvio del server. Di conseguenza, con questa modalità, un eventuale crash non determinerebbe la necessità di intervenire manualmente per riavviare il servizio. Purtroppo però questa modalità è attivabile solo sui sistemi operativi Ubuntu 14.04 e RedHat 6, quindi il sistema attualmente in uso può essere riavviato solo manualmente. La soluzione più semplice sarebbe quella di cambiare sistema operativo e ripetere l'installazione del software con il nuovo sistema.
+Per quanto riguarda l'applicazione "INSIGHT", essa potrà essere ulteriormente sviluppata implementando una misura di riavvio automatico per ripristinare il funzionamento del software in seguito ad interruzioni impreviste del servizio. Questa modalità di sicurezza è chiamata "Upstart", la quale è normalmente presente tra le configurazioni possibili di una applicazione Shiny. Con questa modalità è infatti possibile fare in modo che qualsiasi interruzione imprevista del servizio venga identificata e risolta tramite un riavvio del server. Di conseguenza un eventuale crash non determinerebbe la necessità di intervenire manualmente (tramite il terminale di comando) per riavviare il servizio. Purtroppo però questa modalità è implementabile solo sui sistemi operativi Ubuntu 14.04 e RedHat 6, quindi il sistema attualmente in uso può essere riavviato solo manualmente. La soluzione più semplice sarebbe quella di cambiare sistema operativo e ripetere l'installazione del software con il nuovo sistema.
 
 ## Punti di forza
 
