@@ -3,50 +3,52 @@ output: pdf_document
 ---
 \thispagestyle{empty}
  <!-- \begin{titlepage} -->
-\vspace*{-2cm}
-\begin{center}
-  \large
-  POLITECNICO DI MILANO\\
-  \large
-  Corso di Laurea Magistrale in Ingegneria Biomedica\\
-  Dipartimento di Elettronica, Informazione e Bioingegneria\\
-  \vspace*{1cm}
-  \begin{figure}[htbp]
-    \begin{center}
-      \includegraphics[width=4cm]{img/polimi}
-%	\psfig{file=img/polimi.png,width=3.5cm}
-    \end{center}
-  \end{figure}
-  \vspace*{1cm} \LARGE
+\begin{bfseries}
+  \vspace*{-2cm}
+  \begin{center}
+    \large
+    POLITECNICO DI MILANO\\
+    \large
+    Corso di Laurea Magistrale in Ingegneria Biomedica\\
+    Dipartimento di Elettronica, Informazione e Bioingegneria\\
+    \vspace*{1cm}
+    \begin{figure}[htbp]
+      \begin{center}
+        \includegraphics[width=4cm]{img/polimi}
+  %	\psfig{file=img/polimi.png,width=3.5cm}
+      \end{center}
+    \end{figure}
+    \vspace*{1cm} \LARGE
 
 
 
-  \textbf{LA MANUTENZIONE DELLE APPARECCHIATURE BIOMEDICHE NELL'ERA DELLE TECNOLOGIE DIGITALI}\\
+    \textbf{LA MANUTENZIONE DELLE APPARECCHIATURE BIOMEDICHE NELL'ERA DELLE TECNOLOGIE DIGITALI}\\
 
 
 
 
-\end{center}
-\vspace*{1cm} \large
-\begin{flushleft}
+  \end{center}
+  \vspace*{1cm} \large
+  \begin{flushleft}
 
 
-  Relatore: Prof. Veronica Cimolin \\
-  Correlatore: Ing. Daniela Motta
+    Relatore: Prof. Veronica Cimolin \\
+    Correlatore: Ing. Daniela Motta
 
-\end{flushleft}
-\vspace*{1.0cm}
-\begin{flushright}
-
-
-  Tesi di Laurea di:\\ Francesco Raffaele Tranquillo, matricola 905980 \\
+  \end{flushleft}
+  \vspace*{1.0cm}
+  \begin{flushright}
 
 
-\end{flushright}
-\vspace*{0.5cm}
-\begin{center}
+    Tesi di Laurea di:\\ Francesco Raffaele Tranquillo, matricola 905980 \\
+
+
+  \end{flushright}
+  \vspace*{0.5cm}
+  \begin{center}
 
 
 
-  Anno Accademico 2018-2019
-\end{center}
+    Anno Accademico 2018-2019
+  \end{center}
+\end{bfseries}

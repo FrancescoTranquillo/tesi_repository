@@ -1,4 +1,4 @@
-# Web App INSIGHT
+# Web App INSIGHT \label{insight_cap}
 
 In questo capitolo viene descritto in che modo si è arrivati alla decisione di sviluppare una web app (chiamata "INSIGHT") per il reparto di endoscopia. Vengono prima indicate le problematiche relative alla riprocessazione della strumentazione endoscopica e, per ognuna di esse, verrà descritto in che modo la web app sviluppata può essere d'aiuto nella razionalizzazione e nella successiva risoluzione delle stesse. Verrà inoltre trattata la strategia utilizzata per effettuare il _software deployment_ che ha reso disponibile l'applicazione sulla rete interna dell'ospedale, grazie al contributo dell'U.O.C. Sistemi Informativi Aziendali. Infine si evidenzieranno sia le criticità incontrate durante lo sviluppo del software, sia il riscontro all'utilizzo dell'app da parte del personale del reparto.
 
@@ -54,7 +54,7 @@ Una volta selezionato un intervallo di date valido e un insieme di numeri serial
 ### Overview \label{overcap}
 \FloatBarrier
 
-![Overview \label{overview}](insight/img/overview.png)
+![Schermata della pagina "Overview" \label{overview}](insight/img/overview.png)
 
 Nella pagina chiamata "Overview" (figura \ref{overview}), l'utente ha a disposizione delle informazioni generiche sull'insieme di scontrini caricati. Nella parte superiore della pagina sono presenti 6 "info boxes" che presentano informazioni relative a:
 

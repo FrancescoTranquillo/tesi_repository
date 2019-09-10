@@ -23,7 +23,7 @@ Per l'individuazione di una classe di dispositivi adeguata per essere trattata e
 collegamento alla rete dell’ospedale, ma per nessuno di questi è prevista, per sua propria natura e progettazione, una comunicazione di dati fisici e parametri. Questa è la maggiore criticità incontrata.
 - L'eventuale modifica di un apparecchio elettromedicale, anche se di proprietà dell'ospedale, al fine dell'inserimento di sensori utili alla raccolta di dati fisici (come un semplice termometro) risulterebbe in una invalidazione della certificazione CE, garanzia della sicurezza del dispositivo, innalzando il rischio (sia per il paziente, sia per l'operatore) relativo all'utilizzazione dello stesso.
 
-Si ha quindi una situazione generale dove risulta difficile, per l'Azienda Ospedaliera in generale e per Ingegneria Clinica in particolare, pensare di poter applicare una metodologia di manutenzione così avanzata. Tuttavia, il sistema informativo presente in Ospedale ha, come si vedrà più avanti nel capitolo \ref{insight} relativo allo sviluppo del software , tutti i requisiti per poter, in futuro, ospitare un sistema di manutenzione di questo tipo.
+Si ha quindi una situazione generale dove risulta difficile, per l'Azienda Ospedaliera in generale e per Ingegneria Clinica in particolare, pensare di poter applicare una metodologia di manutenzione così avanzata. Tuttavia, il sistema informativo presente in Ospedale ha, come si vedrà più avanti nel capitolo \ref{insight_cap} relativo allo sviluppo del software , tutti i requisiti per poter, in futuro, ospitare un sistema di manutenzione di questo tipo.
 
 ## L'analisi dei log macchina \label{logs}
 

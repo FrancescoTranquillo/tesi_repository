@@ -1,7 +1,13 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {table}{\numberline {4.1}{\ignorespaces Numero totale di attivit\IeC {\`a} cliniche suddivise per tipologia di prestazione effettuate nel 2017 dalla ASST di Vimercate afferenti al reparto di endoscopia}}{69}{table.4.1}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Top 5 prestazioni di tipo ambulatoriale effettuate}}{70}{table.4.2}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Document Term Matrix}}{89}{table.4.3}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Matrice di confusione}}{92}{table.4.4}
-\contentsline {table}{\numberline {4.5}{\ignorespaces Performance dei modelli ottenuti}}{94}{table.4.5}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.3.1}{\ignorespaces Numero totale di attivit\IeC {\`a} cliniche suddivise per tipologia di prestazione effettuate nel 2017 dalla ASST di Vimercate afferenti al reparto di endoscopia}}{79}{table.4.3.1}
+\contentsline {table}{\numberline {4.3.2}{\ignorespaces Top 5 prestazioni di tipo ambulatoriale effettuate}}{79}{table.4.3.2}
+\contentsline {table}{\numberline {4.6.1}{\ignorespaces Document Term Matrix}}{99}{table.4.6.1}
+\contentsline {table}{\numberline {4.7.1}{\ignorespaces Matrice di confusione}}{102}{table.4.7.1}
+\contentsline {table}{\numberline {4.7.2}{\ignorespaces Performance dei modelli ottenuti}}{104}{table.4.7.2}
+\addvspace {10\p@ }
+\addvspace {10\p@ }

@@ -3,6 +3,8 @@ bibliography: My Library.bib
 csl: style.csl
 fontsize: 12pt
 geometry: asymmetric
+documentclass: report
+classoption: openright
 header-includes:
 - \usepackage{emptypage}
 - \usepackage[italian]{babel}
@@ -23,8 +25,11 @@ header-includes:
 - \oddsidemargin=0.5in
 - \usepackage{fancyhdr}
 - \usepackage{listings}
+- \usepackage{sectsty}
+- \sectionfont{\clearpage}
 - \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true, aboveskip=\medskipamount}
 - \floatplacement{figure}{H}
+- \newcommand{\sectionbreak}{\clearpage}
 linestretch: 1.5
 link-citations: yes
 output:
@@ -46,38 +51,47 @@ output:
 \NewPage
 ```{r child='dedica.rmd'}
 ```
+\NewPage
 \pagebreak
 \pagenumbering{Roman}
+```{r child='sommario_abstract.rmd'}
+```
+\NewPage
+```{r child='ringraziamenti.rmd'}
+```
+\NewPage
 \tableofcontents
 \newpage
 \listoffigures
 \newpage
 \listoftables
 \cleardoublepage
-```{r child='sommario_abstract.rmd'}
-```
-\newpage
 \pagenumbering{arabic}
 \pagestyle{fancy}
-\fancyhead[LO]{\leftmark}
-\fancyhead[RO]{}
-\fancyhead[RE]{\rightmark}
-\fancyhead[LE]{}
+\fancyhead[LO]{}
+\fancyhead[RO]{\rightmark}
+\fancyhead[RE]{}
+\fancyhead[LE]{\leftmark}
 ```{r child='introduzione/introduzione.md'}
 ```
 \pagebreak
+
 ```{r child='man_dm/man_dm.md'}
 ```
 \pagebreak
+
 ```{r child='digital/digital.md'}
 ```
 \pagebreak
+
 ```{r child='vim_pred/vim_pred.md'}
 ```
 \pagebreak
+
 ```{r child='insight/insight.md'}
 ```
 \pagebreak
+
 ```{r child='conclusioni/conclusioni.md'}
 ```
 \pagebreak

@@ -2,9 +2,9 @@
 output: pdf_document
 ---
 
-\vspace{17cm}
+\vspace{30cm}
 
 \large
 \begin{flushright}
-\itshape{Spazio per dedica}
+\itshape{Ai miei genitori e a mio fratello}
 \end{flushright}
