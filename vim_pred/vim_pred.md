@@ -13,7 +13,7 @@ Come visto nel capitolo precedente, la previsione dell'insorgenza di un guasto i
 
 - Temperatura: monitorata attraverso termometri dotati di unità di memoria per il salvataggio e la successiva comunicazione in remoto dei dati misurati.
 - Pressione: monitorata attraverso sensori applicati alle parti meccaniche di interesse.
-- Ampiezza, fase e spettrometria delle vibrazioni meccaniche: variabili, queste, che risultano molto adatte ad essere studiate per il monitoraggio e la previsione dello stato di salute di un dispositivo meccanico sottoposto a movimenti ciclici, o di un componente dello stesso. L'analisi dello spettro delle frequenze si è dimostrato, in letteratura, una buona metodologia di indagine (ref).
+- Ampiezza, fase e spettrometria delle vibrazioni meccaniche: variabili, queste, che risultano molto adatte ad essere studiate per il monitoraggio e la previsione dello stato di salute di un dispositivo meccanico sottoposto a movimenti ciclici, o di un componente dello stesso. L'analisi dello spettro delle frequenze si è dimostrato, in letteratura, una buona metodologia di indagine [@renwickVibrationAnalysisProven1985].
 - Tensioni e correnti: misurate, manualmente, attraverso amperometri e voltmetri e automaticamente attraverso letture "interne" effettuate dai software stessi dei macchinari.
 
 Per l'individuazione di una classe di dispositivi adeguata per essere trattata e analizzata nell'ottica di manutenzione predittiva, ci si è avvalsi della consultazione sia del Global Service, sia del personale del SIC. I risultati di queste consultazioni possono essere sintetizzati nei seguenti punti:
