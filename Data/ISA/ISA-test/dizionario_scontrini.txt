@@ -1,4 +1,3 @@
-"x"
 "acqua"
 "alarm"
 "alcool"

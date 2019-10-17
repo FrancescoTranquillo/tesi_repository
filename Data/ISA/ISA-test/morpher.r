@@ -207,7 +207,7 @@ morpher <- function(scontrino) {
 meta <- function(df){
   
   dizionario <-
-    read.table("dizionario_scontrini.txt") %>%
+    read.table(here::here("dizionario_scontrini.txt")) %>%
     .$V1 %>%
     as.character.factor() %>%
     .[-1]
@@ -294,4 +294,8 @@ predict_median <- function(df_predizione){
   lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>%
   do.call("rbind",.) %>%
   summarise_all(.,median,na.rm=T)
+}
+
+predict_median_TD <<- function(df_predizione){
+  runif(1, 0, 1)
 }

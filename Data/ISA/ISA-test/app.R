@@ -13,7 +13,6 @@ library(shinycssloaders)
 library(shinyalert)
 library(shinyWidgets)
 library(DT)
-library(esquisse)
 library(lubridate)
 library(here)
 library(shinyBS)
@@ -30,16 +29,15 @@ library(stringr)
 library(rlang)
 library(tm)
 library(tidyverse)
-library(dplyr)
 library(lubridate)
 library(here)
 library(pbapply)
 library(forcats)
 library(readr)
-library(tm)
 library(magrittr)
 library(tabulizer)
 library(viridis)
+library(dplyr)
 rds <- as.list(list.files(here::here("ISA-test"),"wa_*"))
 modelli <<- lapply(rds,function(x) readRDS(here(x)))
 
@@ -61,13 +59,15 @@ modulo_upload <- fileInput(
   multiple = T
 )
 modulo_calendario <- uiOutput("date")
-                                        
+
 
 
 # UI ----------------------------------------------------------------------
 
 
 ui <- tagList(dashboardPage( skin = "green",
+
+
 
 
   ## HEADER ------------------------------------------------------------------
@@ -116,6 +116,8 @@ ui <- tagList(dashboardPage( skin = "green",
 
 
     ),
+    actionButton("browser", "browser"),
+    tags$script("$('#browser').hide();"),
     tags$img(src="logo_transparent (3).png", height=250,width=250)
 
   )),
@@ -129,7 +131,7 @@ ui <- tagList(dashboardPage( skin = "green",
 
                               .modal-lg {
                               width: 88%;
-                              
+
                               }
                               '))),
     useSweetAlert(),
@@ -138,7 +140,7 @@ ui <- tagList(dashboardPage( skin = "green",
         tabName = "operatori",
         h2("Vista Operatori"),
         fluidPage(
-          
+
           box(title = "Controlli",status = "success",solidHeader = T,collapsible = T,
             width = 3,
             uiOutput("picker_op"),
@@ -146,11 +148,11 @@ ui <- tagList(dashboardPage( skin = "green",
             checkboxGroupButtons(
               inputId = "opzioni",
               label = "Opzioni",
-              choices = c("CICLI REGOLARI", 
+              choices = c("CICLI REGOLARI",
                           "CICLI IRREGOLARI"),
               status = "success",
               checkIcon = list(
-                yes = icon("ok", 
+                yes = icon("ok",
                            lib = "glyphicon")),
               justified = T,
               size = "normal",
@@ -165,12 +167,12 @@ ui <- tagList(dashboardPage( skin = "green",
                             ),
                    tabPanel(title="Vista totale",
                             plotlyOutput("totale"))
-                
-               
+
+
                 )
-           
+
           )
-          
+
         )
       ),
       tabItem(
@@ -183,10 +185,10 @@ ui <- tagList(dashboardPage( skin = "green",
         h4("Alcuni scontrini sono disponibili al seguente ",a("link", href="https://drive.google.com/drive/folders/1HVTU2cPdoGsUC9x6dBFchgi8hIMTWxHT"),", scaricabili ed utilizzabili per testare le funzionalità di INSIGHT"),
         h4("I file sono situati all'interno dell'archivio."),
         h4("Il manuale utente è consultabile ", a("qui", href="https://francesco-tranquillo.gitbook.io/workspace/"))
-        
+
       ),
       tabItem(
-        
+
         tabName = "Welcomepage",
         fluidPage(
           h2("Overview"),
@@ -198,7 +200,7 @@ ui <- tagList(dashboardPage( skin = "green",
                 valueBoxOutput("ib2")),
             div(id='clickdiv3',
                 valueBoxOutput("ib3")),
-            
+
             div(id='clickdiv4',
                 valueBoxOutput("ib4")),
             valueBoxOutput("cicli_reg_overview"),
@@ -274,7 +276,7 @@ ui <- tagList(dashboardPage( skin = "green",
           fluidRow(column(
             width = 12,
             dygraphOutput("dygraph")
-            
+
           ))
         )
       ),
@@ -291,7 +293,7 @@ ui <- tagList(dashboardPage( skin = "green",
                      uiOutput("picker_str2"),
                      uiOutput("picker_sn"),
                      uiOutput("picker_alarms"),
-                     
+
                      solidHeader = T,
                      status = "success",
                      width = NULL)
@@ -300,10 +302,10 @@ ui <- tagList(dashboardPage( skin = "green",
                  box(title = "Diagramma di flusso", solidHeader = T,status = "success",width = NULL,
                    plotlyOutput("plot_alarm_distr"))
                  )
-                 
+
           )
         ),
-      
+
       tabItem(
         tabName = "strum",
         fluidPage(
@@ -329,7 +331,7 @@ ui <- tagList(dashboardPage( skin = "green",
                        dataTableOutput("table_strumentazione_irreg")
                        )
             )
-            
+
           )
         )
 
@@ -351,6 +353,9 @@ ui <- tagList(dashboardPage( skin = "green",
 # SERVER ------------------------------------------------------------------
 
 server <- function(input, output, session) {
+  observeEvent(input$browser,{
+    browser()
+  })
   session$onSessionEnded(stopApp)
 
 
@@ -385,7 +390,7 @@ server <- function(input, output, session) {
     dates <- tibble("min"=min(df$`INIZIO CICLO`),"max"=max(df$`INIZIO CICLO`))
     return(dates)
   })
-  
+
   date_selezionate <- reactive({
     req(input$date)
     if(length(input$date)>1){
@@ -393,19 +398,19 @@ server <- function(input, output, session) {
       return(giorni)
     } else
       return(input$date)
-    
+
   })
-  
+
   scontrino_df <- reactive({
     req(date_selezionate())
-    
+
     giorni <- date_selezionate()
     df <- creazione_df()
     df <- df[which(df$`NUMERO SERIALE LAVAENDOSCOPI` %in% input$picker_isa &
                      as.Date(df$`INIZIO CICLO`) %in% giorni),]
     return(df)
   })
-  
+
   info_giorni <- reactive({
 
     vista_giorni <- valori_infobox()
@@ -480,7 +485,7 @@ server <- function(input, output, session) {
       data_r$name <- "mtcars"
     }
   })
-  
+
   sankey <- reactive({
     req(input$picker_alarms)
     data <- scontrino_df()[which(scontrino_df()$ALLARMI %in%input$picker_alarms &
@@ -492,8 +497,8 @@ server <- function(input, output, session) {
     }
     p <- ezsankey(tab = data,nome =c("CATEGORIA","MODELLO DELLO STRUMENTO","ALLARMI", "NUMERO SERIALE STRUMENTO","NUMERO SERIALE LAVAENDOSCOPI") )
     return(p)
-    
-    
+
+
   })
 
 # tabelle -----------------------------------------------------------------
@@ -553,7 +558,7 @@ server <- function(input, output, session) {
     )
 
   })
-  
+
 
 # rendering_tabelle_strumentazione ----------------------------------------
 
@@ -583,7 +588,7 @@ server <- function(input, output, session) {
                     scrollY = "600px"
                   )
     )
-    
+
   })
   output$table_strumentazione_irreg <- DT::renderDT(server=FALSE,{
     df <- scontrino_df()[which(scontrino_df()$CATEGORIA==input$picker_str & scontrino_df()$ESITO.CICLO%in%"CICLO IRREGOLARE"),
@@ -611,9 +616,9 @@ server <- function(input, output, session) {
                     scrollY = "600px"
                   )
     )
-    
+
   })
-  
+
 
 
   #
@@ -630,7 +635,7 @@ server <- function(input, output, session) {
    info <- info_giorni()
    info[[4]]
   })
-  
+
 
 # infoboxes ---------------------------------------------------------------
 
@@ -683,7 +688,7 @@ server <- function(input, output, session) {
              subtitle = strong("Cicli irregolari"),
              icon = icon("warning",lib = "font-awesome"),
              color = "red")
-    
+
   })
 
   # INFOBOX DELLA PREDIZIONE
@@ -720,7 +725,7 @@ server <- function(input, output, session) {
              icon = icon("warning",lib = "font-awesome"),
              color = "red"
             )
-    
+
     return(box6)
   })
   output$ib7 <- renderValueBox({
@@ -744,12 +749,12 @@ server <- function(input, output, session) {
                  width = 0.8,
                  size=0.2,alpha=0.6)+
         scale_fill_manual(values = c("CICLO REGOLARE" = "#4286f4", "CICLO IRREGOLARE" = "#f44141"))+
-        
+
         theme_minimal() +
         theme(axis.text.x=element_text(angle = 35, hjust = 0))+
         labs(y = "Numero di cicli effettuati", x="\n Categoria di strumento")+
         facet_wrap(vars(`NUMERO SERIALE LAVAENDOSCOPI`))
-      
+
     )
   })
   sankey_plot2 <- reactive({
@@ -757,16 +762,16 @@ server <- function(input, output, session) {
     data <- scontrino_df()
     p <- ezsankey(tab = data,nome =c("NUMERO SERIALE LAVAENDOSCOPI","CATEGORIA", "ESITO.CICLO") )
     return(p)
-    
-    
+
+
   })
   output$plot2 <- renderPlotly({
     sankey_plot2()
   })
-  
+
 
 # vista op_selezione cicli regolari/irregolari/entrambi -------------------
-  
+
   sceltacicli <- reactive({
     req(length(input$opzioni)>0)
     if(input$opzioni=="CICLI REGOLARI"){
@@ -803,11 +808,11 @@ server <- function(input, output, session) {
         scale_fill_viridis_d(option  = "viridis",direction = -1)+
         theme_minimal()+
         facet_wrap(vars(ESITO.CICLO, `NUMERO SERIALE LAVAENDOSCOPI`))
-      
+
     return(g)
       })
   scelta_totale <- reactive({
-    
+
     req(length(input$opzioni)>0)
     if(length(input$opzioni)==1){
       filtro <- scontrino_df()[which(scontrino_df()$OPERATORE%in%input$picker_op & scontrino_df()$ESITO.CICLO%in%sceltacicli()),]
@@ -836,10 +841,10 @@ server <- function(input, output, session) {
       scale_fill_viridis_d(option  = "viridis",direction = -1)+
       theme_minimal()+
       facet_wrap(vars(ESITO.CICLO))
-    
+
     return(g)
-    
-    
+
+
   })
   output$plot3 <- renderPlotly({
     sceltaplot()
@@ -870,13 +875,16 @@ server <- function(input, output, session) {
                 stepPlot = TRUE)
   })
   output$prediction <- renderDygraph({
+
+    giorni <- length(unique(as.Date(scontrino_df()$`INIZIO CICLO`)))
     df_xts <- predizione()
+
     dygraph(df_xts) %>%
       dyRangeSelector() %>%
-      dyRoller(rollPeriod = 4) %>%
-      dyAxis("y", label = "Probabilità di guasto nei successivi 7 giorni", valueRange = c(0, 1)) %>% 
+      dyRoller(rollPeriod = giorni) %>%
+      dyAxis("y", label = "Probabilità di guasto nei successivi 7 giorni", valueRange = c(0, 1)) %>%
       dyLegend(show = "follow")
-    
+
       # dyHighlight(
       #   highlightCircleSize = 5,
       #   highlightSeriesBackgroundAlpha = 0.4,
@@ -893,10 +901,10 @@ server <- function(input, output, session) {
     #             aes(label=..count..),
     #             nudge_x=0,nudge_y=0.30)+
     #   scale_fill_viridis_d(option  = "viridis",direction = -1) +
-    #   theme_minimal() 
+    #   theme_minimal()
     sankey()
-    
-    
+
+
   })
 
 # predizione --------------------------------------------------------------
@@ -905,7 +913,7 @@ server <- function(input, output, session) {
   predizione <- reactive({
     req(input$picker_isa)
     giorni <- unique(as.Date(scontrino_df()$`INIZIO CICLO`))
-    
+
 
     df_ib <- scontrino_df()
     df_ib %<>% mutate("GIORNO" = factor(cut.Date(
@@ -917,18 +925,35 @@ server <- function(input, output, session) {
     df_giorni <- as.list(split(df_ib, f = df_ib$GIORNO))
     df_giorni_sn <- lapply(df_giorni, function(df) split(df, f = df$`NUMERO SERIALE LAVAENDOSCOPI`))
     df_pred_sn <- lapply(df_giorni_sn, function(giorno) lapply(giorno, function(df) meta(df)))
-    predizioni <- lapply(df_pred_sn, function(giorno) lapply(giorno, predict_median))
+
+
+
+    #codice disattivato per TD
+    #predizioni <- lapply(df_pred_sn, function(giorno) lapply(giorno, predict_median))
+    # df_ts <- lapply(predizioni, function(giorno) as.tibble(lapply(giorno, function(df) df$pos) )) %>%
+    #   do.call("rbind",.) %>% mutate(.,"t"=giorni) 
+
+    # TEST DRIVE (TD): i codici seguiti da un suffisso _TD sovrascrivono l'utilizzo dei modelli di predizione generando
+    # serie temporali casuali al puro fine dimostrativo sulle potenzialità dell'app. Questo perchè
+    # la funzione "predict_median" funziona se la app viene eseguita in locale, mentre riporta un errore
+    # ancora irrisolto se distribuita su shinyapp.io
+
+    predizioni_TD <- lapply(df_pred_sn, function(giorno) lapply(giorno, predict_median_TD))
+
     
-    df_ts <- lapply(predizioni, function(giorno) as.tibble(lapply(giorno, function(df) df$pos) )) %>%
-      do.call("rbind",.) %>% mutate(.,"t"=giorni) 
-    
+
+    df_ts <- lapply(predizioni_TD, function(giorno) as.tibble(lapply(giorno, function(df) runif(1,0,1)) )) %>%
+      do.call("rbind",.) %>% mutate(.,"t"=giorni)
+
+    # cat(str(df_ts))
+
     df_xts <- xts(df_ts[,-ncol(df_ts)],order.by = df_ts$t)
-    # 
+    #
     # df <- last(df_giorni)
-    # 
+    #
     # df_predizione <- meta(df)
-    # 
-    # 
+    #
+    #
     # risultati <- lapply(modelli, function(modello) predict(modello,df_predizione,type = "prob")) %>%
     #   do.call("rbind",.) %>%
     #   summarise_all(.,median,na.rm=T)
@@ -945,7 +970,7 @@ output$date <- renderUI({
                      placeholder = "Seleziona una data o un intervallo di date", dateFormat = "yyyy-mm-dd",
                      view = c("days", "months", "years"),  clearButton = T,
                      autoClose = T)
-})  
+})
 output$picker_str <- renderUI({
   req(input$txt)
   pickerInput(
@@ -993,7 +1018,7 @@ output$picker_isa <- renderUI({
       `actions-box`= T
     )
   )
-  
+
 })
 output$picker_alarms <- renderUI({
   req(input$txt)
@@ -1007,7 +1032,7 @@ output$picker_alarms <- renderUI({
       `actions-box`= T
     )
   )
-  
+
 })
 output$picker_sn <- renderUI({
   req(input$picker_str2)
@@ -1022,8 +1047,8 @@ output$picker_sn <- renderUI({
       `actions-box`= T
     )
   )
-    
-  
+
+
 })
 
 # alerts ------------------------------------------------------------------
@@ -1036,10 +1061,10 @@ output$picker_sn <- renderUI({
       type = "success"
     )
   })
-  
+
 # printaggio scontrino txt ------------------------------------------------
 
-  
+
   selectedRow <- eventReactive(input$scontrino_table_rows_selected,{
     nciclo <- scontrino_df()$print[input$scontrino_table_rows_selected]
     return(nciclo)
@@ -1047,7 +1072,7 @@ output$picker_sn <- renderUI({
   # output$selected <- renderText({
   #   rawText <- paste(scontrino_txt()[[selectedRow()]],collapse = "\\n")
   # })
-  # 
+  #
   output$selected <- renderUI({
     # rawText <- paste(scontrino_txt()[[selectedRow()]],sep = "\\n")
 
@@ -1055,7 +1080,7 @@ output$picker_sn <- renderUI({
     # split the text into a list of character vectors
     #   Each element in the list contains one line
     splitText <- stringi::stri_split(str = selectedRow(), regex = '\n')
-    
+
     splitText <- as.list(splitText[[1]])
     # wrap a paragraph tag around each element in the list
     replacedText <- lapply(splitText, p)
